@@ -1,0 +1,3 @@
+rootProject.name = 'Student_Counter'
+
+include ':app'
