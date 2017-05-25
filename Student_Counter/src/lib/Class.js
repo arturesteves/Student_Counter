@@ -5,7 +5,6 @@ class Class{
     this.name = 'Turma' + number;
     this.alunos = [];
     this.disciplinas = [];
-
     this.save();
   }
 

@@ -2,13 +2,12 @@ import * as firebase from 'firebase';
 
 let teacherPath = '/teacher/';
 
-
 class Teacher{ 
 
-    constructor(name, email, birthdate, photo){
+    constructor(name, email, birthDate, photo){
         this.name = name;
         this.email = email;
-        this.birthdate = birthdate || new Date(1900, 1, 1);
+        this.birthDate = birthDate || new Date(1900, 1, 1);
         this.photo = photo || "no photo";
     }
 
@@ -17,7 +16,7 @@ class Teacher{
             return firebase.database().ref(teacherPath + this.id).update({
                 name: this.name,
                 email: this.email,
-                birthdate: this.birthdate,
+                birthDate: this.birthDate,
                 photo: this.photo,
             });
         } else {
@@ -38,9 +37,9 @@ class Teacher{
             firebase.database().ref(teacherPath + id).once('value').then(function(snapshot){
                 let name = snapshot.val().name;
                 let email = snapshot.val().email;
-                let birthdate = snapshot.val().birthdate;
+                let birthDate = snapshot.val().birthDate;
                 let photo = snapshot.val().photo;
-                let teacher = new Teacher(name, email, birthdate, photo);
+                let teacher = new Teacher(name, email, birthDate, photo);
                 teacher.id = id;
                 resolve(teacher);
             });
