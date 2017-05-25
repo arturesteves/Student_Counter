@@ -1,6 +1,6 @@
 import * as firebase from 'firebase';
 
-let teacherPath = '/teacher/';
+let teacherPath = '/teachers/';
 
 class Teacher{ 
 

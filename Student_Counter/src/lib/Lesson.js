@@ -1,56 +1,52 @@
 import * as firebase from 'firebase';
 
-let lessonPath = '/lesson/';
+let lessonPath = '/lessons/';
 
 class Lesson{
-  constructor(nLesson, date, time, started, finished, photo){
-    this.nLesson = nLesson;
-    this.date = date;
-    this.time = time;
-    this.started = started || false;
-    this.finished = finished || false;
-    this.photo = photo || 'No Photo';
-  }
+    constructor(teacher, subject, startDate, endDate, photo){
+        this.teacher = teacher;
+        this.subject = subject;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.photo = photo || 'No Photo';
+    }
 
-  save(){
-    if(this.id){
-        return firebase.database().ref(lessonPath + this.id).update({
-          nLesson: this.nLesson,
-          date: this.date,
-          time: this.time,
-          started: this.started,
-          finished: this.finished,
-          photo: this.photo
-        });
-    } else {
+    save(){
+        if(this.id){
+            return firebase.database().ref(lessonPath + this.id).update({
+                teacher: this.teacher,
+                subject: this.subject,
+                startDate: this.startDate,
+                endDate: this.endDate,
+                photo: this.photo
+            });
+        } else {
+            return new Promise((resolve, reject)=>{
+                let obj = firebase.database().ref(lessonPath).push(this);
+                this.id = obj.key;
+                resolve(this.id);
+            });
+        }
+    }
+
+    delete(){
+        firebase.database().ref(lessonPath + this.id).remove();
+    }
+
+    static retrieve(id){
         return new Promise((resolve, reject)=>{
-            let obj = firebase.database().ref(lessonPath).push(this);
-            this.id = obj.key;
-            resolve(this.id);
+            firebase.database().ref(lessonPath + id).once('value').then(function(snapshot){
+                let teacher = snapshot.val().teacher;
+                let subject = snapshot.val().subject;
+                let startDate = snapshot.val().startDate;
+                let endDate = snapshot.val().endDate;
+                let photo = snapshot.val().photo;
+                let lesson = new Lesson(teacher, subject, startDate, endDate, photo);
+                lesson.id = id;
+                resolve(lesson);
+            });
         });
     }
-  }
-
-  delete(){
-      firebase.database().ref(lessonPath + this.id).remove();
-  }
-
-  static retrieve(id){
-      return new Promise((resolve, reject)=>{
-          firebase.database().ref(lessonPath + id).once('value').then(function(snapshot){
-              let nLesson = snapshot.val().nLesson;
-              let date = snapshot.val().date;
-              let time = snapshot.val().time;
-              let started = snapshot.val().started;
-              let finished = snapshot.val().finished;
-              let photo = snapshot.val().photo;
-
-              let lesson = new Lesson(nLesson, date, time, started, finished, photo);
-              lesson.id = id;
-              resolve(lesson);
-          });
-      });
-  }
 }
 
 module.exports = Lesson;

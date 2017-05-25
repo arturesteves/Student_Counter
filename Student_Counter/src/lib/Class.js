@@ -1,50 +1,37 @@
 import * as firebase from 'firebase';
 
-let classPath = '/class/';
+let classPath = '/classes/';
 
-
-//teste
 class Class {
 
-    constructor(number, students, subjects) {
-        this.number = number;
-        this.students = students;
-        this.subjects = subjects;
+    constructor(className, studentIds, subjectIds) {
+        this.className = className;
+        this.studentIds = studentIds;
+        this.subjectIds = subjectIds;
     }
 
     save(){
-        if(this.id){
-            return firebase.database().ref(classPath + this.id).update({
-                number: this.number,
-                students: this.students,
-                subjects: this.subjects
-            });
-        } else {
-            return new Promise((resolve, reject)=>{
-                let obj = firebase.database().ref(classPath).push(this);
-                this.id = obj.key;
-                resolve(this.id);
-            });
-        }
+        return firebase.database().ref(classPath + this.className).set({
+            studentIds: this.studentIds,
+            subjectIds: this.subjectIds
+        });
     }
 
     delete(){
-        firebase.database().ref(classPath + this.id).remove();
+        firebase.database().ref(classPath + this.className).remove();
     }
 
-    static retrieve(id){
+    static retrieve(className){
         return new Promise((resolve, reject)=>{
-            firebase.database().ref(classPath + id).once('value').then(function(snapshot){
-                let number = snapshot.val().number;
-                let students = snapshot.val().students;
-                let subjects = snapshot.val().subjects;
-
-                let clazz = new Class(number, students, subjects);
-                clazz.id = id;
+            firebase.database().ref(classPath + className).once('value').then(function(snapshot){
+                let studentIds = snapshot.val().studentIds;
+                let subjectIds = snapshot.val().subjectIds;
+                let clazz = new Class(className, studentIds, subjectIds);
                 resolve(clazz);
             });
         });
     }
+
 }
 
 module.exports = Class;
