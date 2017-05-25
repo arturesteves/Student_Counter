@@ -9,7 +9,7 @@ class Lesson{
     this.time = time;
     this.started = started || false;
     this.finished = finished || false;
-    this.photo = photo || 'photoTest';
+    this.photo = photo || 'No Photo';
   }
 
   save(){

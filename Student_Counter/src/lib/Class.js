@@ -4,10 +4,10 @@ let classPath = '/class/';
 
 class Class {
 
-    constructor(number, alunos, disciplinas) {
+    constructor(number, alunos, subjects) {
         this.number = number;
         this.alunos = alunos;
-        this.disciplinas = disciplinas;
+        this.subjects = subjects;
     }
 
     save(){
@@ -15,7 +15,7 @@ class Class {
             return firebase.database().ref(classPath + this.id).update({
                 number: this.number,
                 alunos: this.alunos,
-                disciplinas: this.disciplinas
+                subjects: this.subjects
             });
         } else {
             return new Promise((resolve, reject)=>{
@@ -35,9 +35,9 @@ class Class {
             firebase.database().ref(classPath + id).once('value').then(function(snapshot){
                 let number = snapshot.val().number;
                 let alunos = snapshot.val().alunos;
-                let disciplinas = snapshot.val().disciplinas;
+                let subjects = snapshot.val().subjects;
 
-                let clazz = new Class(number, alunos, disciplinas);
+                let clazz = new Class(number, alunos, subjects);
                 clazz.id = id;
                 resolve(clazz);
             });
