@@ -44,12 +44,6 @@ export default class Student_Counter extends Component {
       var teacher_JV = new Teacher("João Ventura", "jv@...");
       await teacher_JV.save();
 
-
-      console.log("ID2PILA", teacher_JV.id)
-
-      //teacher_JF.delete();
-      console.log("\n\n\n:  NEW TEACHER", await Teacher.retrieve(teacher_JV.id));
-
       this.logout();
   }
 
