@@ -57,10 +57,16 @@ export default class Student_Counter extends Component {
 
   render() {
     //Cria user, muda o numero de telefone e faz logout
-    this.signup("almeidabatistam@gmail.com", "teste1");
+    this.signup("almeidabatistam@gmail.com", "teste1"); 
     this.login("almeidabatistam@gmail.com", "teste1");
         var student = new Student('140221061', 'Bruno', 'Almeida');
     this.logout();
+
+    this.signup("artur_esteves1995@hotmail.com", "pw_test1");
+    this.login("artur_esteves1995@hotmail.com", "pw_test1");
+    var student_artur = new Student('140221076', 'Artur', 'Esteves');
+    this.logout();
+
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
