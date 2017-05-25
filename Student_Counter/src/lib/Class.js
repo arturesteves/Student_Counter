@@ -2,6 +2,8 @@ import * as firebase from 'firebase';
 
 let classPath = '/class/';
 
+
+//teste
 class Class {
 
     constructor(number, students, subjects) {
