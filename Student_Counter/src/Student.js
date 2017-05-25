@@ -14,13 +14,7 @@ class Student{
 
   save(){
     let studentPath = '/student/' + this.number;
-    firebase.database().ref(studentPath).set({
-      fName: this.fName,
-      lName: this.lName,
-      birthdate: this.birthdate,
-      email: this.email,
-      photo: this.photo
-    })
+    firebase.database().ref(studentPath).set(this);
   }
 }
 
