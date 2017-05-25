@@ -11,7 +11,9 @@ import {
   Text,
   View
 } from 'react-native';
-import Student from './src/Student.js';
+//import Student from './src/lib/Student';
+import Teacher from "./src/lib/Teacher";
+
 import * as firebase from 'firebase';
 
 // Initialize Firebase
@@ -25,6 +27,31 @@ firebase.initializeApp({
 });
 
 export default class Student_Counter extends Component {
+
+
+    componentWillMount() {
+      this.init().then();
+    }
+
+  async init(){
+      this.signup("artur_esteves1995@hotmail.com", "pw_test1");
+      this.login("artur_esteves1995@hotmail.com", "pw_test1");
+      //var student_artur = new Student('140221076', 'Artur', 'Esteves');
+
+      var teacher_JF = new Teacher("Joaquim Filipe", " jf@...");
+      await teacher_JF.save();
+
+      var teacher_JV = new Teacher("João Ventura", "jv@...");
+      await teacher_JV.save();
+
+
+      console.log("ID2PILA", teacher_JV.id)
+
+      //teacher_JF.delete();
+      console.log("\n\n\n:  NEW TEACHER", await Teacher.retrieve(teacher_JV.id));
+
+      this.logout();
+  }
 
   // Signup Function
   async signup(email, pass) {
@@ -56,17 +83,6 @@ export default class Student_Counter extends Component {
 }
 
   render() {
-    //Cria user, muda o numero de telefone e faz logout
-    this.signup("almeidabatistam@gmail.com", "teste1"); 
-    this.login("almeidabatistam@gmail.com", "teste1");
-        var student = new Student('140221061', 'Bruno', 'Almeida');
-    this.logout();
-
-    this.signup("artur_esteves1995@hotmail.com", "pw_test1");
-    this.login("artur_esteves1995@hotmail.com", "pw_test1");
-    var student_artur = new Student('140221076', 'Artur', 'Esteves');
-    this.logout();
-
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
