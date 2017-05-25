@@ -1,6 +1,6 @@
 import * as firebase from 'firebase';
 
-let teacherPath = '/teacher/';
+let studentPath = '/student/';
 
 class Student{
 
@@ -14,15 +14,16 @@ class Student{
 
     save(){
         if(this.id){
-            return firebase.database().ref(teacherPath + this.id).update({
+            return firebase.database().ref(studentPath + this.id).update({
+                number: this.number,
                 name: this.name,
                 email: this.email,
                 birthDate: this.birthDate,
-                photo: this.photo,
+                photo: this.photo
             });
         } else {
             return new Promise((resolve, reject)=>{
-                let obj = firebase.database().ref(teacherPath).push(this);
+                let obj = firebase.database().ref(studentPath).push(this);
                 this.id = obj.key;
                 resolve(this.id);
             });
@@ -30,24 +31,24 @@ class Student{
     }
 
     delete(){
-        firebase.database().ref(teacherPath + this.id).remove();
+        firebase.database().ref(studentPath + this.id).remove();
     }
 
     static retrieve(id){
         return new Promise((resolve, reject)=>{
-            firebase.database().ref(teacherPath + id).once('value').then(function(snapshot){
+            firebase.database().ref(studentPath + id).once('value').then(function(snapshot){
                 let number = snapshot.val().number;
                 let name = snapshot.val().name;
                 let email = snapshot.val().email;
-                let birthdate = snapshot.val().birthDate;
+                let birthDate = snapshot.val().birthDate;
                 let photo = snapshot.val().photo;
 
-                let teacher = new Teacher(name, email, birthdate, photo);
-                teacher.id = id;
-                resolve(teacher);
+                let student = new Student(number,name, email, birthDate, photo);
+                student.id = id;
+                resolve(student);
             });
         });
     }
 }
 
-module.exports = Teacher;
+module.exports = Student;
