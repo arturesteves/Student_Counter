@@ -21,6 +21,7 @@ export default class Student_Counter extends Component {
         </Text>
         <Text style={styles.instructions}>
           To get started, edit index.ios.js
+          alterado!
         </Text>
         <Text style={styles.instructions}>
           Press Cmd+R to reload,{'\n'}
