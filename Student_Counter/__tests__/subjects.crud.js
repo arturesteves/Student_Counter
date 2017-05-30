@@ -80,37 +80,31 @@ test('Get overseers of a subject', () => {
     var subject = new Subject("Reconhecimento de Padrões", [teacher_1.id, teacher_2.id, teacher_3.id]);
     subject.save();
 
+    expect.assertions(10 * subject.overseers.length + 1);
+
     expect(subject).toHaveProperty("overseers");
 
-    //var a = Subject.retrieve(subject.id).then(this.getOverseers());
-    //console.log(a);
+    var overseers = [teacher_1, teacher_2, teacher_3];
+
+    // isto é a única coisa que não funciona e não percebo porque
+
+
     return subject.getOverseers().then(function(data){
         //success
-        console.log(data);
-        expect.assertions(subject.overseers.length);
-        expect(data[0].id).toBe(teacher_1.id);
-        expect(data[0]).toHaveProperty("name");
-        expect(data[0].name).toBe("Artur Miguel H.");
+        var size = data.length;
+        for(let i = 0; i < size; i++){
+            expect(data[i]).toHaveProperty("id");
+            expect(data[i]).toHaveProperty("name");
+            expect(data[i]).toHaveProperty("email");
+            expect(data[i]).toHaveProperty("birthDate");
+            expect(data[i]).toHaveProperty("photo");
+
+            expect(data[i].id).toBe(subject.overseers[i]);
+            expect(data[i].name).toBe(overseers[i].name);
+            expect(data[i].email).toBe(overseers[i].email);
+            expect(data[i].birthDate).toBe(overseers[i].birthDate);
+            expect(data[i].photo).toBe(overseers[i].photo);
+        }
     });
 
-
 });
-/*
-it('works with promises', () => {
-    var teacher_1 = new Teacher("Artur Miguel H.", "artur.miguel@gmail.com", "13-12-1990", "PHOto.png");
-    teacher_1.save();
-    var teacher_2 = new Teacher("Ricardo Morais", "ricardo.morais@gmail.com", "13-10-1990", "pa.png");
-    teacher_2.save();
-    var teacher_3 = new Teacher("Francisco S.", "francis_s@gmail.com", "08-04-1993", "photohptoht.png");
-    teacher_3.save();
-
-    var subject = new Subject("Reconhecimento de Padrões", [teacher_1.id, teacher_2.id, teacher_3.id]);
-    subject.save();
-
-    expect(subject).toHaveProperty("overseers");
-
-    expect.assertions(subject.overseers.length);
-    return subject.getOverseers().then(data => expect(data).toEqual('Mark'));
-});
-*/
-//test getOverssers

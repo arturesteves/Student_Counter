@@ -22,6 +22,8 @@ class Class {
     }
 
     //todo
+    // get students
+    // get subjects
 
     static retrieve(className){
         return new Promise((resolve, reject)=>{
