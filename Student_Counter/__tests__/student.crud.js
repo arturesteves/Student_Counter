@@ -29,11 +29,13 @@ test('Update a student', () => {
     student.photo = "newPhoto.png";
 
     student.save();
-    expect(Student.number).not.toBe("1400001");
-    expect(Student.name).not.toBe("João José");
-    expect(Student.birthDate).not.toBe("13-02-1990");
-    expect(Student.email).not.toBe("joao.jose@gmail.com");
-    expect(Student.photo).not.toBe("myPhoto.png");
+
+    expect(student.number).not.toBe("1400001");
+    expect(student.name).not.toBe("João José");
+    expect(student.birthDate).not.toBe("13-02-1990");
+    expect(student.email).not.toBe("joao.jose@gmail.com");
+    expect(student.photo).not.toBe("myPhoto.png");
+
     expect(Student.retrieve(student.number).number).resolves.toBe("1500000");
     expect(Student.retrieve(student.number).name).resolves.toBe("Pedro Manteigas");
     expect(Student.retrieve(student.number).birthDate).resolves.toBe("14-02-2000");

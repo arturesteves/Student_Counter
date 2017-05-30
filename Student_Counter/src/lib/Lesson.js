@@ -33,6 +33,14 @@ class Lesson{
         firebase.database().ref(lessonPath + this.id).remove();
     }
 
+    getSubject(){
+        //TODO
+    }
+
+    getTeacher(){
+        //TODO
+    }
+
     static retrieve(id){
         return new Promise((resolve, reject)=>{
             firebase.database().ref(lessonPath + id).once('value').then(function(snapshot){

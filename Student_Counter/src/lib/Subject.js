@@ -28,6 +28,10 @@ class Subject{
         firebase.database().ref(subjectPath + this.id).remove();
     }
 
+    getOverseers(){
+        //TODO devolver array de profs.
+    }
+
     static retrieve(id){
         return new Promise((resolve, reject)=>{
             firebase.database().ref(subjectPath + id).once('value').then(function(snapshot){
