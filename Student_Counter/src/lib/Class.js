@@ -24,7 +24,7 @@ class Class {
     }
 
     // get students
-    async students(){
+    async getStudents(){
         let array = [];
         for(let studentId of this.studentIds) {
             array.push(await Student.retrieve(studentId));
@@ -32,7 +32,7 @@ class Class {
         return array;
     }
     // get subjects
-    async subjects(){
+    async getSubjects(){
         let array = [];
         for(let subjectId of this.subjectIds) {
             array.push(await Subject.retrieve(subjectId));

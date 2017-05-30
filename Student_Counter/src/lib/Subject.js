@@ -44,7 +44,7 @@ class Subject{
                 let overseers = snapshot.val().overseers;
                 let subject = new Subject(name, overseers);
                 subject.id = id;
-                resolve();
+                resolve(subject);
             });
         });
     }

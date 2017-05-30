@@ -17,13 +17,13 @@ const Teacher = require("../src/lib/Teacher");
 
 
 test('Create a class in database and check id after and before creation', () => {
-    var student = new Student("1400222", "João Batata", "14:22:1984", "batatas@gmail.com", "myFile/photo.png");
+    let student = new Student("1400222", "João Batata", "14:22:1984", "batatas@gmail.com", "myFile/photo.png");
     student.save();
-    var teacher = new Teacher("João Ventura", "joao.ventura@gmail.com", "13:02:1990", "p.png");
+    let teacher = new Teacher("João Ventura", "joao.ventura@gmail.com", "13:02:1990", "p.png");
     teacher.save();
-    var subject = new Subject("Programação para a Internet", [teacher.id]);
+    let subject = new Subject("Programação para a Internet", [teacher.id]);
     subject.save();
-    var clazz = new Class("Turma A", [student.number], [subject.id]);
+    let clazz = new Class("Turma A", [student.number], [subject.id]);
     clazz.save();
 
     expect(clazz).toHaveProperty("className");
@@ -37,19 +37,19 @@ test('Create a class in database and check id after and before creation', () => 
 });
 
 test('Update a class', () => {
-    var student_1 = new Student("1400222", "João Batata", "14:22:1984", "batatas@gmail.com", "myFile/photo.png");
+    let student_1 = new Student("1400222", "João Batata", "14:22:1984", "batatas@gmail.com", "myFile/photo.png");
     student_1.save();
-    var student_2 = new Student("1422132", "João Arroz", "16:21:1987", "arroz@gmail.com", "myFileee/photo.png");
+    let student_2 = new Student("1422132", "João Arroz", "16:21:1987", "arroz@gmail.com", "myFileee/photo.png");
     student_2.save();
-    var teacher_1 = new Teacher("João Ventura", "joao.ventura@gmail.com", "13:02:1990", "p.png");
+    let teacher_1 = new Teacher("João Ventura", "joao.ventura@gmail.com", "13:02:1990", "p.png");
     teacher_1.save();
-    var teacher_2 = new Teacher("Marco Paulo", "marco.paulo@gmail.com", "09:02:1990", "photo.png");
+    let teacher_2 = new Teacher("Marco Paulo", "marco.paulo@gmail.com", "09:02:1990", "photo.png");
     teacher_2.save();
-    var subject_1 = new Subject("Programação para a Internet", [teacher_1.id, teacher_2.id]);
+    let subject_1 = new Subject("Programação para a Internet", [teacher_1.id, teacher_2.id]);
     subject_1.save();
-    var subject_2 = new Subject("Sistemas Operativos", [teacher_1.id, teacher_2.id]);
+    let subject_2 = new Subject("Sistemas Operativos", [teacher_1.id, teacher_2.id]);
     subject_2.save();
-    var clazz = new Class("Turma A", [student_1.number], [subject_1.id]);
+    let clazz = new Class("Turma A", [student_1.number], [subject_1.id]);
     clazz.save();
 
     clazz.name = "Turma B";
@@ -67,19 +67,19 @@ test('Update a class', () => {
 });
 
 test('Delete a class', () => {
-    var student_1 = new Student("1400222", "João Batata", "14:22:1984", "batatas@gmail.com", "myFile/photo.png");
+    let student_1 = new Student("1400222", "João Batata", "14:22:1984", "batatas@gmail.com", "myFile/photo.png");
     student_1.save();
-    var student_2 = new Student("1422132", "João Arroz", "16:21:1987", "arroz@gmail.com", "myFileee/photo.png");
+    let student_2 = new Student("1422132", "João Arroz", "16:21:1987", "arroz@gmail.com", "myFileee/photo.png");
     student_2.save();
-    var teacher_1 = new Teacher("João Ventura", "joao.ventura@gmail.com", "13:02:1990", "p.png");
+    let teacher_1 = new Teacher("João Ventura", "joao.ventura@gmail.com", "13:02:1990", "p.png");
     teacher_1.save();
-    var teacher_2 = new Teacher("Marco Paulo", "marco.paulo@gmail.com", "09:02:1990", "photo.png");
+    let teacher_2 = new Teacher("Marco Paulo", "marco.paulo@gmail.com", "09:02:1990", "photo.png");
     teacher_2.save();
-    var subject_1 = new Subject("Programação para a Internet", [teacher_1.id, teacher_2.id]);
+    let subject_1 = new Subject("Programação para a Internet", [teacher_1.id, teacher_2.id]);
     subject_1.save();
-    var subject_2 = new Subject("Sistemas Operativos", [teacher_1.id, teacher_2.id]);
+    let subject_2 = new Subject("Sistemas Operativos", [teacher_1.id, teacher_2.id]);
     subject_2.save();
-    var clazz = new Class("Turma A", [student_1.number], [subject_1.id]);
+    let clazz = new Class("Turma A", [student_1.number], [subject_1.id]);
     clazz.save();
     clazz.delete();
 
@@ -87,4 +87,59 @@ test('Delete a class', () => {
     expect(Class.retrieve(clazz.className).studentIds).resolves.toBeUndefined();
     expect(Class.retrieve(clazz.className).subjectIds).resolves.toBeUndefined();
 
+});
+
+test('Get students of a class', () => {
+    let student_1 = new Student("1400222", "João Batata", "14:22:1984", "batatas@gmail.com", "myFile/photo.png");
+    student_1.save();
+    let student_2 = new Student("1422132", "João Arroz", "16:21:1987", "arroz@gmail.com", "myFileee/photo.png");
+    student_2.save();
+    let teacher_1 = new Teacher("João Ventura", "joao.ventura@gmail.com", "13:02:1990", "p.png");
+    teacher_1.save();
+    let teacher_2 = new Teacher("Marco Paulo", "marco.paulo@gmail.com", "09:02:1990", "photo.png");
+    teacher_2.save();
+    let subject_1 = new Subject("Programação para a Internet", [teacher_1.id, teacher_2.id]);
+    subject_1.save();
+    let subject_2 = new Subject("Sistemas Operativos", [teacher_1.id, teacher_2.id]);
+    subject_2.save();
+    let clazz = new Class("Turma A", [student_1.number, student_2.number], [subject_1.id, subject_2.id]);
+    clazz.save();
+
+    let students = [student_1, student_2];
+    let subjects = [subject_1, subject_2];
+
+    expect.assertions(10 * students.length + 6 * subjects.length + 2);
+
+    expect(clazz).toHaveProperty("studentIds");
+    expect(clazz).toHaveProperty("subjectIds");
+
+    return clazz.getStudents().then(function(data){
+
+        for(let i = 0; i < data.length; i++){
+            expect(data[i]).toHaveProperty("number");
+            expect(data[i]).toHaveProperty("name");
+            expect(data[i]).toHaveProperty("email");
+            expect(data[i]).toHaveProperty("birthDate");
+            expect(data[i]).toHaveProperty("photo");
+
+            expect(data[i].number).toBe(students[i].number);
+            expect(data[i].name).toBe(students[i].name);
+            expect(data[i].email).toBe(students[i].email);
+            expect(data[i].birthDate).toBe(students[i].birthDate);
+            expect(data[i].photo).toBe(students[i].photo);
+        }
+
+    }).then(()=> clazz.getSubjects()).then(function (data) {
+
+        for (let i = 0; i < data.length; i++) {
+            expect(data[i]).toHaveProperty("id");
+            expect(data[i]).toHaveProperty("name");
+            expect(data[i]).toHaveProperty("overseers");
+
+            expect(data[i].id).toEqual(subjects[i].id);
+            expect(data[i].name).toEqual(subjects[i].name);
+            expect(data[i].overseers).toEqual(expect.arrayContaining(subjects[i].overseers));
+        }
+
+    });
 });
