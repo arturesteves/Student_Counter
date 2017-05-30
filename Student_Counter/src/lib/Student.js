@@ -28,6 +28,8 @@ class Student{
         firebase.database().ref(studentPath + this.number).remove();
     }
 
+    // TODO: Obter presenças de um aluno por cada disciplina em que esteja presente
+
     static retrieve(number){
         return new Promise((resolve, reject)=>{
             firebase.database().ref(studentPath + number).once('value').then(function(snapshot){
@@ -35,7 +37,7 @@ class Student{
                 let email = snapshot.val().email;
                 let birthDate = snapshot.val().birthDate;
                 let photo = snapshot.val().photo;
-                let student = new Student(number,name, email, birthDate, photo);
+                let student = new Student(number, name, birthDate, email, photo);
                 resolve(student);
             });
         });

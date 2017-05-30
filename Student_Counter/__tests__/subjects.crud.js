@@ -86,9 +86,6 @@ test('Get overseers of a subject', () => {
 
     var overseers = [teacher_1, teacher_2, teacher_3];
 
-    // isto é a única coisa que não funciona e não percebo porque
-
-
     return subject.getOverseers().then(function(data){
         //success
         var size = data.length;
