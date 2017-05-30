@@ -21,6 +21,8 @@ class Class {
         firebase.database().ref(classPath + this.className).remove();
     }
 
+    //todo
+
     static retrieve(className){
         return new Promise((resolve, reject)=>{
             firebase.database().ref(classPath + className).once('value').then(function(snapshot){

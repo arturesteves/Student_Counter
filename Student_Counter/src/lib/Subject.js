@@ -1,5 +1,5 @@
 import * as firebase from 'firebase';
-import * as Teacher from 'Teacher';
+import * as Teacher from './Teacher';
 
 let subjectPath = '/subjects/';
 

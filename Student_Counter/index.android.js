@@ -75,9 +75,9 @@ export default class Student_Counter extends Component {
     async signup(email, pass) {
         try {
             await firebase.auth().createUserWithEmailAndPassword(email, pass);
-            console.log("Account Created");
+           // console.log("Account Created");
         } catch (error) {
-            console.log(error.toString());
+            //console.log(error.toString());
         }
     }
 
@@ -85,9 +85,9 @@ export default class Student_Counter extends Component {
     async login(email, pass) {
         try {
             await firebase.auth().signInWithEmailAndPassword(email, pass);
-            console.log("Logged In!");
+          //  console.log("Logged In!");
         } catch (error) {
-            console.log(error.toString())
+           // console.log(error.toString())
         }
     }
 
@@ -96,7 +96,7 @@ export default class Student_Counter extends Component {
         try {
             await firebase.auth().signOut();
         } catch (error) {
-            console.log(error);
+           // console.log(error);
         }
     }
 
