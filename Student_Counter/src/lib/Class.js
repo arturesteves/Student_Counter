@@ -1,4 +1,6 @@
 import * as firebase from 'firebase';
+let Student = require("./Student");
+let Subject = require("./Subject");
 
 let classPath = '/classes/';
 
@@ -21,9 +23,22 @@ class Class {
         firebase.database().ref(classPath + this.className).remove();
     }
 
-    //todo
     // get students
+    async students(){
+        let array = [];
+        for(let studentId of this.studentIds) {
+            array.push(await Student.retrieve(studentId));
+        }
+        return array;
+    }
     // get subjects
+    async subjects(){
+        let array = [];
+        for(let subjectId of this.subjectIds) {
+            array.push(await Subject.retrieve(subjectId));
+        }
+        return array;
+    }
 
     static retrieve(className){
         return new Promise((resolve, reject)=>{
