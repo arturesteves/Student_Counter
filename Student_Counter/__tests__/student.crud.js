@@ -1,6 +1,17 @@
+import * as firebase from 'firebase';
+
+// Initialize Firebase
+firebase.initializeApp({
+    apiKey: "AIzaSyCJO-fJa5dlYXKK1zy8bt4TxzwoniSvtsU",
+    authDomain: "gpbitteam-59ca2.firebaseapp.com",
+    databaseURL: "https://gpbitteam-59ca2.firebaseio.com",
+    projectId: "gpbitteam-59ca2",
+    storageBucket: "gpbitteam-59ca2.appspot.com",
+    messagingSenderId: "571714718837"
+});
+
 
 const Student = require('../src/lib/Student');
-
 
 
 test('Create a student in database', () => {
