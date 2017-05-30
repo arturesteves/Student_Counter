@@ -1,6 +1,6 @@
 import * as firebase from 'firebase';
-import * as Subject from './Subject';
-import * as Teacher from './Teacher';
+var Subject = require("./Subject");
+var Teacher = require("./Teacher");
 
 let lessonPath = '/lessons/';
 

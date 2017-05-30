@@ -33,7 +33,6 @@ test('Update a student', () => {
     var student = new Student("1400001", "João José", "13-02-1990", "joao.jose@gmail.com", "myPhoto.png");
     student.save();
 
-    student.number = "1500000";
     student.name = "Pedro Manteigas";
     student.birthDate = "14-02-2000";
     student.email = "pedro.manteigas@gmail";
@@ -41,13 +40,11 @@ test('Update a student', () => {
 
     student.save();
 
-    expect(student.number).not.toBe("1400001");
     expect(student.name).not.toBe("João José");
     expect(student.birthDate).not.toBe("13-02-1990");
     expect(student.email).not.toBe("joao.jose@gmail.com");
     expect(student.photo).not.toBe("myPhoto.png");
 
-    expect(Student.retrieve(student.number).number).resolves.toBe("1500000");
     expect(Student.retrieve(student.number).name).resolves.toBe("Pedro Manteigas");
     expect(Student.retrieve(student.number).birthDate).resolves.toBe("14-02-2000");
     expect(Student.retrieve(student.number).email).resolves.toBe("pedro.manteigas@gmail");
@@ -59,7 +56,7 @@ test('Delete a student', () => {
     student.save();
     student.delete();
 
-    expect(Student.retrieve(student.number).number).resolves.not.toBe("1500000");
+    expect(Student.retrieve(student.number).number).resolves.not.toBe("1400001");
     expect(Student.retrieve(student.number).name).resolves.toBeUndefined();
     expect(Student.retrieve(student.number).birthDate).resolves.toBeUndefined();
     expect(Student.retrieve(student.number).email).resolves.toBeUndefined();

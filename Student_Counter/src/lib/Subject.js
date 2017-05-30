@@ -1,5 +1,5 @@
 import * as firebase from 'firebase';
-import * as Teacher from './Teacher';
+var Teacher = require("./Teacher");
 
 let subjectPath = '/subjects/';
 
@@ -31,7 +31,7 @@ class Subject{
 
     async getOverseers(){
         let array = [];
-        for(let overseer of overseers) {
+        for(let overseer of this.overseers) {
             array.push(await Teacher.retrieve(overseer));
         }
         return array;
