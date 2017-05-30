@@ -1,4 +1,5 @@
 import * as firebase from 'firebase';
+import * as Teacher from 'Teacher';
 
 let subjectPath = '/subjects/';
 
@@ -28,8 +29,12 @@ class Subject{
         firebase.database().ref(subjectPath + this.id).remove();
     }
 
-    getOverseers(){
-        //TODO devolver array de profs.
+    async getOverseers(){
+        let array = [];
+        for(let overseer of overseers) {
+            array.push(await Teacher.retrieve(overseer));
+        }
+        return array;
     }
 
     static retrieve(id){

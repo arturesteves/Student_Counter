@@ -1,6 +1,4 @@
 import * as firebase from 'firebase';
-import * as Subject from 'Subject';
-import * as Teacher from 'Teacher';
 
 let lessonPath = '/lessons/';
 
@@ -33,14 +31,7 @@ class Lesson{
 
     delete(){
         firebase.database().ref(lessonPath + this.id).remove();
-    }
 
-    async getSubject(){
-        return await Subject.retrieve(this.subject);
-    }
-
-    async getTeacher(){
-        return await Teacher.retrieve(this.teacher);
     }
 
     static retrieve(id){
