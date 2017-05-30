@@ -18,16 +18,16 @@ const Lesson = require("../src/lib/Lesson");
 
 
 test('Create a presence in database and check id after and before creation', () => {
-    var student = new Student("1303412", "Miguel Saraiva", "13-03-1993", "miguel.saraia@gmail.com", "photos/1303412.png");
+    let student = new Student("1303412", "Miguel Saraiva", "13-03-1993", "miguel.saraia@gmail.com", "photos/1303412.png");
     student.save();
-    var teacher = new Teacher("Cédric B.", "email.ah@gmail.com", "13-12-1894", "myPhoto.png");
+    let teacher = new Teacher("Cédric B.", "email.ah@gmail.com", "13-12-1894", "myPhoto.png");
     teacher.save();
-    var subject = new Subject("Gestão de Projectos",[teacher.id]);
+    let subject = new Subject("Gestão de Projectos",[teacher.id]);
     subject.save();
-    var lesson = new Lesson(teacher.id, subject.id, "08:30:00", "10:30:00", "photo.png");
+    let lesson = new Lesson(teacher.id, subject.id, "08:30:00", "10:30:00", "photo.png");
     lesson.save();
 
-    var presence_Miguel = new Presence(student.number, lesson.id, true);
+    let presence_Miguel = new Presence(student.number, lesson.id, true);
     expect(presence_Miguel.id).toBeUndefined();
 
     presence_Miguel.save();
@@ -44,20 +44,20 @@ test('Create a presence in database and check id after and before creation', () 
 
 
 test('Update a presence', () => {
-    var student = new Student("1303412", "Miguel Saraiva", "13-03-1993", "miguel.saraia@gmail.com", "photos/1303412.png");
+    let student = new Student("1303412", "Miguel Saraiva", "13-03-1993", "miguel.saraia@gmail.com", "photos/1303412.png");
     student.save();
-    var teacher = new Teacher("Cédric B.", "email.ah@gmail.com", "13-12-1894", "myPhoto.png");
+    let teacher = new Teacher("Cédric B.", "email.ah@gmail.com", "13-12-1894", "myPhoto.png");
     teacher.save();
-    var subject_1 = new Subject("Gestão de Projectos",[teacher.id]);
+    let subject_1 = new Subject("Gestão de Projectos",[teacher.id]);
     subject_1.save();
-    var subject_2 = new Subject("Análise I",[teacher.id]);
+    let subject_2 = new Subject("Análise I",[teacher.id]);
     subject_2.save();
-    var lesson_1 = new Lesson(teacher.id, subject_1.id, "08:30:00", "10:30:00", "photo.png");
+    let lesson_1 = new Lesson(teacher.id, subject_1.id, "08:30:00", "10:30:00", "photo.png");
     lesson_1.save();
-    var lesson_2 = new Lesson(teacher.id, subject_1.id, "08:30:00", "10:30:00", "photo.png");
+    let lesson_2 = new Lesson(teacher.id, subject_1.id, "08:30:00", "10:30:00", "photo.png");
     lesson_2.save();
 
-    var presence_Miguel = new Presence(student.number, lesson_1.id, true);
+    let presence_Miguel = new Presence(student.number, lesson_1.id, true);
 
     presence_Miguel.lessonId = lesson_2.id;
     presence_Miguel.late = false;
@@ -75,19 +75,19 @@ test('Update a presence', () => {
 
 
 test('Delete a presence', () => {
-    var student = new Student("1303412", "Miguel Saraiva", "13-03-1993", "miguel.saraia@gmail.com", "photos/1303412.png");
+    let student = new Student("1303412", "Miguel Saraiva", "13-03-1993", "miguel.saraia@gmail.com", "photos/1303412.png");
     student.save();
-    var teacher = new Teacher("Cédric B.", "email.ah@gmail.com", "13-12-1894", "myPhoto.png");
+    let teacher = new Teacher("Cédric B.", "email.ah@gmail.com", "13-12-1894", "myPhoto.png");
     teacher.save();
-    var subject_1 = new Subject("Gestão de Projectos",[teacher.id]);
+    let subject_1 = new Subject("Gestão de Projectos",[teacher.id]);
     subject_1.save();
-    var subject_2 = new Subject("Análise I",[teacher.id]);
+    let subject_2 = new Subject("Análise I",[teacher.id]);
     subject_2.save();
-    var lesson_1 = new Lesson(teacher.id, subject_1.id, "08:30:00", "10:30:00", "photo.png");
+    let lesson_1 = new Lesson(teacher.id, subject_1.id, "08:30:00", "10:30:00", "photo.png");
     lesson_1.save();
-    var lesson_2 = new Lesson(teacher.id, subject_1.id, "08:30:00", "10:30:00", "photo.png");
+    let lesson_2 = new Lesson(teacher.id, subject_1.id, "08:30:00", "10:30:00", "photo.png");
     lesson_2.save();
-    var presence_Miguel = new Presence(student.number, lesson_1.id, true);
+    let presence_Miguel = new Presence(student.number, lesson_1.id, true);
 
     presence_Miguel.save();
     presence_Miguel.delete();
@@ -100,17 +100,17 @@ test('Delete a presence', () => {
 });
 
 test('Get student of a presence', () => {
-    var student = new Student("1303412", "Miguel Saraiva", "13-03-1993", "miguel.saraia@gmail.com", "photos/1303412.png");
+    let student = new Student("1303412", "Miguel Saraiva", "13-03-1993", "miguel.saraia@gmail.com", "photos/1303412.png");
     student.save();
-    var teacher = new Teacher("Cédric B.", "email.ah@gmail.com", "13-12-1894", "myPhoto.png");
+    let teacher = new Teacher("Cédric B.", "email.ah@gmail.com", "13-12-1894", "myPhoto.png");
     teacher.save();
-    var subject_1 = new Subject("Gestão de Projectos",[teacher.id]);
+    let subject_1 = new Subject("Gestão de Projectos",[teacher.id]);
     subject_1.save();
-    var subject_2 = new Subject("Análise I",[teacher.id]);
+    let subject_2 = new Subject("Análise I",[teacher.id]);
     subject_2.save();
-    var lesson_1 = new Lesson(teacher.id, subject_1.id, "08:30:00", "10:30:00", "photo.png");
+    let lesson_1 = new Lesson(teacher.id, subject_1.id, "08:30:00", "10:30:00", "photo.png");
     lesson_1.save();
-    var presence_Miguel = new Presence(student.number, lesson_1.id, true);
+    let presence_Miguel = new Presence(student.number, lesson_1.id, true);
 
     //expect.assertions(11);
 
@@ -136,17 +136,17 @@ test('Get student of a presence', () => {
 
 
 test('Get lesson of a presence', () => {
-    var student = new Student("1303412", "Miguel Saraiva", "13-03-1993", "miguel.saraia@gmail.com", "photos/1303412.png");
+    let student = new Student("1303412", "Miguel Saraiva", "13-03-1993", "miguel.saraia@gmail.com", "photos/1303412.png");
     student.save();
-    var teacher = new Teacher("Cédric B.", "email.ah@gmail.com", "13-12-1894", "myPhoto.png");
+    let teacher = new Teacher("Cédric B.", "email.ah@gmail.com", "13-12-1894", "myPhoto.png");
     teacher.save();
-    var subject_1 = new Subject("Gestão de Projectos",[teacher.id]);
+    let subject_1 = new Subject("Gestão de Projectos",[teacher.id]);
     subject_1.save();
-    var subject_2 = new Subject("Análise I",[teacher.id]);
+    let subject_2 = new Subject("Análise I",[teacher.id]);
     subject_2.save();
-    var lesson_1 = new Lesson(teacher.id, subject_1.id, "08:30:00", "10:30:00", "photo.png");
+    let lesson_1 = new Lesson(teacher.id, subject_1.id, "08:30:00", "10:30:00", "photo.png");
     lesson_1.save();
-    var presence_Miguel = new Presence(student.number, lesson_1.id, true);
+    let presence_Miguel = new Presence(student.number, lesson_1.id, true);
 
     expect.assertions(11);
 

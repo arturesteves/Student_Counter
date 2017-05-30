@@ -15,11 +15,11 @@ const Subject = require("../src/lib/Subject");
 const Teacher = require("../src/lib/Teacher");
 
 test('Create a lesson in database and check id after and before creation', () => {
-    var teacher = new Teacher("Cédric B.", "email.ah@gmail.com", "13-12-1894", "myPhoto.png");
+    let teacher = new Teacher("Cédric B.", "email.ah@gmail.com", "13-12-1894", "myPhoto.png");
     teacher.save();
-    var subject = new Subject("Gestão de Projectos",[teacher.id]);
+    let subject = new Subject("Gestão de Projectos",[teacher.id]);
     subject.save();
-    var lesson = new Lesson(teacher.id, subject.id, "08:30:00", "10:30:00", "photo.png");
+    let lesson = new Lesson(teacher.id, subject.id, "08:30:00", "10:30:00", "photo.png");
 
     expect(lesson.id).toBeUndefined();
     lesson.save();
@@ -38,15 +38,15 @@ test('Create a lesson in database and check id after and before creation', () =>
 });
 
 test('Update a lesson', () => {
-    var teacher_1 = new Teacher("Cédric B.", "email.ah@gmail.com", "13-12-1894", "myPhoto.png");
+    let teacher_1 = new Teacher("Cédric B.", "email.ah@gmail.com", "13-12-1894", "myPhoto.png");
     teacher_1.save();
-    var teacher_2 = new Teacher("Rui C.", "email.ah@gmail.com", "13-12-1994", "myPhoto.png");
+    let teacher_2 = new Teacher("Rui C.", "email.ah@gmail.com", "13-12-1994", "myPhoto.png");
     teacher_2.save();
-    var subject_1 = new Subject("Gestão de Projectos",[teacher_1.id, teacher_2.id]);
+    let subject_1 = new Subject("Gestão de Projectos",[teacher_1.id, teacher_2.id]);
     subject_1.save();
-    var subject_2 = new Subject("Engenharia de Software",[teacher_1.id, teacher_2.id]);
+    let subject_2 = new Subject("Engenharia de Software",[teacher_1.id, teacher_2.id]);
     subject_2.save();
-    var lesson = new Lesson(teacher_1.id, subject_1.id, "08:30:00", "10:30:00", "photo.png");
+    let lesson = new Lesson(teacher_1.id, subject_1.id, "08:30:00", "10:30:00", "photo.png");
     lesson.save();
 
     lesson.startDate = "14:00:00";
@@ -70,15 +70,15 @@ test('Update a lesson', () => {
 });
 
 test('Delete a lesson', () => {
-    var teacher_1 = new Teacher("Cédric B.", "email.ah@gmail.com", "13-12-1894", "myPhoto.png");
+    let teacher_1 = new Teacher("Cédric B.", "email.ah@gmail.com", "13-12-1894", "myPhoto.png");
     teacher_1.save();
-    var teacher_2 = new Teacher("Rui C.", "email.ah@gmail.com", "13-12-1994", "myPhoto.png");
+    let teacher_2 = new Teacher("Rui C.", "email.ah@gmail.com", "13-12-1994", "myPhoto.png");
     teacher_2.save();
-    var subject_1 = new Subject("Gestão de Projectos",[teacher_1.id, teacher_2.id]);
+    let subject_1 = new Subject("Gestão de Projectos",[teacher_1.id, teacher_2.id]);
     subject_1.save();
-    var subject_2 = new Subject("Engenharia de Software",[teacher_1.id, teacher_2.id]);
+    let subject_2 = new Subject("Engenharia de Software",[teacher_1.id, teacher_2.id]);
     subject_2.save();
-    var lesson = new Lesson(teacher_1.id, subject_1.id, "08:30:00", "10:30:00", "photo.png");
+    let lesson = new Lesson(teacher_1.id, subject_1.id, "08:30:00", "10:30:00", "photo.png");
     lesson.save();
     lesson.delete();
 
