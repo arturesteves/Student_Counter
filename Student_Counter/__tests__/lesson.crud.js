@@ -105,15 +105,14 @@ test('Get subject of lesson', () => {
     //expect.assertions(5);
 
     expect(lesson).toHaveProperty("subject");
-    
+
     return lesson.getSubject().then(function(data){
         //success
-        console.log(data);
         expect(data).toHaveProperty("name");
         expect(data).toHaveProperty("overseers");
 
         expect(data.name).toBe("Gestão de Projectos");
-        expect(data.overseers).toBe(overseers);
+        expect(data.overseers).toEqual(expect.arrayContaining(overseers));
 
     });
 

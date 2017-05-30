@@ -4,6 +4,7 @@ let Subject = require("./Subject");
 
 let classPath = '/classes/';
 
+
 class Class {
 
     constructor(className, studentIds, subjectIds) {
@@ -23,7 +24,6 @@ class Class {
         firebase.database().ref(classPath + this.className).remove();
     }
 
-    // get students
     async getStudents(){
         let array = [];
         for(let studentId of this.studentIds) {
@@ -31,7 +31,7 @@ class Class {
         }
         return array;
     }
-    // get subjects
+
     async getSubjects(){
         let array = [];
         for(let subjectId of this.subjectIds) {
@@ -50,7 +50,6 @@ class Class {
             });
         });
     }
-
 }
 
 module.exports = Class;
