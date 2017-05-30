@@ -90,3 +90,62 @@ test('Delete a lesson', () => {
     expect(Lesson.retrieve(lesson.id).photo).resolves.toBeUndefined();
 
 });
+
+test('Get subject of lesson', () => {
+    var teacher_1 = new Teacher("Cédric B.", "email.ah@gmail.com", "13-12-1894", "myPhoto.png");
+    teacher_1.save();
+    var teacher_2 = new Teacher("Rui C.", "email.ah@gmail.com", "13-12-1994", "myPhoto.png");
+    teacher_2.save();
+    var subject_1 = new Subject("Gestão de Projectos",[teacher_1.id, teacher_2.id]);
+    subject_1.save();
+    var lesson = new Lesson(teacher_1.id, subject_1.id, "08:30:00", "10:30:00", "photo.png");
+    lesson.save();
+
+    var overseers = [teacher_1.id, teacher_2.id];
+    //expect.assertions(5);
+
+    expect(lesson).toHaveProperty("subject");
+    
+    return lesson.getSubject().then(function(data){
+        //success
+        console.log(data);
+        expect(data).toHaveProperty("name");
+        expect(data).toHaveProperty("overseers");
+
+        expect(data.name).toBe("Gestão de Projectos");
+        expect(data.overseers).toBe(overseers);
+
+    });
+
+});
+
+
+test('Get teacher of lesson', () => {
+    var teacher_1 = new Teacher("Cédric B.", "email.ah@gmail.com", "13-12-1894", "myPhoto.png");
+    teacher_1.save();
+    var teacher_2 = new Teacher("Rui C.", "email.ah@gmail.com", "13-12-1994", "myPhoto.png");
+    teacher_2.save();
+    var subject_1 = new Subject("Gestão de Projectos",[teacher_1.id, teacher_2.id]);
+    subject_1.save();
+    var lesson = new Lesson(teacher_1.id, subject_1.id, "08:30:00", "10:30:00", "photo.png");
+    lesson.save();
+
+    var overseers = [teacher_1.id, teacher_2.id];
+    //expect.assertions(5);
+
+    expect(lesson).toHaveProperty("teacher");
+
+    return lesson.getTeacher().then(function(data){
+        //success
+        expect(data).toHaveProperty("name");
+        expect(data).toHaveProperty("email");
+        expect(data).toHaveProperty("birthDate");
+        expect(data).toHaveProperty("photo");
+
+        expect(data.name).toBe("Cédric B.");
+        expect(data.email).toBe("email.ah@gmail.com");
+        expect(data.birthDate).toBe("13-12-1894");
+        expect(data.photo).toBe("myPhoto.png");
+    });
+
+});
