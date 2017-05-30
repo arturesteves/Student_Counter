@@ -38,7 +38,7 @@ export default class Student_Counter extends Component {
       this.login("artur_esteves1995@hotmail.com", "pw_test1");
       //var student_artur = new Student('140221076', 'Artur', 'Esteves');
 
-      var teacher_JF = new Teacher("Joaquim Filipe", " jf@...");
+      var teacher_JF = new Teacher("Joaquim ... Filipe", " jf@...");
       await teacher_JF.save();
 
       var teacher_JV = new Teacher("João Ventura", "jv@...");
@@ -51,9 +51,9 @@ export default class Student_Counter extends Component {
   async signup(email, pass) {
     try {
       await firebase.auth().createUserWithEmailAndPassword(email, pass);
-      console.log("Account Created");
+      //console.log("Account Created");
     } catch (error) {
-      console.log(error.toString());
+      //console.log(error.toString());
     }
   }
 
@@ -61,9 +61,9 @@ export default class Student_Counter extends Component {
   async login(email, pass) {
     try {
       await firebase.auth().signInWithEmailAndPassword(email, pass);
-      console.log("Logged In!");
+      //console.log("Logged In!");
     } catch (error) {
-      console.log(error.toString())
+      //console.log(error.toString())
     }
   }
 
@@ -72,7 +72,7 @@ export default class Student_Counter extends Component {
     try {
         await firebase.auth().signOut();
     } catch (error) {
-        console.log(error);
+        //console.log(error);
     }
 }
 
