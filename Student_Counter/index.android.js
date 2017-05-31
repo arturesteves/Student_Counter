@@ -12,7 +12,7 @@ import {
     View
 } from 'react-native';
 
-import Camera from './src/components/camera';
+import CameraScreen from './src/components/CameraScreen';
 import Student from './src/lib/Student';
 import Teacher from "./src/lib/Teacher";
 import Subject from "./src/lib/Subject";
@@ -69,7 +69,7 @@ export default class Student_Counter extends Component {
 
         let lesson1 = new Lesson(teacher_JV.id, subject1.id, new Date().toISOString(), new Date().toISOString(), "src/image3");
         lesson1.save();
-        
+
         this.logout();
     }
 
@@ -105,7 +105,7 @@ export default class Student_Counter extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Camera/>
+                <CameraScreen/>
             </View>
         );
     }
