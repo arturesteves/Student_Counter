@@ -18,7 +18,7 @@ const Subject = require('../src/lib/Subject');
 test('Create a subject in database', () => {
     var teacher_1 = new Teacher("Artur Miguel", "artur.miguel@gmail.com", "13-12-1990", "PHOto.png");
     teacher_1.save();
-    var teacher_2 = new Teacher("Ricardo Silva", "ricardo.silva@gamail.com", "13-12-1994", "PHOto.png");
+    var teacher_2 = new Teacher("Ricardo Silva", "ricardo.silva@gmail.com", "13-12-1994", "PHOto.png");
     teacher_2.save();
 
     var subject = new Subject("MEC", [teacher_1.id, teacher_2.id]);
@@ -36,9 +36,9 @@ test('Create a subject in database', () => {
 test('Update a subject', () => {
     var teacher_1 = new Teacher("Artur Miguel H.", "artur.miguel@gmail.com", "13-12-1990", "PHOto.png");
     teacher_1.save();
-    var teacher_2 = new Teacher("Ricardo M. Silva", "ricardo.silva@gamail.com", "13-12-1994", "PHOto.png");
+    var teacher_2 = new Teacher("Ricardo M. Silva", "ricardo.silva@gmail.com", "13-12-1994", "PHOto.png");
     teacher_2.save();
-    var teacher_3 = new Teacher("Joaquim Filipe", "joaquim.filipe@gamail.com", "13-12-1985", "photo.png");
+    var teacher_3 = new Teacher("Joaquim Filipe", "joaquim.filipe@gmail.com", "13-12-1985", "photo.png");
     teacher_3.save();
 
     var subject = new Subject("MSI", [teacher_1.id, teacher_2.id]);
