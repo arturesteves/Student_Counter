@@ -112,7 +112,6 @@ test('Get students of a class', () => {
 
     expect(clazz).toHaveProperty("studentIds");
     expect(clazz).toHaveProperty("subjectIds");
-
     return clazz.getStudents().then(function(data){
 
         for(let i = 0; i < data.length; i++){
