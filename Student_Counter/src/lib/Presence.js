@@ -1,6 +1,6 @@
 import * as firebase from "firebase";
-var Student = require("./Student");
-var Lesson = require("./Lesson");
+let Student = require("./Student");
+let Lesson = require("./Lesson");
 
 let namespaces = require("./namespaces").namespaces;
 
@@ -41,6 +41,27 @@ class Presence{
 
     async getLesson(){
         return await Lesson.retrieve(this.lessonId);
+    }
+
+    static all(){
+        return firebase.database().ref(namespaces.presences).once("value").then(function (snapshot) {
+            let presences = [];
+            snapshot.forEach(function(presenceValues){
+                let id = presenceValues.key;
+                let delay = presenceValues.val().delay;
+                let present = presenceValues.val().present;
+                let lessonId = presenceValues.val().lessonId;
+                let studentId = presenceValues.val().studentId;
+                let presence = new Presence(studentId, lessonId, present, delay);
+                presence.id = id;
+                presences.push(presence);
+            });
+            return presences;
+        }, function(error) {
+            console.error(error);
+        }).then(function(value) {
+            return value;
+        });
     }
 
     static retrieve(id){

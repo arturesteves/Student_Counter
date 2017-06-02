@@ -62,6 +62,26 @@ class Student{
         });
     }
 
+    static all(){
+        return firebase.database().ref(namespaces.students).once("value").then(function (snapshot) {
+            let students = [];
+            snapshot.forEach(function(studentValues){
+                let number = studentValues.key;
+                let name = studentValues.val().name;
+                let email = studentValues.val().email;
+                let birthDate = studentValues.val().birthDate;
+                let photo = studentValues.val().photo;
+                let student = new Student(number, name, birthDate, email, photo);
+                students.push(student);
+            });
+            return students;
+        }, function(error) {
+            console.error(error);
+        }).then(function(value) {
+            return value;
+        });
+    }
+
     static retrieve(number){
         return new Promise((resolve, reject)=>{
             firebase.database().ref(namespaces.students + number).once('value').then(function(snapshot){

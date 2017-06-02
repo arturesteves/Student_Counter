@@ -1,6 +1,6 @@
 import * as firebase from "firebase";
-var Subject = require("./Subject");
-var Teacher = require("./Teacher");
+let Subject = require("./Subject");
+let Teacher = require("./Teacher");
 
 let namespaces = require("./namespaces").namespaces;
 
@@ -45,6 +45,29 @@ class Lesson{
 
     async getTeacher(){
         return await Teacher.retrieve(this.teacherId);
+    }
+
+    static all(){
+        return firebase.database().ref(namespaces.lessons).once("value").then(function (snapshot) {
+            let lessons = [];
+            snapshot.forEach(function(lessonValues){
+                let id = lessonValues.key;
+                let endDate = lessonValues.val().endDate;
+                let photo = lessonValues.val().photo;
+                let startDate = lessonValues.val().startDate;
+                let subjectId = lessonValues.val().subjectId;
+                let summary = lessonValues.val().summary;
+                let teacherId = lessonValues.val().teacherId;
+                let lesson = new Lesson(teacherId, subjectId, startDate, endDate, photo, summary);
+                lesson.id = id;
+                lessons.push(lesson);
+            });
+            return lessons;
+        }, function(error) {
+            console.error(error);
+        }).then(function(value) {
+            return value;
+        });
     }
 
     static retrieve(id){

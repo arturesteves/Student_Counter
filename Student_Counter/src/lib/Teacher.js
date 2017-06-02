@@ -8,7 +8,7 @@ class Teacher{
     constructor(name, email, birthDate, photo){
         this.name = name;
         this.email = email;
-        this.birthDate = birthDate || new Date(1900, 1, 1);
+        this.birthDate = birthDate || new Date(1900, 1, 1); // TODO: update " new Date(1900, 1, 1); " -> because its not working
         this.photo = photo || "no photo";
     }
 
@@ -35,8 +35,28 @@ class Teacher{
 
     //TODO: Obter as disciplinas que lecciona
     //TODO: obter as turmas que tem
-    //TODO: obter os alunos que possui
+    //TODO: obter os alunos que possui  -> basta ver as disciplinas que tem e obter os alunos dessas disciplinas
 
+    static all(){
+        return firebase.database().ref(namespaces.teachers).once("value").then(function (snapshot) {
+            let teachers = [];
+            snapshot.forEach(function(teacherValues){
+                let id = teacherValues.key;
+                let name = teacherValues.val().name;
+                let email = teacherValues.val().email;
+                let birthDate = teacherValues.val().birthDate;
+                let photo = teacherValues.val().birthDate;
+                let teacher = new Teacher(name, email, birthDate, photo);
+                teacher.id = id;
+                teachers.push(teacher);
+            });
+            return teachers;
+        }, function(error) {
+            console.error(error);
+        }).then(function(value) {
+            return value;
+        });
+    }
 
     static retrieve(id){
         return new Promise((resolve, reject)=>{

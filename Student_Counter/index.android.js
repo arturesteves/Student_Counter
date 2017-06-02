@@ -48,8 +48,8 @@ export default class Student_Counter extends Component {
         this.login("artur_esteves1995@hotmail.com", "pw_test1");
         //let student_artur = new Subject('140221076', 'Artur', 'Esteves');
 
-        let teacher_jf = new Teacher("Joaquim Filipe", "joaquim.filipe@gmail.com");
-        let teacher_jv = new Teacher("João Ventura", "joao.ventura@gmail.com");
+        let teacher_jf = new Teacher("Joaquim Filipe", "joaquim.filipe@gmail.com", "13-12-1980", "myphoto");
+        let teacher_jv = new Teacher("João Ventura", "joao.ventura@gmail.com", "13-12-1980", "myphoto");
 
         await teacher_jf.save();
         await teacher_jv.save();
@@ -67,7 +67,7 @@ export default class Student_Counter extends Component {
         await subject_dbm.save();
 
         let clazz_1 = new Class("Class 1", [student_ricardo.number,student_bruno.number], [subject_gp.id, subject_dbm.id]);
-        let clazz_2 = new Class("Class 2", [student_ricardo.number,student_bruno.number], [subject_dbm.id]);
+        let clazz_2 = new Class("Class 2", [student_ricardo.number], [subject_dbm.id]);
 
         await clazz_1.save();
         await clazz_2.save();
@@ -83,19 +83,20 @@ export default class Student_Counter extends Component {
 
         lesson_gp_1.save();
         lesson_gp_2.save();
-        lesson_gp_3.save();
+        console.log("heheh", lesson_gp_2);
+    /*    lesson_gp_3.save();
         lesson_gp_4.save();
         lesson_dbm_1.save();
         lesson_dbm_2.save();
         lesson_dbm_3.save();
         lesson_dbm_4.save();
-
+*/
 
         // define the presences of a student in a class
         //TODO: marcar uma presença requer verificações do tipo: o aluno tem que estar inscrito na disciplina
         // Ou seja, é necessário obter a classe(turma) a que o aluno pertence e verificar se a turma tem aquela disciplina ou nao
 
-        let presence_ricardo_gp_lesson_1 = new Presence(student_ricardo.number, lesson_gp_1.id, true, true);
+     /*   let presence_ricardo_gp_lesson_1 = new Presence(student_ricardo.number, lesson_gp_1.id, true, true);
         let presence_ricardo_gp_lesson_2 = new Presence(student_ricardo.number, lesson_gp_2.id, false);
         let presence_ricardo_gp_lesson_3 = new Presence(student_ricardo.number, lesson_gp_3.id, true, true);
         let presence_ricardo_gp_lesson_4 = new Presence(student_ricardo.number, lesson_gp_4.id, true, false);
@@ -113,14 +114,46 @@ export default class Student_Counter extends Component {
         presence_ricardo_dbm_lesson_3.save();
         presence_ricardo_dbm_lesson_4.save();
 
-
+*/
         student_ricardo.getPresencesAsync(subject_gp.id).then(function(data){
-            console.log("GP assiduity :", data);
+           // console.log("GP assiduity :", data);
         });
 
         student_ricardo.getPresencesAsync(subject_dbm.id).then(function(data){
-            console.log("DBM assiduity :", data);
+            //console.log("DBM assiduity :", data);
         });
+
+        clazz_1.numberOfregisteredStudentsAsync().then(function(data){
+            //console.log("number of students at class " + clazz_1.name +":",data);
+        });
+
+        Class.all().then(function(data){
+            //console.log("all classes:",data);
+        });
+
+        Teacher.all().then(function (data) {
+           // console.log("all teachers:", data);
+        })
+
+        Subject.all().then(function (data) {
+           // console.log("all subjects:", data);
+        })
+
+        Student.all().then(function (data) {
+           // console.log("all students:", data);
+        })
+
+        Presence.all().then(function (data) {
+           // console.log("all presences:", data);
+        })
+
+        Lesson.all().then(function (data) {
+           // console.log("all lessons:", data);
+        })
+
+        /*subject_gp.getLessonsAsync(function(data){
+            console.log("All lessons of gp:", data);
+        });*/
 
         this.logout();
     }
