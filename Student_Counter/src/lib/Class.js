@@ -40,7 +40,9 @@ class Class {
         return array;
     }
 
-    //TODO
+    //TODO consultar a assiduidad de uma turma? - COULD - talvez nao
+    //TODO acabar all function
+    //TODO obter o numero de alunos inscritos
     static all(){
         return new Promise((resolve, reject) => {
             firebase.database().ref(namespaces.classes).once("value", function(snapshot) {

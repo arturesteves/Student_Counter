@@ -41,6 +41,7 @@ class Subject{
         return array;
     }
 
+    // TODO: obter as turmas a que uma disciplina pertence
     static retrieve(id){
         return new Promise((resolve, reject)=>{
             firebase.database().ref(namespaces.subjects + id).once('value').then(function(snapshot){

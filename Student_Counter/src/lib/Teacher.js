@@ -33,6 +33,11 @@ class Teacher{
         firebase.database().ref(namespaces.teachers + this.id).remove();
     }
 
+    //TODO: Obter as disciplinas que lecciona
+    //TODO: obter as turmas que tem
+    //TODO: obter os alunos que possui
+
+
     static retrieve(id){
         return new Promise((resolve, reject)=>{
             firebase.database().ref(namespaces.teachers + id).once('value').then(function(snapshot){
