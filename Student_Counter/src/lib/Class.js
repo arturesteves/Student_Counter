@@ -1,8 +1,8 @@
-import * as firebase from 'firebase';
+import * as firebase from "firebase";
 let Student = require("./Student");
 let Subject = require("./Subject");
 
-let classPath = '/classes/';
+let namespaces = require("./namespaces").namespaces;
 
 
 class Class {
@@ -14,14 +14,14 @@ class Class {
     }
 
     save(){
-        return firebase.database().ref(classPath + this.className).set({
+        return firebase.database().ref(namespaces.classes + this.className).set({
             studentIds: this.studentIds,
             subjectIds: this.subjectIds
         });
     }
 
     delete(){
-        firebase.database().ref(classPath + this.className).remove();
+        firebase.database().ref(namespaces.classes + this.className).remove();
     }
 
     async getStudents(){
@@ -38,6 +38,22 @@ class Class {
             array.push(await Subject.retrieve(subjectId));
         }
         return array;
+    }
+
+    static all(){
+        return new Promise((resolve, reject) => {
+            firebase.database().ref(namespaces.classes).once("value", function(snapshot) {
+                let classes = [];
+                snapshot.forEach((child) => {
+                    console.log("child key", child.key);
+                    console.log("child val ", child.val());
+                    console.log("child val ", child.val().studentIds);
+                    classes.push(child);    // mudar que nao e isto
+                    // falta obter alunos e cadeiras
+                });
+                resolve(classes)
+            });
+        });
     }
 
     static retrieve(className){

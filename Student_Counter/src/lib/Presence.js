@@ -1,8 +1,8 @@
-import * as firebase from 'firebase';
+import * as firebase from "firebase";
 var Student = require("./Student");
 var Lesson = require("./Lesson");
 
-let presencePath = '/presences/';
+let namespaces = require("./namespaces").namespaces;
 
 
 class Presence{
@@ -15,14 +15,14 @@ class Presence{
 
     save(){
         if(this.id){
-            return firebase.database().ref(presencePath + this.id).update({
+            return firebase.database().ref(namespaces.presences + this.id).update({
                 studentId: this.studentId,
                 lessonId: this.lessonId,
                 late: this.late
             });
         } else {
             return new Promise((resolve, reject)=>{
-                let obj = firebase.database().ref(presencePath).push(this);
+                let obj = firebase.database().ref(namespaces.presences).push(this);
                 this.id = obj.key;
                 resolve(this.id);
             });
@@ -30,7 +30,7 @@ class Presence{
     }
 
     delete(){
-        firebase.database().ref(presencePath + this.id).remove();
+        firebase.database().ref(namespaces.presences + this.id).remove();
     }
 
     async getStudent(){
@@ -43,7 +43,7 @@ class Presence{
 
     static retrieve(id){
         return new Promise((resolve, reject)=>{
-            firebase.database().ref(presencePath + id).once('value').then(function(snapshot){
+            firebase.database().ref(namespaces.presences + id).once('value').then(function(snapshot){
                 let studentId = snapshot.val().studentId;
                 let lessonId = snapshot.val().lessonId;
                 let late = snapshot.val().late;

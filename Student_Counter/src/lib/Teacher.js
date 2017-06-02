@@ -1,7 +1,6 @@
 import * as firebase from 'firebase';
 
-let teacherPath = '/teachers/';
-
+let namespaces = require("./namespaces").namespaces;
 
 
 class Teacher{ 
@@ -15,7 +14,7 @@ class Teacher{
 
     save(){
         if(this.id){
-            return firebase.database().ref(teacherPath + this.id).update({
+            return firebase.database().ref(namespaces.teachers + this.id).update({
                 name: this.name,
                 email: this.email,
                 birthDate: this.birthDate,
@@ -23,7 +22,7 @@ class Teacher{
             });
         } else {
             return new Promise((resolve, reject)=>{
-                let obj = firebase.database().ref(teacherPath).push(this);
+                let obj = firebase.database().ref(namespaces.teachers).push(this);
                 this.id = obj.key;
                 resolve(this.id);
             });
@@ -31,12 +30,12 @@ class Teacher{
     }
 
     delete(){
-        firebase.database().ref(teacherPath + this.id).remove();
+        firebase.database().ref(namespaces.teachers + this.id).remove();
     }
 
     static retrieve(id){
         return new Promise((resolve, reject)=>{
-            firebase.database().ref(teacherPath + id).once('value').then(function(snapshot){
+            firebase.database().ref(namespaces.teachers + id).once('value').then(function(snapshot){
                 let name = snapshot.val().name;
                 let email = snapshot.val().email;
                 let birthDate = snapshot.val().birthDate;

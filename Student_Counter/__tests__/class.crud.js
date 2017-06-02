@@ -142,3 +142,30 @@ test('Get students of a class', () => {
 
     });
 });
+
+
+test("Test all classes", () => {
+    let student_1 = new Student("1400222", "João Batata", "14:22:1984", "batatas@gmail.com", "myFile/photo.png");
+    student_1.save();
+    let student_2 = new Student("1422132", "João Arroz", "16:21:1987", "arroz@gmail.com", "myFileee/photo.png");
+    student_2.save();
+    let teacher_1 = new Teacher("João Ventura", "joao.ventura@gmail.com", "13:02:1990", "p.png");
+    teacher_1.save();
+    let teacher_2 = new Teacher("Marco Paulo", "marco.paulo@gmail.com", "09:02:1990", "photo.png");
+    teacher_2.save();
+    let subject_1 = new Subject("Programação para a Internet", [teacher_1.id, teacher_2.id]);
+    subject_1.save();
+    let subject_2 = new Subject("Sistemas Operativos", [teacher_1.id, teacher_2.id]);
+    subject_2.save();
+    let clazz = new Class("Turma A", [student_1.number], [subject_1.id]);
+    clazz.save();
+
+    console.log("classes");
+
+    return Class.all().then(function(data){
+        console.log("data");
+        console.log("d",data);
+    });
+
+
+});
