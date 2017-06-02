@@ -3,6 +3,7 @@ package com.student_counter;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.facebook.react.ReactNativeHost;
@@ -26,6 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new RCTCameraPackage(),
           new MainReactPackage(),
+            new VectorIconsPackage(),
             new RNFetchBlobPackage()
       );
     }
