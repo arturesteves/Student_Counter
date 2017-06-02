@@ -22,10 +22,11 @@ class Lesson{
                 subject: this.subject,
                 startDate: this.startDate,
                 endDate: this.endDate,
-                photo: this.photo
+                photo: this.photo,
             });
         } else {
             return new Promise((resolve, reject)=>{
+                // aqui seria necessario ver quantas aulas existem para esta disciplina (count)
                 let obj = firebase.database().ref(namespaces.lessons).push(this);
                 this.id = obj.key;
                 resolve(this.id);

@@ -74,11 +74,13 @@ export default class Student_Counter extends Component {
         let lesson_gp_1 = new Lesson(teacher_jv.id, subject_gp.id, new Date().toISOString(), new Date().toISOString(), "src/image3");
         let lesson_gp_2 = new Lesson(teacher_jv.id, subject_gp.id, new Date().toISOString(), new Date().toISOString(), "src/image4");
         let lesson_gp_3 = new Lesson(teacher_jv.id, subject_gp.id, new Date().toISOString(), new Date().toISOString(), "src/image5");
-        let lesson_dbm_1 = new Lesson(teacher_jf.id, subject_dbm.id, new Date().toISOString(), new Date().toISOString(), "src/image6");
+        let lesson_gp_4 = new Lesson(teacher_jv.id, subject_gp.id, new Date().toISOString(), new Date().toISOString(), "src/image6");
+        let lesson_dbm_1 = new Lesson(teacher_jf.id, subject_dbm.id, new Date().toISOString(), new Date().toISOString(), "src/image7");
 
         lesson_gp_1.save();
         lesson_gp_2.save();
         lesson_gp_3.save();
+        lesson_gp_4.save();
         lesson_dbm_1.save();
 
 
@@ -89,11 +91,13 @@ export default class Student_Counter extends Component {
         let presence_ricardo_gp_lesson_1 = new Presence(student_ricardo.number, lesson_gp_1.id, true);
         let presence_ricardo_gp_lesson_2 = new Presence(student_ricardo.number, lesson_gp_2.id, false);
         let presence_ricardo_gp_lesson_3 = new Presence(student_ricardo.number, lesson_gp_3.id, true);
+        let presence_ricardo_gp_lesson_4 = new Presence(student_ricardo.number, lesson_gp_4.id, true);
         let presence_ricardo_dbm_lesson_1 = new Presence(student_ricardo.number, lesson_dbm_1.id, true);
 
         presence_ricardo_gp_lesson_1.save();
         presence_ricardo_gp_lesson_2.save();
         presence_ricardo_gp_lesson_3.save();
+        presence_ricardo_gp_lesson_4.save();
         presence_ricardo_dbm_lesson_1.save();
 
         // console.log("presence ricardo gp lesson 1, id:", presence_ricardo_gp_lesson_1.id);
@@ -108,9 +112,17 @@ export default class Student_Counter extends Component {
         numberPresencesGp.then(function(data){console.log("ddgp", data);});
         numberPresencesDbm.then(function(data){console.log("dddbm", data);});
 
+        console.log("\n --- COUNT PRESENCES --- \n");
+        student_ricardo.countPresences(subject_gp.id);
         // marcar uma presença passa por indicar a aula e se esteve presente ou nao
 
-
+        console.log("---------");
+        student_ricardo.tryingToGetPresences(subject_gp.id).then(function(data){
+           console.log("gp:",data);
+        });
+        student_ricardo.tryingToGetPresences(subject_dbm.id).then(function(data){
+            console.log("dbm:",data);
+        });
 //        console.log(Class.all());
 
         this.logout();
