@@ -8,15 +8,15 @@ export default class HomeScreen extends React.Component {
     this.state = {
       appFunc: [
         {
-          id:1,
+          id: 1,
           title: 'Create Student',
           icon: 'school'
         }, {
-          id:2,
+          id: 2,
           title: 'Create Class',
           icon: 'Class'
         }, {
-          id:3,
+          id: 3,
           title: 'Create Lesson',
           icon: 'alarm'
         }
@@ -26,17 +26,9 @@ export default class HomeScreen extends React.Component {
 
   render() {
     let functButtons = this.state.appFunc.map(function(obj) {
-      return (
-        <Button
-        key={obj.id}
-        borderRadius={5}
-        raised large
-        iconRight
-        containerViewStyle={styles.buttonContainer}
-        icon={{name: obj.icon}}
-        title={obj.title}
-        backgroundColor='orange'/>
-      )
+      return (<Button key={obj.id} borderRadius={5} raised large iconRight containerViewStyle={styles.buttonContainer} icon={{
+        name: obj.icon
+      }} title={obj.title} backgroundColor='orange'/>)
     });
 
     return (
@@ -74,10 +66,11 @@ var styles = {
     width: width,
     paddingLeft: 10,
     paddingRight: 10,
+    marginBottom: 10,
     backgroundColor: 'orange'
   },
-  toolText:{
-    color:'white',
+  toolText: {
+    color: 'white',
     marginTop: 11,
     fontWeight: 'bold',
     fontSize: 20
