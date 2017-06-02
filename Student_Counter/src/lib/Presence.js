@@ -7,10 +7,11 @@ let namespaces = require("./namespaces").namespaces;
 
 class Presence{
 
-    constructor(studentId, lessonId, late){
+    constructor(studentId, lessonId, present, delay){
         this.studentId = studentId;
         this.lessonId = lessonId;
-        this.late = late;
+        this.present = present;
+        this.delay = present ? delay : false; // this check exists because: a student couldn't be late if he didn't show up
     }
 
     save(){
@@ -18,7 +19,8 @@ class Presence{
             return firebase.database().ref(namespaces.presences + this.id).update({
                 studentId: this.studentId,
                 lessonId: this.lessonId,
-                late: this.late
+                present: this.present,
+                delay: this.delay
             });
         } else {
             return new Promise((resolve, reject)=>{
@@ -46,8 +48,9 @@ class Presence{
             firebase.database().ref(namespaces.presences + id).once('value').then(function(snapshot){
                 let studentId = snapshot.val().studentId;
                 let lessonId = snapshot.val().lessonId;
-                let late = snapshot.val().late;
-                let lesson = new Lesson(studentId, lessonId, late);
+                let present = snapshot.val().present;
+                let late = snapshot.val().delay;
+                let lesson = new Lesson(studentId, lessonId, present, late);
                 lesson.id = id;
                 resolve(lesson);
             });

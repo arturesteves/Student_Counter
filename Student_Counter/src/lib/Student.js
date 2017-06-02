@@ -30,21 +30,17 @@ class Student{
         firebase.database().ref(namespaces.students + this.number).remove();
     }
 
-    // diminui a coesao esta funcao certo?
-    // createPresence(lessonId, late){
-    //     let presence = new Presence(this.number, lessonId, late);
-    //     return presence.id;
-    // }
-
     getPresencesAsync(subjectId){
         return firebase.database().ref(namespaces.presences).once("value").then(function (snapshot) {
             let numberPresences = 0;
             let numberAbsences = 0;
+            let numberDelays = 0;
             let promises = [];
             snapshot.forEach(function(presence){
                 let promise = firebase.database().ref(namespaces.lessons + presence.val().lessonId).once("value").then(function(snapshot2) {
-                    if (snapshot2.val().subject === subjectId) {
-                        presence.val().late ? numberPresences += 1 : numberAbsences += 1;
+                    if (snapshot2.val().subjectId === subjectId) {
+                        presence.val().present ? numberPresences += 1 : numberAbsences += 1;
+                        numberDelays += presence.val().delay ? 1 : 0;
                     }
                     // not returning value
                 }, function(error){
@@ -55,7 +51,8 @@ class Student{
             return Promise.all(promises).then(function(){
                 return {
                     presences: numberPresences,
-                    absences: numberAbsences
+                    absences: numberAbsences,
+                    delays: numberDelays
                 };
             })
         }, function(error) {

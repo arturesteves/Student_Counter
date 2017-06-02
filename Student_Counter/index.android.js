@@ -59,8 +59,8 @@ export default class Student_Counter extends Component {
         await student_ricardo.save();
         await student_bruno.save();
 
-        let subject_gp = new Subject("Gestão de Projeto - GP", [teacher_jf.id, teacher_jv.id]);
-        let subject_dbm = new Subject("Desenvolvimento Baseado em Modelos - DBM", [teacher_jf.id]);
+        let subject_gp = new Subject("Gestão de Projeto", "GP", [teacher_jf.id, teacher_jv.id]);
+        let subject_dbm = new Subject("Desenvolvimento Baseado em Modelos", "DBM", [teacher_jf.id]);
 
         await subject_gp.save();
         await subject_dbm.save();
@@ -94,11 +94,11 @@ export default class Student_Counter extends Component {
         //TODO: marcar uma presença requer verificações do tipo: o aluno tem que estar inscrito na disciplina
         // Ou seja, é necessário obter a classe(turma) a que o aluno pertence e verificar se a turma tem aquela disciplina ou nao
 
-        let presence_ricardo_gp_lesson_1 = new Presence(student_ricardo.number, lesson_gp_1.id, true);
+        let presence_ricardo_gp_lesson_1 = new Presence(student_ricardo.number, lesson_gp_1.id, true, true);
         let presence_ricardo_gp_lesson_2 = new Presence(student_ricardo.number, lesson_gp_2.id, false);
-        let presence_ricardo_gp_lesson_3 = new Presence(student_ricardo.number, lesson_gp_3.id, true);
+        let presence_ricardo_gp_lesson_3 = new Presence(student_ricardo.number, lesson_gp_3.id, true, true);
         let presence_ricardo_gp_lesson_4 = new Presence(student_ricardo.number, lesson_gp_4.id, true);
-        let presence_ricardo_dbm_lesson_1 = new Presence(student_ricardo.number, lesson_dbm_1.id, true);
+        let presence_ricardo_dbm_lesson_1 = new Presence(student_ricardo.number, lesson_dbm_1.id, true, true);
         let presence_ricardo_dbm_lesson_2 = new Presence(student_ricardo.number, lesson_dbm_2.id, false);
         let presence_ricardo_dbm_lesson_3 = new Presence(student_ricardo.number, lesson_dbm_3.id, false);
         let presence_ricardo_dbm_lesson_4 = new Presence(student_ricardo.number, lesson_dbm_4.id, false);
@@ -111,7 +111,7 @@ export default class Student_Counter extends Component {
         presence_ricardo_dbm_lesson_2.save();
         presence_ricardo_dbm_lesson_3.save();
         presence_ricardo_dbm_lesson_4.save();
-        
+
 
         student_ricardo.getPresencesAsync(subject_gp.id).then(function(data){
             console.log("GP assiduity :", data);

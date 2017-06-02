@@ -40,6 +40,7 @@ class Class {
         return array;
     }
 
+    //TODO
     static all(){
         return new Promise((resolve, reject) => {
             firebase.database().ref(namespaces.classes).once("value", function(snapshot) {

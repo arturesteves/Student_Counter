@@ -7,16 +7,18 @@ let namespaces = require("./namespaces").namespaces;
 //TODO: modificar overseers para overseersIds -> ATENÇÃO: que esta alteração requer que talvez seja necessário alterar os testes
 class Subject{
 
-    constructor(name, overseers){
+    constructor(name, acronym, overseersIds){
         this.name = name;
-        this.overseers = overseers;
+        this.acronym = acronym;
+        this.overseersIds = overseersIds;
     }
 
     save(){
         if(this.id){
             return firebase.database().ref(namespaces.subjects + this.id).update({
                 name: this.name,
-                overseers: this.overseers
+                acronym: this.acronym,
+                overseersIds: this.overseersIds
             });
         } else {
             return new Promise((resolve, reject)=>{
@@ -33,8 +35,8 @@ class Subject{
 
     async getOverseers(){
         let array = [];
-        for(let overseer of this.overseers) {
-            array.push(await Teacher.retrieve(overseer));
+        for(let overseerId of this.overseersIds) {
+            array.push(await Teacher.retrieve(overseerId));
         }
         return array;
     }
@@ -43,8 +45,9 @@ class Subject{
         return new Promise((resolve, reject)=>{
             firebase.database().ref(namespaces.subjects + id).once('value').then(function(snapshot){
                 let name = snapshot.val().name;
-                let overseers = snapshot.val().overseers;
-                let subject = new Subject(name, overseers);
+                let acronym = snapshot.val().acronym;
+                let overseersIds = snapshot.val().overseersIds;
+                let subject = new Subject(name, acronym, overseersIds);
                 subject.id = id;
                 resolve(subject);
             });
