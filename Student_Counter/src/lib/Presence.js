@@ -49,8 +49,8 @@ class Presence{
                 let studentId = snapshot.val().studentId;
                 let lessonId = snapshot.val().lessonId;
                 let present = snapshot.val().present;
-                let late = snapshot.val().delay;
-                let lesson = new Lesson(studentId, lessonId, present, late);
+                let delay = snapshot.val().delay;
+                let lesson = new Lesson(studentId, lessonId, present, delay);
                 lesson.id = id;
                 resolve(lesson);
             });

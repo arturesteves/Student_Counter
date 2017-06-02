@@ -19,6 +19,7 @@ let Student = require("./src/lib/Student");
 let Subject = require("./src/lib/Subject");
 let Teacher = require("./src/lib/Teacher");
 import CameraScreen from "./src/components/CameraScreen";
+import HomeScreen from "./src/screens/HomeScreen";
 
 let firebase = require("firebase");
 
@@ -97,7 +98,7 @@ export default class Student_Counter extends Component {
         let presence_ricardo_gp_lesson_1 = new Presence(student_ricardo.number, lesson_gp_1.id, true, true);
         let presence_ricardo_gp_lesson_2 = new Presence(student_ricardo.number, lesson_gp_2.id, false);
         let presence_ricardo_gp_lesson_3 = new Presence(student_ricardo.number, lesson_gp_3.id, true, true);
-        let presence_ricardo_gp_lesson_4 = new Presence(student_ricardo.number, lesson_gp_4.id, true);
+        let presence_ricardo_gp_lesson_4 = new Presence(student_ricardo.number, lesson_gp_4.id, true, false);
         let presence_ricardo_dbm_lesson_1 = new Presence(student_ricardo.number, lesson_dbm_1.id, true, true);
         let presence_ricardo_dbm_lesson_2 = new Presence(student_ricardo.number, lesson_dbm_2.id, false);
         let presence_ricardo_dbm_lesson_3 = new Presence(student_ricardo.number, lesson_dbm_3.id, false);
@@ -156,7 +157,7 @@ export default class Student_Counter extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <CameraScreen/>
+                <HomeScreen/>
             </View>
         );
     }
