@@ -36,126 +36,33 @@ class Student{
     //     return presence.id;
     // }
 
-    // TODO: Obter presenças de um aluno por cada disciplina em que esteja presente
-    // é preciso verificar se o aluno é o mesmo
-    countPresences(subjectId){
-        return new Promise((resolve, reject) => {
-           firebase.database().ref(namespaces.lessons).once("value").then(function(snapshot){
-              snapshot.forEach((lesson) =>{
-                  /*console.log("lesson key:", lesson.key);
-                  console.log("startDate:", lesson.val().startDate);
-                  console.log("endDate:", lesson.val().endDate);
-                  console.log("photo:", lesson.val().photo);
-                  console.log("subject:", lesson.val().subject);
-                  console.log("teacher:", lesson.val().teacher);
-                  console.log("subject id received:", subjectId);*/
-              });
-           });
-        });
-    }
-
-    tryingToGetPresences(subjectId) {
+    getPresencesAsync(subjectId){
         return firebase.database().ref(namespaces.presences).once("value").then(function (snapshot) {
-            let pCOUNT = 0;
-            let aCOUNT = 0;
-            var promises = [];
-            console.log("abc");
-            console.log("type",typeof snapshot);
-            snapshot.forEach((presence) => {
-                promises.push(firebase.database().ref(namespaces.lessons + presence.val().lessonId).once("value").then(function(snapshot2){
-                    if(snapshot2.val().subject === subjectId){
-                        presence.val().late ? pCOUNT += 1 : aCOUNT += 1;
-                        console.log("entrei");
+            let numberPresences = 0;
+            let numberAbsences = 0;
+            let promises = [];
+            snapshot.forEach(function(presence){
+                let promise = firebase.database().ref(namespaces.lessons + presence.val().lessonId).once("value").then(function(snapshot2) {
+                    if (snapshot2.val().subject === subjectId) {
+                        presence.val().late ? numberPresences += 1 : numberAbsences += 1;
                     }
-                    return 2;
-                }).then(function(data){
-                    return {
-                        d: data,
-                        presences: pCOUNT,
-                        absences: aCOUNT
-                    }
-                }));
-            });
-            return Promise.all(promises).then(function(data){
-                return data[0];
-            });
-            /*Promise.all(snapshot.forEach((presence) => {
-                return firebase.database().ref(namespaces.lessons + presence.val().lessonId).once("value").then(function(snapshot2){
-                    if(snapshot2.val().subject === subjectId){
-                        presence.val().late ? pCOUNT += 1 : aCOUNT += 1;
-                        console.log("entrei");
-                    }
+                    // not returning value
+                }, function(error){
+                    console.log("error fetching presences:", error);
                 });
-            })).then(function(data){
-                console.log("Acabaram-se todos os accesos à bd");
-                console.log("p:",pCOUNT);
-                console.log("a:",aCOUNT);
-                console.log("data:",data);
+                promises.push(promise);
+            });
+            return Promise.all(promises).then(function(){
                 return {
-                    presences: pCOUNT,
-                    absence: aCOUNT
-                }
-
-            });*/
+                    presences: numberPresences,
+                    absences: numberAbsences
+                };
+            })
+        }, function(error) {
+            console.error(error);
+        }).then(function(values) {
+            return values;
         });
-    }
-
-    getPresences(subjectId){
-        return new Promise((resolve, reject) => {
-            let countPresences = 0;
-            let countAbsence = 0;
-            return firebase.database().ref(namespaces.presences).once("value").then(function(snapshot){
-                return new Promise((resolver, reject) => {
-                    snapshot.forEach((presence) => {
-                        firebase.database().ref(namespaces.lessons + presence.val().lessonId).once("value").then(function(snapshot2){
-                            if (snapshot2.val().subject === subjectId) {
-                                console.log(presence.key);
-                                presence.val().late ? countPresences += 1 : countAbsence += 1;
-                                console.log("countPresences", countPresences);
-                                console.log("countAbsence", countAbsence);
-                                resolver();   // not all results
-                            }
-                        });
-                    });
-                    //resolver(); not working -> result logged to soon
-                }).then(function(data){
-                    resolve({
-                        presences: countPresences,
-                        absence: countAbsence
-                    })
-                });
-            });
-        });
-    }
-
-    getPresencesOld(className){
-        return new Promise((resolve, reject) => {
-            firebase.database().ref("/presences").once("value", function(snapshot) {
-                let classes = [];
-                snapshot.forEach((child) => {
-                    console.log("child key", child.key);
-                    console.log("child val ", child.val());
-                    console.log("child val ", child.val().studentIds);
-                    classes.push(child);    // mudar que nao e isto
-                    // falta obter alunos e cadeiras
-                });
-                resolve(classes)
-            });
-        });
-
-       /*
-
-        firebase.database().ref(namespaces.subjects).once("value", function(snapshot){
-        if(snapshot.key === subjectId){
-
-        }
-        });
-        */
-    }
-
-
-    getClasses(){
-
     }
 
     static retrieve(number){

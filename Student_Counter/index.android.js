@@ -76,12 +76,18 @@ export default class Student_Counter extends Component {
         let lesson_gp_3 = new Lesson(teacher_jv.id, subject_gp.id, new Date().toISOString(), new Date().toISOString(), "src/image5");
         let lesson_gp_4 = new Lesson(teacher_jv.id, subject_gp.id, new Date().toISOString(), new Date().toISOString(), "src/image6");
         let lesson_dbm_1 = new Lesson(teacher_jf.id, subject_dbm.id, new Date().toISOString(), new Date().toISOString(), "src/image7");
+        let lesson_dbm_2 = new Lesson(teacher_jf.id, subject_dbm.id, new Date().toISOString(), new Date().toISOString(), "src/image8");
+        let lesson_dbm_3 = new Lesson(teacher_jf.id, subject_dbm.id, new Date().toISOString(), new Date().toISOString(), "src/image9");
+        let lesson_dbm_4 = new Lesson(teacher_jf.id, subject_dbm.id, new Date().toISOString(), new Date().toISOString(), "src/image10");
 
         lesson_gp_1.save();
         lesson_gp_2.save();
         lesson_gp_3.save();
         lesson_gp_4.save();
         lesson_dbm_1.save();
+        lesson_dbm_2.save();
+        lesson_dbm_3.save();
+        lesson_dbm_4.save();
 
 
         // define the presences of a student in a class
@@ -93,37 +99,27 @@ export default class Student_Counter extends Component {
         let presence_ricardo_gp_lesson_3 = new Presence(student_ricardo.number, lesson_gp_3.id, true);
         let presence_ricardo_gp_lesson_4 = new Presence(student_ricardo.number, lesson_gp_4.id, true);
         let presence_ricardo_dbm_lesson_1 = new Presence(student_ricardo.number, lesson_dbm_1.id, true);
+        let presence_ricardo_dbm_lesson_2 = new Presence(student_ricardo.number, lesson_dbm_2.id, false);
+        let presence_ricardo_dbm_lesson_3 = new Presence(student_ricardo.number, lesson_dbm_3.id, false);
+        let presence_ricardo_dbm_lesson_4 = new Presence(student_ricardo.number, lesson_dbm_4.id, false);
 
         presence_ricardo_gp_lesson_1.save();
         presence_ricardo_gp_lesson_2.save();
         presence_ricardo_gp_lesson_3.save();
         presence_ricardo_gp_lesson_4.save();
         presence_ricardo_dbm_lesson_1.save();
+        presence_ricardo_dbm_lesson_2.save();
+        presence_ricardo_dbm_lesson_3.save();
+        presence_ricardo_dbm_lesson_4.save();
+        
 
-        // console.log("presence ricardo gp lesson 1, id:", presence_ricardo_gp_lesson_1.id);
-        // console.log("presence ricardo gp lesson 2, id:", presence_ricardo_gp_lesson_2.id);
-        // console.log("presence ricardo gp lesson 3, id:", presence_ricardo_gp_lesson_3.id);
-        // console.log("presence ricardo dbm lesson 1, id:", presence_ricardo_dbm_lesson_1.id);
-
-
-        let numberPresencesGp = student_ricardo.getPresences(subject_gp.id);
-        let numberPresencesDbm = student_ricardo.getPresences(subject_dbm.id);
-
-        numberPresencesGp.then(function(data){console.log("ddgp", data);});
-        numberPresencesDbm.then(function(data){console.log("dddbm", data);});
-
-        console.log("\n --- COUNT PRESENCES --- \n");
-        student_ricardo.countPresences(subject_gp.id);
-        // marcar uma presença passa por indicar a aula e se esteve presente ou nao
-
-        console.log("---------");
-        student_ricardo.tryingToGetPresences(subject_gp.id).then(function(data){
-           console.log("gp:",data);
+        student_ricardo.getPresencesAsync(subject_gp.id).then(function(data){
+            console.log("GP assiduity :", data);
         });
-        student_ricardo.tryingToGetPresences(subject_dbm.id).then(function(data){
-            console.log("dbm:",data);
+
+        student_ricardo.getPresencesAsync(subject_dbm.id).then(function(data){
+            console.log("DBM assiduity :", data);
         });
-//        console.log(Class.all());
 
         this.logout();
     }
