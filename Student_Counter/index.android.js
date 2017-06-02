@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 import CameraScreen from './src/components/CameraScreen';
+import HomeScreen from './src/screens/HomeScreen';
 import Student from './src/lib/Student';
 import Teacher from "./src/lib/Teacher";
 import Subject from "./src/lib/Subject";
@@ -105,7 +106,7 @@ export default class Student_Counter extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <CameraScreen/>
+                <HomeScreen/>
             </View>
         );
     }
