@@ -83,20 +83,20 @@ export default class Student_Counter extends Component {
 
         lesson_gp_1.save();
         lesson_gp_2.save();
-        console.log("heheh", lesson_gp_2);
-    /*    lesson_gp_3.save();
+        //console.log("heheh", lesson_gp_2);
+        lesson_gp_3.save();
         lesson_gp_4.save();
         lesson_dbm_1.save();
         lesson_dbm_2.save();
         lesson_dbm_3.save();
         lesson_dbm_4.save();
-*/
+
 
         // define the presences of a student in a class
         //TODO: marcar uma presença requer verificações do tipo: o aluno tem que estar inscrito na disciplina
         // Ou seja, é necessário obter a classe(turma) a que o aluno pertence e verificar se a turma tem aquela disciplina ou nao
 
-     /*   let presence_ricardo_gp_lesson_1 = new Presence(student_ricardo.number, lesson_gp_1.id, true, true);
+        let presence_ricardo_gp_lesson_1 = new Presence(student_ricardo.number, lesson_gp_1.id, true, true);
         let presence_ricardo_gp_lesson_2 = new Presence(student_ricardo.number, lesson_gp_2.id, false);
         let presence_ricardo_gp_lesson_3 = new Presence(student_ricardo.number, lesson_gp_3.id, true, true);
         let presence_ricardo_gp_lesson_4 = new Presence(student_ricardo.number, lesson_gp_4.id, true, false);
@@ -114,13 +114,13 @@ export default class Student_Counter extends Component {
         presence_ricardo_dbm_lesson_3.save();
         presence_ricardo_dbm_lesson_4.save();
 
-*/
+
         student_ricardo.getPresencesAsync(subject_gp.id).then(function(data){
-           // console.log("GP assiduity :", data);
+            console.log("GP assiduity :", data);
         });
 
         student_ricardo.getPresencesAsync(subject_dbm.id).then(function(data){
-            //console.log("DBM assiduity :", data);
+            console.log("DBM assiduity :", data);
         });
 
         clazz_1.numberOfregisteredStudentsAsync().then(function(data){
