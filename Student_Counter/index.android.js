@@ -91,6 +91,8 @@ export default class Student_Counter extends Component {
         lesson_dbm_3.save();
         lesson_dbm_4.save();
 
+        //teste navigation! :P 
+
 
         // define the presences of a student in a class
         //TODO: marcar uma presença requer verificações do tipo: o aluno tem que estar inscrito na disciplina
