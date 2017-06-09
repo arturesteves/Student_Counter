@@ -19,7 +19,7 @@ import SubjectLib from "../lib/Subject.js";
 
 export default class Lesson extends React.Component {
     static navigationOptions = {
-        drawerLabel: "Lesson",
+        drawerLabel: undefined,
     }
     constructor(){
         super();
