@@ -11,6 +11,7 @@ import {
 import { DrawerNavigator } from "react-navigation";
 import Header from "../components/Header"
 import Styles from "../styles/Styles.js";
+import Icons from "../icons/icons.js"
 
 
 export default class Teacher extends React.Component {
@@ -27,6 +28,14 @@ export default class Teacher extends React.Component {
                     <View style={Styles.teacherInfo}>
                         <Text style={Styles.teacherInfoText}>John Doe</Text>
                         <Text style={Styles.teacherInfoText}>21</Text>
+                    </View>
+                    <View style = {Styles.teacherNumbers}>
+                        <Image source={Icons.subject} style={Styles.teacherNumberIcon} />
+                        <Text style={Styles.teacherNumberText}>99</Text>
+                        <Image source={Icons.class} style={Styles.teacherNumberIcon} />
+                        <Text style={Styles.teacherNumberText}>99</Text>
+                        <Image source={Icons.student} style={Styles.teacherNumberIcon} />
+                        <Text style={Styles.teacherNumberText}>99</Text>
                     </View>
                 </View>
             </View>

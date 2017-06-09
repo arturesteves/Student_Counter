@@ -223,7 +223,8 @@ module.exports = StyleSheet.create({
         width:200,
         borderRadius:200,
         alignSelf:"center",
-        marginBottom:10
+        marginBottom:10,
+        marginTop:50
     },
 
     teacherInfo: {
@@ -236,6 +237,24 @@ module.exports = StyleSheet.create({
     teacherInfoText:{
         fontFamily:"MedulaOne",
         fontSize:40,
+        color:"black",
         marginRight:15,
     },
+
+    teacherNumbers:{
+        flexDirection:"row",
+        alignItems:"center",
+        justifyContent:"space-between",
+        marginTop:20
+    },
+
+    teacherNumberIcon:{
+        width:40,
+        height:40
+    },
+
+    teacherNumberText:{
+        fontSize:20,
+        color:"black"
+    }
 })
