@@ -3,10 +3,14 @@ import {AppRegistry, StyleSheet, Text, View, Dimensions} from 'react-native';
 import Camera from 'react-native-camera';
 import * as firebase from 'firebase';
 import RNFetchBlob from 'react-native-fetch-blob';
+import { DrawerNavigator } from "react-navigation";
 
 export default class CameraScreen extends Component {
-  constructor() {
-    super();
+  static navigationOptions = {
+    drawerLabel: `Presence`,
+  };
+  constructor(props) {
+    super(props);
     this.state = {
       options: {
         captureTarget: Camera.constants.CaptureTarget.disk
@@ -18,12 +22,11 @@ export default class CameraScreen extends Component {
     this.camera.capture({metadata: this.state.options}).then((data) => {
       console.log(data.path);
       /*Como passar os diretorios das imagens*/
-      this.saveOnFirebase('/Student/140221061/profile_pic.jpg', data.path);
+      this.saveOnFirebase('/Student/140221061/profile_pic.jpg', data.path); //temos de passar a identificação da turma.
     }).catch(err => console.error(err));
   }
 
   saveOnFirebase(storagePath, uri) {
-
     const polyfill = RNFetchBlob.polyfill
 
     window.XMLHttpRequest = polyfill.XMLHttpRequest
@@ -36,18 +39,23 @@ export default class CameraScreen extends Component {
       };
 
       Blob.build(RNFetchBlob.wrap(uri), {type : 'image/jpeg'}).then((blob) => {
-        let storageRef = firebase.storage().ref('images');
+        let storageRef = firebase.storage().ref('images'); //path
         let testImagesRef = storageRef.child(storagePath);
-        var uploadTask = testImagesRef.put(blob, metadata).then((snapshot) => {/*Working*/});
+        var uploadTask = testImagesRef.put(blob, metadata).then((snapshot) => {}); //What is the snapshot.
       }).catch((err) => console.log(err));
     }).catch((err) => console.log(err));
   }
 
   render() {
+    const { navigate } = this.props.navigation;
+    const {params} = this.props.navigation.state;
     return <Camera ref={(cam) => {
       this.camera = cam;
     }} style={styles.preview} aspect={Camera.constants.Aspect.fill}>
-      <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
+      <Text style={styles.capture} onPress={() => {
+        this.takePicture.bind(this)
+        navigate(params.screenName);
+        }}>CAPTURE</Text>
     </Camera>
 
   }
@@ -63,7 +71,7 @@ const styles = StyleSheet.create({
   },
   capture: {
     flex: 0,
-    backgroundColor: '#ff8d3f',
+    backgroundColor: 'white',
     borderRadius: 5,
     color: '#000',
     padding: 10,
