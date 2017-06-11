@@ -1,12 +1,6 @@
-import React, {Component} from "react";
-import {Avatar} from "react-native-elements";
+import React from "react";
 import {
-    AppRegistry,
-    StyleSheet,
-    Text,
     View,
-    TouchableHighlight,
-    Image
 } from "react-native";
 import DrawerHeader from "./DrawerHeader";
 import DrawerContent from "./DrawerContent";

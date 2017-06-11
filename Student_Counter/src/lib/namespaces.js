@@ -4,5 +4,6 @@ exports.namespaces = {
     presences: "/presences/",
     students: "/students/",
     subjects: "/subjects/",
-    teachers: "/teachers/"
+    teachers: "/teachers/",
+    lessonCreate: "/lessonCreate/"
 };

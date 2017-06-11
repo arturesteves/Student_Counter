@@ -13,15 +13,17 @@ import Header from "../components/Header"
 
 
 export default class Student extends React.Component {
+
     static navigationOptions = {
         drawerLabel: "Student",
-    }
+    };
+
     render(){
-        const { navigate } = this.props.navigation;
         return(
             <View>
-                <Header navigate={navigate}/>
+                <Header navigate={this.props.navigation}/>
                 <Text>Student Screen</Text>
+                <Button onPress={() => this.props.navigation('StudentCreate')} title="Create new student" />
             </View>
         )
     }

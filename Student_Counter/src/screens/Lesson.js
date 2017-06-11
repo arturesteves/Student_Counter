@@ -44,7 +44,7 @@ export default class Lesson extends React.Component {
                     console.log(subject);
                     return subject;
                 })
-            })
+            });
             Promise.all(all).then((subjects) => {
                 let lessonItems = lessons.map((lesson, index) => {
                     let nDate = new Date(lesson.startDate);

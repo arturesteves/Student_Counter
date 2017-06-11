@@ -257,4 +257,4 @@ module.exports = StyleSheet.create({
         fontSize:20,
         color:"black"
     }
-})
+});
