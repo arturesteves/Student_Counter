@@ -27,10 +27,9 @@ export default class StudentCreate extends React.Component {
     //         </Picker>
     // }
     render(){
-        const { navigate } = this.props.navigator;
         return(
             <View>
-                <Header navigate={navigate}/>
+                <Header navigate={this.props.navigation.navigate}/>
                 <Text>Student create Screen</Text>
             </View>
         )

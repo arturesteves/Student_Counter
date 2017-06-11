@@ -63,11 +63,12 @@ export default class Lesson extends React.Component {
         })
     }
     render(){
-        const { navigate } = this.props.navigation;
+        const { navigate } = this.props.navigation.navigate;
         return(
             <View>
                 <Header navigate={navigate} text="Lesson"/>
                 <ScrollView height={Dimensions.get("window").height-90} showsVerticalScrollIndicator={false}>
+                <Button onPress={() => this.props.navigation.navigate('LessonCreate')} title="Create new lesson" />
                 <View style={Styles.lessonContent}>
                     {this.state.lessons}
                 </View>

@@ -22,8 +22,7 @@ export default class Student extends React.Component {
         return(
             <View>
                 <Header navigate={this.props.navigation}/>
-                <Text>Student Screen</Text>
-                <Button onPress={() => this.props.navigation('StudentCreate')} title="Create new student" />
+                <Button onPress={() => this.props.navigation.navigate('StudentCreate')} title="Create new student" />
             </View>
         )
     }
