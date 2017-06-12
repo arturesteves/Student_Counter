@@ -24,10 +24,11 @@ import { DrawerNavigator} from "react-navigation";
 import HomeScreen from "./src/screens/Home";
 import Drawer from "./src/components/Drawer";
 import LessonScreen from "./src/screens/Lesson";
-import StudentCreateScreen from "./src/screens/StudentCreate";
+import LessonCreateScreen from "./src/screens/LessonCreate";
 import SubjectScreen from "./src/screens/Subject";
 import TeacherScreen from "./src/screens/Teacher";
 import StudentScreen from "./src/screens/Student";
+import StudentCreateScreen from "./src/screens/StudentCreate";
 import ClassScreen from "./src/screens/Class";
 
 import firebaseInit from "./firebase";
@@ -42,8 +43,8 @@ const MyApp = DrawerNavigator({
     Lesson:{
         screen: LessonScreen
     },
-    StudentCreate:{
-        screen: StudentCreateScreen
+    LessonCreate:{
+        screen: LessonCreateScreen
     },
     Subject:{
         screen: SubjectScreen
@@ -53,6 +54,9 @@ const MyApp = DrawerNavigator({
     },
     Student:{
         screen: StudentScreen
+    },
+    StudentCreate:{
+        screen: StudentCreateScreen
     },
     Class:{
         screen: ClassScreen
