@@ -1,15 +1,11 @@
 import React, {Component} from 'react';
 import {
-    StyleSheet,
     Text,
     View,
     Button,
     Dimensions,
-    Image,
-    TouchableHighlight,
     ScrollView
 } from "react-native";
-import { DrawerNavigator } from "react-navigation";
 import Header from "../components/Header"
 import Styles from "../styles/Styles.js";
 import LessonItem from "../components/LessonItem.js";
@@ -20,11 +16,12 @@ import SubjectLib from "../lib/Subject.js";
 export default class Lesson extends React.Component {
     static navigationOptions = {
         drawerLabel: undefined,
-    }
+    };
+
     constructor(){
         super();
         this.state = {
-            lessons:<Text></Text>,
+            lessons: <Text></Text>,
         }
     }
     componentDidMount(){

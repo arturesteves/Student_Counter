@@ -11,7 +11,6 @@ let Teacher = require("../lib/Teacher");
 
 import React from 'react';
 import { Picker} from "react-native";
-import TeacherClass from "../lib/Teacher.js";
 
 
 export default class EntityPicker extends React.Component {
@@ -25,15 +24,16 @@ export default class EntityPicker extends React.Component {
 
         switch(this.props.entity){
             case "class":
+                this.createClassPicker().then();
                 break;
             case "presence":
-
+                this.createPresencePicker().then();
                 break;
             case "student":
-
+                this.createStudentPicker().then();
                 break;
             case "subject":
-
+                this.createSubjectPicker().then();
                 break;
             case "teacher":
                 this.createTeacherPicker().then();
@@ -46,13 +46,54 @@ export default class EntityPicker extends React.Component {
         return this.state.id;
     }
 
+    async createClassPicker() {
+        let classes = await Class.all();
+        if (!classes) {
+            return null;
+        }
+        let newState = {};
+        newState.picker = classes.map((t) => <Picker.Item key={t.id} label={t.name} value={t.id}/>);
+        this.setState(newState);
+    }
+
+    async createPresencePicker() {
+        let presences = await Presence.all();
+        if (!presences) {
+            return null;
+        }
+        let newState = {};
+        newState.picker = presences.map((t) => <Picker.Item key={t.id} label={t.name} value={t.id}/>);
+        this.setState(newState);
+    }
+
+    async createStudentPicker() {
+        let students = await Student.all();
+        if (!students) {
+            return null;
+        }
+        let newState = {};
+        newState.picker = students.map((t) => <Picker.Item key={t.id} label={t.name} value={t.id}/>);
+        this.setState(newState);
+    }
+
+    async createSubjectPicker() {
+        let subjects = await Subject.all();
+        if (!subjects) {
+            return null;
+        }
+        let newState = {};
+        newState.picker = subjects.map((t) => <Picker.Item key={t.id} label={t.name} value={t.id}/>);
+        this.setState(newState);
+    }
+
     async createTeacherPicker() {
-        let teachers = await TeacherClass.all();
+        let teachers = await Teacher.all();
         if (!teachers) {
             return null;
         }
         let newState = {};
         newState.picker = teachers.map((t) => <Picker.Item key={t.id} label={t.name} value={t.id}/>);
+        this.props.onChange(teachers[0].id);
         this.setState(newState);
     }
 
@@ -63,10 +104,14 @@ export default class EntityPicker extends React.Component {
                 this.setState({
                     id: itemValue,
                     picker: this.state.picker
-                })
+                });
+                if(this.props.onchange) {
+                    this.props.onChange(itemValue);
+                }
             }}
         >
             {this.state.picker}
         </Picker>
     }
+
 }
