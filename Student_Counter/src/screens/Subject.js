@@ -41,11 +41,13 @@ export default class Subject extends React.Component {
             })
         })
     }
+    ///
     render(){
         const { navigate } = this.props.navigation;
         return(
             <View>
                 <Header navigate={navigate} text="Subject"/>
+                <Button onPress={() => navigate('SubjectCreate')} title="Create new subject" />
                 <ScrollView height={Dimensions.get("window").height-90} showsVerticalScrollIndicator={false}>
                 <View style={Styles.subjectContent}>
                 {this.state.subjects}

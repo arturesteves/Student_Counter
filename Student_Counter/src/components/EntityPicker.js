@@ -42,6 +42,7 @@ export default class EntityPicker extends React.Component {
 
     }
 
+    //////
     getId(){
         return this.state.id;
     }
@@ -52,7 +53,8 @@ export default class EntityPicker extends React.Component {
             return null;
         }
         let newState = {};
-        newState.picker = classes.map((t) => <Picker.Item key={t.id} label={t.name} value={t.id}/>);
+        newState.picker = classes.map((t) => <Picker.Item key={t.name} label={t.name} value={t.name}/>);
+        this.props.onChange(classes[0].id);
         this.setState(newState);
     }
 
@@ -63,6 +65,7 @@ export default class EntityPicker extends React.Component {
         }
         let newState = {};
         newState.picker = presences.map((t) => <Picker.Item key={t.id} label={t.name} value={t.id}/>);
+        this.props.onChange(presences[0].id);
         this.setState(newState);
     }
 
@@ -72,7 +75,8 @@ export default class EntityPicker extends React.Component {
             return null;
         }
         let newState = {};
-        newState.picker = students.map((t) => <Picker.Item key={t.id} label={t.name} value={t.id}/>);
+        newState.picker = students.map((t) => <Picker.Item key={t.number} label={t.name} value={t.number}/>);
+        this.props.onChange(students[0].number);
         this.setState(newState);
     }
 
@@ -83,14 +87,16 @@ export default class EntityPicker extends React.Component {
         }
         let newState = {};
         newState.picker = subjects.map((t) => <Picker.Item key={t.id} label={t.name} value={t.id}/>);
+        this.props.onChange(subjects[0].id);
         this.setState(newState);
     }
 
     async createTeacherPicker() {
         let teachers = await Teacher.all();
-        if (!teachers) {
+        if (!teachers || teachers.length === 0) {
             return null;
         }
+
         let newState = {};
         newState.picker = teachers.map((t) => <Picker.Item key={t.id} label={t.name} value={t.id}/>);
         this.props.onChange(teachers[0].id);
@@ -105,7 +111,7 @@ export default class EntityPicker extends React.Component {
                     id: itemValue,
                     picker: this.state.picker
                 });
-                if(this.props.onchange) {
+                if(this.props.onChange) {
                     this.props.onChange(itemValue);
                 }
             }}

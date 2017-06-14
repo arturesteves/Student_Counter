@@ -9,20 +9,16 @@ let namespaces = require("./namespaces").namespaces;
  */
 class Student{
 
-    constructor(number, name, birthDate, email, photo) {
+    constructor(number, name, email) {
         this.number = number;
         this.name = name;
-        this.birthDate = birthDate;
         this.email = email;
-        this.photo = photo || "no photo";
     }
 
     save(){
         return firebase.database().ref(namespaces.students + this.number).set({
             name: this.name,
             email: this.email,
-            birthDate: this.birthDate,
-            photo: this.photo
         });
     }
 
@@ -69,9 +65,7 @@ class Student{
                 let number = studentValues.key;
                 let name = studentValues.val().name;
                 let email = studentValues.val().email;
-                let birthDate = studentValues.val().birthDate;
-                let photo = studentValues.val().photo;
-                let student = new Student(number, name, birthDate, email, photo);
+                let student = new Student(number, name, email);
                 students.push(student);
             });
             return students;
@@ -87,9 +81,7 @@ class Student{
             firebase.database().ref(namespaces.students + number).once('value').then(function(snapshot){
                 let name = snapshot.val().name;
                 let email = snapshot.val().email;
-                let birthDate = snapshot.val().birthDate;
-                let photo = snapshot.val().photo;
-                let student = new Student(number, name, birthDate, email, photo);
+                let student = new Student(number, name,  email);
                 resolve(student);
             });
         });

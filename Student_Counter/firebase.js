@@ -1,5 +1,11 @@
 let firebase = require("firebase");
 
+let Class = require("./src/lib/Class");
+let Lesson = require("./src/lib/Lesson");
+let Presence = require("./src/lib/Presence");
+let Student = require("./src/lib/Student");
+let Subject = require("./src/lib/Subject");
+let Teacher = require("./src/lib/Teacher");
 //import * as firebase from 'firebase';
 
 // Initialize Firebase
@@ -14,12 +20,12 @@ firebase.initializeApp({
 
 async function init(){
 
-    this.signup("artur_esteves1995@hotmail.com", "pw_test1");
-    this.login("artur_esteves1995@hotmail.com", "pw_test1");
+    await signup("artur_esteves1995@hotmail.com", "pw_test1");
+    await login("artur_esteves1995@hotmail.com", "pw_test1");
     //let student_artur = new Subject('140221076', 'Artur', 'Esteves');
 
-    let teacher_jf = new Teacher("Joaquim Filipe", "joaquim.filipe@gmail.com", "13-12-1980", "myphoto");
-    let teacher_jv = new Teacher("João Ventura", "joao.ventura@gmail.com", "13-12-1980", "myphoto");
+    let teacher_jf = new Teacher("Joaquim Filipe", "joaquim.filipe@gmail.com");
+    let teacher_jv = new Teacher("João Ventura", "joao.ventura@gmail.com");
 
     await teacher_jf.save();
     await teacher_jv.save();

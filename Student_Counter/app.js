@@ -26,14 +26,33 @@ import Drawer from "./src/components/Drawer";
 import LessonScreen from "./src/screens/Lesson";
 import LessonCreateScreen from "./src/screens/LessonCreate";
 import SubjectScreen from "./src/screens/Subject";
+import SubjectCreateScreen from "./src/screens/SubjectCreate";
 import TeacherScreen from "./src/screens/Teacher";
+import TeacherCreateScreen from "./src/screens/TeacherCreate";
 import StudentScreen from "./src/screens/Student";
 import StudentCreateScreen from "./src/screens/StudentCreate";
 import ClassScreen from "./src/screens/Class";
+import ClassCreateScreen from "./src/screens/ClassCreate";
 
-import firebaseInit from "./firebase";
+// import firebaseInit from "./firebase";
+
+let firebase = require("firebase");
+// Initialize Firebase
+firebase.initializeApp({
+    apiKey: "AIzaSyCJO-fJa5dlYXKK1zy8bt4TxzwoniSvtsU",
+    authDomain: "gpbitteam-59ca2.firebaseapp.com",
+    databaseURL: "https://gpbitteam-59ca2.firebaseio.com",
+    projectId: "gpbitteam-59ca2",
+    storageBucket: "gpbitteam-59ca2.appspot.com",
+    messagingSenderId: "571714718837"
+});
 
 // firebaseInit().then();
+
+/////////
+
+///////
+// /////
 
 
 const MyApp = DrawerNavigator({
@@ -49,8 +68,14 @@ const MyApp = DrawerNavigator({
     Subject:{
         screen: SubjectScreen
     },
+    SubjectCreate:{
+        screen: SubjectCreateScreen
+    },
     Teacher:{
         screen: TeacherScreen
+    },
+    TeacherCreate:{
+        screen: TeacherCreateScreen
     },
     Student:{
         screen: StudentScreen
@@ -60,6 +85,9 @@ const MyApp = DrawerNavigator({
     },
     Class:{
         screen: ClassScreen
+    },
+    ClassCreate:{
+        screen: ClassCreateScreen
     }
 },{
     drawerWidth: Dimensions.get("window").width * 3/4,

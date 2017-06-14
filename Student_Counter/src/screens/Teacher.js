@@ -23,6 +23,7 @@ export default class Teacher extends React.Component {
         return(
             <View>
                 <Header navigate={navigate} text="Teacher"/>
+                <Button onPress={() => navigate('TeacherCreate')} title="Create new teacher" />
                 <View style={Styles.teacherContent}>
                     <Image source={require("../icons/userPic.jpg")} style={Styles.teacherImage}/>
                     <View style={Styles.teacherInfo}>

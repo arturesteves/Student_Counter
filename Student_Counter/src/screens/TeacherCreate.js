@@ -1,9 +1,9 @@
-import Student from '../lib/Student';
+import Teacher from '../lib/Teacher';
 import React from 'react';
 import { View, Text, Button, TextInput } from "react-native";
 import Header from "../components/Header";
 
-export default class StudentCreate extends React.Component {
+export default class TeacherCreate extends React.Component {
 
     constructor(props){
         super(props);
@@ -19,9 +19,9 @@ export default class StudentCreate extends React.Component {
 
         //todo - validation of the values
 
-        let student = new Student (this.state.number, this.state.name, this.state.email);
-        student.save().then(()=> {
-            this.props.navigation.navigate('Student');
+        let teacher = new Teacher (this.state.name, this.state.email);
+        teacher.save().then(()=> {
+            this.props.navigation.navigate('Teacher');
         });
     }
 
@@ -30,17 +30,8 @@ export default class StudentCreate extends React.Component {
         let that = this;
         return(
             <View>
-                <Header navigate={navigate} text="Create Student"/>
-                <Text>Insert the number of the student</Text>
-                <TextInput
-                    placeholder="number"
-                    onChangeText={(number) => {
-                        this.state.number = number;
-                        this.setState(this.state);
-                    }}
-                    value={this.state.number}
-                />
-                <Text>Insert the name of the student</Text>
+                <Header navigate={navigate} text="Create Teacher"/>
+                <Text>Insert the name of the teacher</Text>
                 <TextInput
                     placeholder="name"
                     onChangeText={(name) => {
@@ -49,7 +40,7 @@ export default class StudentCreate extends React.Component {
                     }}
                     value={this.state.name}
                 />
-                <Text>Insert the email of the student</Text>
+                <Text>Insert the email of the teacher</Text>
                 <TextInput
                     placeholder="email"
                     onChangeText={(email) => {

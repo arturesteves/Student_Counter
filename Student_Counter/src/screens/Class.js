@@ -22,6 +22,7 @@ export default class Class extends React.Component {
             <View>
                 <Header navigate={navigate}/>
                 <Text>Class Screen</Text>
+                <Button onPress={() => this.props.navigation.navigate('ClassCreate')} title="Create new class" />
             </View>
         )
     }

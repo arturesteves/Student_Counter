@@ -8,7 +8,7 @@ import EntityPicker from "../components/EntityPicker";
 import DatePicker from 'react-native-datepicker';
 import Header from "../components/Header";
 
-export default class LessonCreate extends React.Component {
+export default class LessonEdit extends React.Component {
 
     constructor(props){
         super(props);
@@ -18,6 +18,16 @@ export default class LessonCreate extends React.Component {
     static navigationOptions = {
         drawerLabel: undefined,
     };
+
+    onComponentDidMount(){
+        let lessonId = this.props.navigation.state.params.lessonId;
+        Lesson.retrieve(lessonId).then((lesson)=>{
+            this.state.dateStart  = lesson.startDate;
+            this.state.dateEnd  = lesson.EndDate;
+            this.state.teacherId  = lesson.teacherId;
+            this.setState(this.state);
+        });
+    }
 
     create(){
         let lesson = new Lesson(this.state.teacherId, this.state.subjectId,

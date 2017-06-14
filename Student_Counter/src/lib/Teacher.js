@@ -5,11 +5,9 @@ let namespaces = require("./namespaces").namespaces;
 
 class Teacher{ 
 
-    constructor(name, email, birthDate, photo){
+    constructor(name, email){
         this.name = name;
         this.email = email;
-        this.birthDate = birthDate || new Date(1900, 1, 1); // TODO: update " new Date(1900, 1, 1); " -> because its not working
-        this.photo = photo || "no photo";
     }
 
     save(){
@@ -17,8 +15,6 @@ class Teacher{
             return firebase.database().ref(namespaces.teachers + this.id).update({
                 name: this.name,
                 email: this.email,
-                birthDate: this.birthDate,
-                photo: this.photo,
             });
         } else {
             return new Promise((resolve, reject)=>{
@@ -44,9 +40,7 @@ class Teacher{
                 let id = teacherValues.key;
                 let name = teacherValues.val().name;
                 let email = teacherValues.val().email;
-                let birthDate = teacherValues.val().birthDate;
-                let photo = teacherValues.val().birthDate;
-                let teacher = new Teacher(name, email, birthDate, photo);
+                let teacher = new Teacher(name, email);
                 teacher.id = id;
                 teachers.push(teacher);
             });
@@ -63,9 +57,7 @@ class Teacher{
             firebase.database().ref(namespaces.teachers + id).once('value').then(function(snapshot){
                 let name = snapshot.val().name;
                 let email = snapshot.val().email;
-                let birthDate = snapshot.val().birthDate;
-                let photo = snapshot.val().photo;
-                let teacher = new Teacher(name, email, birthDate, photo);
+                let teacher = new Teacher(name, email);
                 teacher.id = id;
                 resolve(teacher);
             });
