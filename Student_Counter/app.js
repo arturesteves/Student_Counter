@@ -12,13 +12,7 @@ import {
     View
 } from "react-native";
 
-let Class = require("./src/lib/Class");
-let Lesson = require("./src/lib/Lesson");
-let Presence = require("./src/lib/Presence");
-let Student = require("./src/lib/Student");
-let Subject = require("./src/lib/Subject");
-let Teacher = require("./src/lib/Teacher");
-
+let firebase = require("firebase");
 import { Dimensions } from "react-native";
 import { DrawerNavigator} from "react-navigation";
 import HomeScreen from "./src/screens/Home";
@@ -30,11 +24,21 @@ import TeacherScreen from "./src/screens/Teacher";
 import StudentScreen from "./src/screens/Student";
 import StudentCreateScreen from "./src/screens/StudentCreate";
 import ClassScreen from "./src/screens/Class";
+import LessonInfo from "./src/screens/LessonInfo";
 
-import firebaseInit from "./firebase";
+//import firebaseInit from "./firebase";
 
-// firebaseInit().then();
+//firebaseInit().then();
 
+// Initialize Firebase
+firebase.initializeApp({
+    apiKey: "AIzaSyCJO-fJa5dlYXKK1zy8bt4TxzwoniSvtsU",
+    authDomain: "gpbitteam-59ca2.firebaseapp.com",
+    databaseURL: "https://gpbitteam-59ca2.firebaseio.com",
+    projectId: "gpbitteam-59ca2",
+    storageBucket: "gpbitteam-59ca2.appspot.com",
+    messagingSenderId: "571714718837"
+});
 
 const MyApp = DrawerNavigator({
     Home: {
@@ -60,6 +64,9 @@ const MyApp = DrawerNavigator({
     },
     Class:{
         screen: ClassScreen
+    },
+    LessonInfo:{
+        screen: LessonInfo
     }
 },{
     drawerWidth: Dimensions.get("window").width * 3/4,

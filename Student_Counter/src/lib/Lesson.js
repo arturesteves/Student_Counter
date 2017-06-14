@@ -1,4 +1,4 @@
-import * as firebase from "firebase";
+import * as firebase from 'firebase';
 let Subject = require("./Subject");
 let Teacher = require("./Teacher");
 
@@ -6,10 +6,11 @@ let namespaces = require("./namespaces").namespaces;
 
 // TODO: suportar o número da aula
 class Lesson{
-    constructor(teacherId, subjectId, startDate, endDate, photo, summary){
+    constructor(teacherId, subjectId, classes, startDate, endDate, photo, summary){
         this.teacherId = teacherId;
         this.subjectId = subjectId;
         this.startDate = startDate;
+        this.classes = classes;
         this.endDate = endDate;
         this.photo = photo || "No Photo";
         this.summary = summary || ""
@@ -23,7 +24,8 @@ class Lesson{
                 startDate: this.startDate,
                 endDate: this.endDate,
                 photo: this.photo,
-                summary: this.summary
+                summary: this.summary,
+                classes:this.classes
             });
         } else {
             return new Promise((resolve, reject)=>{
@@ -58,7 +60,8 @@ class Lesson{
                 let subjectId = lessonValues.val().subjectId;
                 let summary = lessonValues.val().summary;
                 let teacherId = lessonValues.val().teacherId;
-                let lesson = new Lesson(teacherId, subjectId, startDate, endDate, photo, summary);
+                let classes = lessonValues.val().classes;
+                let lesson = new Lesson(teacherId, subjectId,classes, startDate, endDate, photo, summary);
                 lesson.id = id;
                 lessons.push(lesson);
             });
@@ -79,7 +82,8 @@ class Lesson{
                 let endDate = snapshot.val().endDate;
                 let photo = snapshot.val().photo;
                 let summary = snapshot.val().summary;
-                let lesson = new Lesson(teacherId, subjectId, startDate, endDate, photo, summary);
+                let classes = snapshot.val().classes;
+                let lesson = new Lesson(teacherId, subjectId,classes, startDate, endDate, photo, summary);
                 lesson.id = id;
                 resolve(lesson);
             });

@@ -24,6 +24,20 @@ export default class Lesson extends React.Component {
             lessons: <Text></Text>,
         }
     }
+
+    removeLesson(key){
+        let lessons = this.state.lessons;
+        console.log(lessons);
+        let nLessons = lessons.map((lesson) => {
+            if(lesson.key != key){
+                return lesson
+            }
+        });
+        this.setState({
+            lessons: nLessons
+        })
+    }
+
     componentDidMount(){
         this.getLessonItems();
     }
@@ -33,6 +47,7 @@ export default class Lesson extends React.Component {
         })
     }
     getLessonItems(){
+        let that = this;
         this.getAllLessons()
         .then((lessons) => {
             let pos = 1;
@@ -44,11 +59,12 @@ export default class Lesson extends React.Component {
             });
             Promise.all(all).then((subjects) => {
                 let lessonItems = lessons.map((lesson, index) => {
+                    let classes = lesson.classes;
                     let nDate = new Date(lesson.startDate);
                     let date = `${nDate.getDate()}/${nDate.getMonth()}/${nDate.getFullYear()}`;
                     let time = `${nDate.getHours()}:${nDate.getMinutes()}`;
                     pos == 0 ? pos = 1 : pos= 0;
-                    return <LessonItem key={lesson.id} id={lesson.id} time={time} date={date} pos={pos} subjectName={subjects[index].acronym} subjectId={subjects[index].id} color="#ef9a9a"/>
+                    return <LessonItem key={lesson.id} removeLesson={this.removeLesson.bind(this)} id={lesson.id} time={time} date={date} pos={pos} subjectName={subjects[index].acronym} subjectId={subjects[index].id} classes={classes} color="#ef9a9a" navigate={that.props.navigation.navigate}/>
                 });
                 this.setState({
                     lessons:lessonItems,
@@ -60,12 +76,12 @@ export default class Lesson extends React.Component {
         })
     }
     render(){
-        const { navigate } = this.props.navigation.navigate;
+        const { navigate } = this.props.navigation;
         return(
             <View>
                 <Header navigate={navigate} text="Lesson"/>
                 <ScrollView height={Dimensions.get("window").height-90} showsVerticalScrollIndicator={false}>
-                <Button onPress={() => this.props.navigation.navigate('LessonCreate')} title="Create new lesson" />
+                <Button onPress={() => navigate('LessonCreate')} title="Create new lesson" />
                 <View style={Styles.lessonContent}>
                     {this.state.lessons}
                 </View>

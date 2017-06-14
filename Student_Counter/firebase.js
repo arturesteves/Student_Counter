@@ -1,5 +1,11 @@
 let firebase = require("firebase");
 
+let Class = require("./src/lib/Class");
+let Lesson = require("./src/lib/Lesson");
+let Presence = require("./src/lib/Presence");
+let Student = require("./src/lib/Student");
+let Subject = require("./src/lib/Subject");
+let Teacher = require("./src/lib/Teacher");
 //import * as firebase from 'firebase';
 
 // Initialize Firebase
@@ -14,12 +20,12 @@ firebase.initializeApp({
 
 async function init(){
 
-    this.signup("artur_esteves1995@hotmail.com", "pw_test1");
-    this.login("artur_esteves1995@hotmail.com", "pw_test1");
+    await signup("artur_esteves1995@hotmail.com", "pw_test1");
+    await login("artur_esteves1995@hotmail.com", "pw_test1");
     //let student_artur = new Subject('140221076', 'Artur', 'Esteves');
 
-    let teacher_jf = new Teacher("Joaquim Filipe", "joaquim.filipe@gmail.com", "13-12-1980", "myphoto");
-    let teacher_jv = new Teacher("João Ventura", "joao.ventura@gmail.com", "13-12-1980", "myphoto");
+    let teacher_jf = new Teacher("Joaquim Filipe", "joaquim.filipe@gmail.com");
+    let teacher_jv = new Teacher("João Ventura", "joao.ventura@gmail.com");
 
     await teacher_jf.save();
     await teacher_jv.save();
@@ -42,14 +48,14 @@ async function init(){
     await clazz_1.save();
     await clazz_2.save();
 
-    let lesson_gp_1 = new Lesson(teacher_jv.id, subject_gp.id, new Date().toISOString(), new Date().toISOString(), "src/image3", "sumário..");
-    let lesson_gp_2 = new Lesson(teacher_jv.id, subject_gp.id, new Date().toISOString(), new Date().toISOString(), "src/image4", "sumário..");
-    let lesson_gp_3 = new Lesson(teacher_jv.id, subject_gp.id, new Date().toISOString(), new Date().toISOString(), "src/image5", "sumário..");
-    let lesson_gp_4 = new Lesson(teacher_jv.id, subject_gp.id, new Date().toISOString(), new Date().toISOString(), "src/image6", "sumário..");
-    let lesson_dbm_1 = new Lesson(teacher_jf.id, subject_dbm.id, new Date().toISOString(), new Date().toISOString(), "src/image7", "sumário..");
-    let lesson_dbm_2 = new Lesson(teacher_jf.id, subject_dbm.id, new Date().toISOString(), new Date().toISOString(), "src/image8", "sumário..");
-    let lesson_dbm_3 = new Lesson(teacher_jf.id, subject_dbm.id, new Date().toISOString(), new Date().toISOString(), "src/image9", "sumário..");
-    let lesson_dbm_4 = new Lesson(teacher_jf.id, subject_dbm.id, new Date().toISOString(), new Date().toISOString(), "src/image10", "sumário..");
+    let lesson_gp_1 = new Lesson(teacher_jv.id, subject_gp.id,[clazz_1], new Date().toISOString(), new Date().toISOString(), "src/image3", "sumário..");
+    let lesson_gp_2 = new Lesson(teacher_jv.id, subject_gp.id,[clazz_2], new Date().toISOString(), new Date().toISOString(), "src/image4", "sumário..");
+    let lesson_gp_3 = new Lesson(teacher_jv.id, subject_gp.id,[clazz_1,clazz_2], new Date().toISOString(), new Date().toISOString(), "src/image5", "sumário..");
+    let lesson_gp_4 = new Lesson(teacher_jv.id, subject_gp.id,[clazz_1], new Date().toISOString(), new Date().toISOString(), "src/image6", "sumário..");
+    let lesson_dbm_1 = new Lesson(teacher_jf.id, subject_dbm.id,[clazz_2], new Date().toISOString(), new Date().toISOString(), "src/image7", "sumário..");
+    let lesson_dbm_2 = new Lesson(teacher_jf.id, subject_dbm.id,[clazz_1,clazz_2], new Date().toISOString(), new Date().toISOString(), "src/image8", "sumário..");
+    let lesson_dbm_3 = new Lesson(teacher_jf.id, subject_dbm.id,[clazz_1], new Date().toISOString(), new Date().toISOString(), "src/image9", "sumário..");
+    let lesson_dbm_4 = new Lesson(teacher_jf.id, subject_dbm.id,[clazz_2], new Date().toISOString(), new Date().toISOString(), "src/image10", "sumário..");
 
     lesson_gp_1.save();
     lesson_gp_2.save();
