@@ -48,14 +48,14 @@ async function init(){
     await clazz_1.save();
     await clazz_2.save();
 
-    let lesson_gp_1 = new Lesson(teacher_jv.id, subject_gp.id, new Date().toISOString(), new Date().toISOString(), "src/image3", "sumário..");
-    let lesson_gp_2 = new Lesson(teacher_jv.id, subject_gp.id, new Date().toISOString(), new Date().toISOString(), "src/image4", "sumário..");
-    let lesson_gp_3 = new Lesson(teacher_jv.id, subject_gp.id, new Date().toISOString(), new Date().toISOString(), "src/image5", "sumário..");
-    let lesson_gp_4 = new Lesson(teacher_jv.id, subject_gp.id, new Date().toISOString(), new Date().toISOString(), "src/image6", "sumário..");
-    let lesson_dbm_1 = new Lesson(teacher_jf.id, subject_dbm.id, new Date().toISOString(), new Date().toISOString(), "src/image7", "sumário..");
-    let lesson_dbm_2 = new Lesson(teacher_jf.id, subject_dbm.id, new Date().toISOString(), new Date().toISOString(), "src/image8", "sumário..");
-    let lesson_dbm_3 = new Lesson(teacher_jf.id, subject_dbm.id, new Date().toISOString(), new Date().toISOString(), "src/image9", "sumário..");
-    let lesson_dbm_4 = new Lesson(teacher_jf.id, subject_dbm.id, new Date().toISOString(), new Date().toISOString(), "src/image10", "sumário..");
+    let lesson_gp_1 = new Lesson(teacher_jv.id, subject_gp.id,[clazz_1], new Date().toISOString(), new Date().toISOString(), "src/image3", "sumário..");
+    let lesson_gp_2 = new Lesson(teacher_jv.id, subject_gp.id,[clazz_2], new Date().toISOString(), new Date().toISOString(), "src/image4", "sumário..");
+    let lesson_gp_3 = new Lesson(teacher_jv.id, subject_gp.id,[clazz_1,clazz_2], new Date().toISOString(), new Date().toISOString(), "src/image5", "sumário..");
+    let lesson_gp_4 = new Lesson(teacher_jv.id, subject_gp.id,[clazz_1], new Date().toISOString(), new Date().toISOString(), "src/image6", "sumário..");
+    let lesson_dbm_1 = new Lesson(teacher_jf.id, subject_dbm.id,[clazz_2], new Date().toISOString(), new Date().toISOString(), "src/image7", "sumário..");
+    let lesson_dbm_2 = new Lesson(teacher_jf.id, subject_dbm.id,[clazz_1,clazz_2], new Date().toISOString(), new Date().toISOString(), "src/image8", "sumário..");
+    let lesson_dbm_3 = new Lesson(teacher_jf.id, subject_dbm.id,[clazz_1], new Date().toISOString(), new Date().toISOString(), "src/image9", "sumário..");
+    let lesson_dbm_4 = new Lesson(teacher_jf.id, subject_dbm.id,[clazz_2], new Date().toISOString(), new Date().toISOString(), "src/image10", "sumário..");
 
     lesson_gp_1.save();
     lesson_gp_2.save();

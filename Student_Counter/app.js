@@ -12,13 +12,7 @@ import {
     View
 } from "react-native";
 
-let Class = require("./src/lib/Class");
-let Lesson = require("./src/lib/Lesson");
-let Presence = require("./src/lib/Presence");
-let Student = require("./src/lib/Student");
-let Subject = require("./src/lib/Subject");
-let Teacher = require("./src/lib/Teacher");
-
+let firebase = require("firebase");
 import { Dimensions } from "react-native";
 import { DrawerNavigator} from "react-navigation";
 import HomeScreen from "./src/screens/Home";

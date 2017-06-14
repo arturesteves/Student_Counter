@@ -1,4 +1,4 @@
-import * as firebase from "firebase";
+import * as firebase from 'firebase';
 let Student = require("./Student");
 let Lesson = require("./Lesson");
 
@@ -27,6 +27,14 @@ class Presence{
                 let obj = firebase.database().ref(namespaces.presences).push(this);
                 this.id = obj.key;
                 resolve(this.id);
+            });
+        }
+    }
+
+    updatePresence(isPresent){
+        if(this.id){
+            return firebase.database().ref(namespaces.presences + this.id).update({
+                present:isPresent        
             });
         }
     }
@@ -71,9 +79,9 @@ class Presence{
                 let lessonId = snapshot.val().lessonId;
                 let present = snapshot.val().present;
                 let delay = snapshot.val().delay;
-                let lesson = new Lesson(studentId, lessonId, present, delay);
-                lesson.id = id;
-                resolve(lesson);
+                let presence = new Presence(studentId, lessonId, present, delay);
+                presence.id = id;
+                resolve(presence);
             });
         });
     }
