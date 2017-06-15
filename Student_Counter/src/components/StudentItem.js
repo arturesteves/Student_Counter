@@ -1,25 +1,26 @@
 import React from "react";
 import {StyleSheet, View, Text, Image, TouchableHighlight, Alert} from "react-native";
-import ClassLib from "../lib/Class.js";
+import StudentLib from "../lib/Student.js";
 import Icons from "../icons/icons.js";
 
-export default class ClassItem extends React.Component{
+export default class StudentItem extends React.Component{
     constructor(props){
         super(props);
     }
 
-    deleteClass(){
+    deleteStudent(){
         let that = this;
-        ClassLib.retrieve(this.props.id).then((clazz) => {
-            clazz.delete();
-            that.props.removeClass(clazz.id);
+        StudentLib.retrieve(this.props.id).then((student) => {
+            student.delete();
+            that.props.removeStudent(student.id);
         }).catch((err) => {
             alert(err);
         })
     }
 
+
     askForDelete(){
-        Alert.alert( "Delete?",`Do you want to delete the class ${this.name}`, [
+        Alert.alert( "Delete?",`Do you want to delete the student ${this.student.name}`, [
                 {text: 'Delete', onPress: () => this.deleteClass()},
                 {text: "Don't Delete", onDismiss: () => {}}
             ]
@@ -29,18 +30,12 @@ export default class ClassItem extends React.Component{
     render(){
         return(
             <TouchableHighlight underlayColor={"white"} onPress={() => {
-                return this.props.navigate("LessonInfo", );
+                return this.props.navigate("StudentInfo", );
             }}>
                 <View style={styles.item}>
-                    <Text style={styles.name}>{this.props.clazz.name}</Text>
-                    <View style={styles.studentsView}>
-                        <Image source={Icons.student} style={styles.imageItem} />
-                        <Text style= {styles.countClass}>{this.props.countStudents}</Text>
-                    </View>
-                    <View style={styles.subjectsView}>
-                        <Image source={Icons.subject} style={styles.imageItem} />
-                        <Text style= {styles.countClass}>{this.props.countSubjects}</Text>
-                    </View>
+                    <Text style={styles.name}>{this.props.student.number}</Text>
+                    <Text style={styles.name}>{this.props.student.name}</Text>
+                    <Text style={styles.name}>{this.props.student.email}</Text>
                     <TouchableHighlight underlayColor={this.props.color} onPress={() => {
                         return this.askForDelete(this.props.name)
                     }}>

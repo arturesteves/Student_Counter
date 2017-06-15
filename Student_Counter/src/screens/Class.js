@@ -29,10 +29,8 @@ export default class Class extends React.Component {
             console.log("Classes", classes);
             let items = [];
             for(let clazz of classes) {
-                let students = clazz.getStudents();
-                let countStudents = students.length;
-                let subjects = clazz.getSubjects();
-                let countSubjects = subjects.length;
+                let countStudents = clazz.studentIds.length;
+                let countSubjects = clazz.subjectIds.length;
                 let item = <ClassItem key={clazz.id}
                                       removeClasss={this.removeClass.bind(this)}
                                       id={clazz.id}

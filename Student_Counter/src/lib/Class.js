@@ -1,7 +1,6 @@
 import * as firebase from 'firebase';
 let Student = require("./Student");
 let Subject = require("./Subject");
-
 let namespaces = require("./namespaces").namespaces;
 
 
