@@ -10,36 +10,24 @@ export default class PresenceItem extends React.Component{
         super(props);
         this.state = {
             isPresent:false,
-            presenceId:undefined
+            currentPresence:undefined
         }
     }
     componentDidMount(){
         let that = this;
-        this.setState({
-            isPresent:that.props.presenceId ? !this.state.isPresent : this.state.isPresent,
-            presenceId:that.props.presenceId? that.props.presenceId : undefined
-        });
+        PresenceLib.retrieve(this.props.presenceId).then((presence)=>{
+            this.setState({
+                currentPresence:presence,
+                isPresent: presence.present   
+            });
+        })
     }
 
     handlePresence(){
-        if(this.state.presenceId){
-            alert("Ja existo");
-            PresenceLib.retrieve(this.props.presenceId).then((presence)=>{
-                presence.updatePresence(!this.state.isPresent);
-                this.setState({
-                isPresent:!this.state.isPresent
-                })               
-            })
-        }else{
-            alert("Não existo");
-            let presence = new PresenceLib(this.props.number, this.props.lessonId, true, false);
-            presence.save().then((presenceId)=> {
-                this.setState({
-                    isPresent:true,
-                    presenceId: presenceId
-                })
-            }).catch((err) => console.log(err))
-        }
+        this.state.currentPresence.updatePresence(!this.state.isPresent);
+        this.setState({
+        isPresent:!this.state.isPresent
+        })               
     }
 
     render(){

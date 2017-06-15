@@ -21,13 +21,13 @@ export default class Lesson extends React.Component {
     constructor(){
         super();
         this.state = {
-            lessons: <Text></Text>,
+            lessons: undefined,
         }
     }
 
     removeLesson(key){
+        //FALTA REMOVER AS PRESENCAS
         let lessons = this.state.lessons;
-        console.log(lessons);
         let nLessons = lessons.map((lesson) => {
             if(lesson.key != key){
                 return lesson
@@ -36,6 +36,7 @@ export default class Lesson extends React.Component {
         this.setState({
             lessons: nLessons
         })
+        this.props.navigation.navigate("Lesson");
     }
 
     componentDidMount(){

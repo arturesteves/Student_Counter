@@ -1,7 +1,10 @@
 import * as firebase from 'firebase';
 let Subject = require("./Subject");
 let Teacher = require("./Teacher");
-
+let Presence = require("./Presence");
+let Class = require("./Class");
+let StudentLib = require("./Student");
+let PresenceLib = require("./Presence");
 let namespaces = require("./namespaces").namespaces;
 
 // TODO: suportar o número da aula
@@ -16,7 +19,66 @@ class Lesson{
         this.summary = summary || ""
     }
 
+    createPresences(lessonId){
+        if(this.classes.length != 0){
+            let allClasses = this.classes.map((_class) => {
+                return Class.retrieve(_class);
+            })
+            let studentIds = [];
+            Promise.all(allClasses).then((classes) =>{
+                classes.map((_class) => {
+                    studentIds = studentIds.concat(_class.studentIds);
+                })
+            }).then(()=>{
+                studentIds.map((studentId)=>{
+                    p = new Presence(studentId, lessonId,false,false);
+                    p.save();
+                })
+            })
+        }    
+    }
+
+    updatePresences(lessonId){
+        if(this.classes.length != 0){
+            let allClasses = this.classes.map((_class) => {
+                return Class.retrieve(_class);
+            })
+            let studentIds = [];
+            Promise.all(allClasses).then((classes) =>{
+                classes.map((_class) => {
+                    studentIds = studentIds.concat(_class.studentIds);
+                })
+            }).then(()=>{
+                studentIds.map((studentId)=>{
+                    StudentLib.all().then((students) => {
+                        PresenceLib.all().then((presences) => {
+                            let currentPresences = [];
+                            presences.map((presence) => {
+                                if(presence.lessonId == lessonId){
+                                    currentPresences.push(presence);
+                                }
+                            })
+                            let studentsToCreatePresence = [];
+                            students.map((student) => {
+                                currentPresences.map((presence) => {
+                                    if(presence.studentId == student.id){
+                                        studentsToCreatePresence.push(student);
+                                    }
+                                })        
+                            })
+                            studentsToCreatePresence.map((student) => {
+                                p = new Presence(student.id, lessonId,false,false);
+                                p.save();
+                            }) 
+                        })  
+                    })
+                    
+                })
+            })
+        }
+    }
     save(){
+        let that = this;
         if(this.id){
             return firebase.database().ref(namespaces.lessons + this.id).update({
                 teacherId: this.teacherId,
@@ -26,13 +88,16 @@ class Lesson{
                 photo: this.photo,
                 summary: this.summary,
                 classes:this.classes
+            }).then(()=> {
+                that.updatePresences(that.id);
             });
         } else {
             return new Promise((resolve, reject)=>{
                 // aqui seria necessario ver quantas aulas existem para esta disciplina (count)
-                let obj = firebase.database().ref(namespaces.lessons).push(this);
-                this.id = obj.key;
-                resolve(this.id);
+                let obj = firebase.database().ref(namespaces.lessons).push(that);
+                that.id = obj.key;
+                that.createPresences(that.id);
+                resolve(that.id);
             });
         }
     }

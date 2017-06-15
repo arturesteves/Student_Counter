@@ -27,10 +27,10 @@ import StudentScreen from "./src/screens/Student";
 import StudentCreateScreen from "./src/screens/StudentCreate";
 import ClassScreen from "./src/screens/Class";
 import ClassCreateScreen from "./src/screens/ClassCreate";
+import LessonInfo from "./src/screens/LessonInfo";
 
-// import firebaseInit from "./firebase";
+//import firebaseInit from "./firebase";
 
-let firebase = require("firebase");
 // Initialize Firebase
 firebase.initializeApp({
     apiKey: "AIzaSyCJO-fJa5dlYXKK1zy8bt4TxzwoniSvtsU",
@@ -41,12 +41,8 @@ firebase.initializeApp({
     messagingSenderId: "571714718837"
 });
 
-// firebaseInit().then();
 
-/////////
-
-///////
-// /////
+//firebaseInit().then();
 
 
 const MyApp = DrawerNavigator({
@@ -82,6 +78,9 @@ const MyApp = DrawerNavigator({
     },
     ClassCreate:{
         screen: ClassCreateScreen
+    },
+    LessonInfo:  {
+        screen: LessonInfo
     }
 },{
     drawerWidth: Dimensions.get("window").width * 3/4,
