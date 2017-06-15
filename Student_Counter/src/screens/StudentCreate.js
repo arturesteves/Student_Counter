@@ -7,7 +7,7 @@ export default class StudentCreate extends React.Component {
 
     constructor(props){
         super(props);
-        this.state = {};
+        this.state = {number: null, name: null,  email: null};
     }
 
     static navigationOptions = {
@@ -17,7 +17,20 @@ export default class StudentCreate extends React.Component {
     /////
     create(){
 
-        //todo - validation of the values
+        if(!this.state.number){
+            alert("The number field is required");
+            return;
+        }
+
+        if(!this.state.name){
+            alert("The name field is required");
+            return;
+        }
+
+        if(!this.state.email){
+            alert("The email field is required");
+            return;
+        }
 
         let student = new Student (this.state.number, this.state.name, this.state.email);
         student.save().then(()=> {
