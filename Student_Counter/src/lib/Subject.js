@@ -1,11 +1,9 @@
 import * as firebase from 'firebase';
-
+let Teacher = require("./Teacher");
 
 // circular dependencies : https://coderwall.com/p/myzvmg/circular-dependencies-in-node-js
 //https://gist.github.com/lperrin/5934098
 //let Lesson = require("./Lesson.js");
-let Teacher = require("./Teacher");
-
 
 let namespaces = require("./namespaces").namespaces;
 
@@ -36,7 +34,18 @@ class Subject{
     }
 
     delete(){
+        let that = this;
         firebase.database().ref(namespaces.subjects + this.id).remove();
+        /*
+        Lesson.all().then((lessons) => {
+            lessons.map((lesson)=>{
+                if(lesson.subjectId == that.id){
+                    lesson.delete();
+                }
+            })
+        })
+        */
+
     }
 
     async getOverseers(){

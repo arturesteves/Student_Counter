@@ -29,19 +29,26 @@ export default class Subject extends React.Component {
     componentDidMount(){
         this.getSubjects();
     }
+    removeSubject(key){
+        let nSubjects = this.state.subjects.filter((subject) => subject.key != key);
+        this.setState({
+            subjects: nSubjects
+        })
+    }
+
     getSubjects(){
+        let that = this;
         SubjectLib.all().then((subjects) => {
             let color = 1;
             let subjs = subjects.map(function(subject){
                 color == 1 ? color=0 : color=1;
-                return <SubjectItem key={subject.id} name={subject.acronym} color={color == 0 ? "#90CAF9" : "#b1d9fa"} />
+                return <SubjectItem key={subject.id} id={subject.id} removeSubject={that.removeSubject.bind(that)} name={subject.acronym} color={color == 0 ? "#90CAF9" : "#b1d9fa"} />
             })
             this.setState({
                 subjects:subjs
             })
         })
     }
-    ///
     render(){
         const { navigate } = this.props.navigation;
         return(
