@@ -12,14 +12,14 @@ export default class ClassItem extends React.Component{
         let that = this;
         ClassLib.retrieve(this.props.id).then((clazz) => {
             clazz.delete();
-            that.props.removeClass(clazz.id);
+            that.props.removeClass(clazz.name);
         }).catch((err) => {
             alert(err);
         })
     }
 
     askForDelete(){
-        Alert.alert( "Delete?",`Do you want to delete the class ${this.name}`, [
+        Alert.alert( "Delete?",`Do you want to delete the class ${this.props.id}`, [
                 {text: 'Delete', onPress: () => this.deleteClass()},
                 {text: "Don't Delete", onDismiss: () => {}}
             ]
@@ -29,7 +29,7 @@ export default class ClassItem extends React.Component{
     render(){
         return(
             <TouchableHighlight underlayColor={"white"} onPress={() => {
-                return this.props.navigate("LessonInfo", );
+                alert("Class:"+this.props.id)
             }}>
                 <View style={styles.item}>
                     <Text style={styles.name}>{this.props.clazz.name}</Text>

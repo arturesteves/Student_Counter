@@ -4,12 +4,13 @@ import React from 'react';
 import { View, Text, Button, TextInput, ScrollView, Dimensions } from "react-native";
 import MultiEntityPicker from "../components/MultiEntityPicker";
 import Header from "../components/Header";
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class ClassCreate extends React.Component {
 
     constructor(props){
         super(props);
-        this.state = { students: {}, subjects: {} };
+        this.state = { students: {}, subjects: {}, name:"", isLoading:false };
     }
 
     static navigationOptions = {
@@ -17,8 +18,26 @@ export default class ClassCreate extends React.Component {
     };
 
     create(){
+        if(this.state.name.length <1 ){
+            alert("Please insert the class name");
+            return null;
+        }
+        if(Object.keys(this.state.students).length === 0){
+            alert("Please insert students");
+            return null;
+        }
+        if(Object.keys(this.state.subjects).length === 0){
+            alert("Please insert subjects");
+            return null;
+        }
+        this.setState({
+                isLoading:!this.state.isLoading
+            })
         let clazz = new Class(this.state.name, Object.keys(this.state.students), Object.keys(this.state.subjects));
         clazz.save().then(()=> {
+            this.setState({
+                isLoading:!this.state.isLoading
+            })
             this.props.navigation.navigate('Class');
         });
     }
@@ -27,6 +46,7 @@ export default class ClassCreate extends React.Component {
         const { navigate } = this.props.navigation;
         return(
             <View>
+                <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
                 <Header navigate={navigate} text="Create Class"/>
                 <ScrollView height={Dimensions.get("window").height-90} showsVerticalScrollIndicator={false}>
                     <Text>Insert the name of the class</Text>
