@@ -10,18 +10,20 @@ import Header from "../components/Header";
 import ClassLib from "../lib/Class";
 import SubjectLib from "../lib/Subject";
 import TeacherLIb from "../lib/Teacher";
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class LessonCreate extends React.Component {
 
     constructor(props){
         super(props);
         this.state = {
-        dateStart: "2016-05-09, 1:00 am",
-        dateEnd: "2016-05-09, 1:00 am",
+        dateStart: "2016-05-09 01:00",
+        dateEnd: "2016-05-09 01:00",
         selectTeacher:0,
         teacherItems:[<Picker.Item key={0} label={"Select Teacher"} value={0} />],
         selectSubject:0,
-        subjectItems:[<Picker.Item key={0} label={"Select Subject"} value={0} />]
+        subjectItems:[<Picker.Item key={0} label={"Select Subject"} value={0} />],
+        isLoading:true
         }
     }
 
@@ -51,6 +53,11 @@ export default class LessonCreate extends React.Component {
                 return null;
             }
 
+            this.setState({
+                isLoading: !this.state.isLoading
+            })
+            console.log(this.state.dateStart);
+            console.log(this.state.dateEnd);
             let lesson = new Lesson(that.state.selectTeacher,
                 that.state.selectSubject,eligibleClasses,
                 new Date(this.state.dateStart).toISOString(),
@@ -58,13 +65,22 @@ export default class LessonCreate extends React.Component {
             
             lesson.save().then(()=>{
                 this.props.navigation.navigate('Lesson');
+                this.setState({
+                    isLoading: !this.state.isLoading
+                })
             }).catch((err) =>{
                 console.log(err);
                 alert("Something went wrong");
+                this.setState({
+                    isLoading: !this.state.isLoading
+                })
             });
         }).catch((err) =>{
                 console.log(err);
                 alert("Something went wrong");
+                this.setState({
+                    isLoading: !this.state.isLoading
+                })
         });
     
     }
@@ -96,7 +112,8 @@ export default class LessonCreate extends React.Component {
                     return <Picker.Item key={teacher.id} label={teacher.name} value={teacher.id} />
                 })
                 this.setState({
-                    teacherItems:teacherItems
+                    teacherItems:teacherItems,
+                    isLoading: !this.state.isLoading
                 })
             })
         })
@@ -125,6 +142,7 @@ export default class LessonCreate extends React.Component {
         let that = this;
         return(
             <View>
+                <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
                 <Header navigate={navigate} text="Create Lesson"/>
                 <Text>Select the teacher:</Text>
                 <Picker
@@ -149,7 +167,6 @@ export default class LessonCreate extends React.Component {
                     date={this.state.dateStart}
                     mode="datetime"
                     placeholder="select date"
-                    format="YYYY-MM-DD hh:mm"
                     is24Hour={true}
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"

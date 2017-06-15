@@ -6,12 +6,13 @@ import {
     Dimensions,
     ScrollView
 } from "react-native";
-import Header from "../components/Header"
+import Header from "../components/Header";
 import Styles from "../styles/Styles.js";
 import LessonItem from "../components/LessonItem.js";
 import LessonLib from "../lib/Lesson.js";
 import SubjectLib from "../lib/Subject.js";
-
+import Spinner from 'react-native-loading-spinner-overlay';
+import { NavigationActions } from 'react-navigation'
 
 export default class Lesson extends React.Component {
     static navigationOptions = {
@@ -22,21 +23,15 @@ export default class Lesson extends React.Component {
         super();
         this.state = {
             lessons: undefined,
+            isLoading:true,
         }
     }
 
     removeLesson(key){
-        //FALTA REMOVER AS PRESENCAS
-        let lessons = this.state.lessons;
-        let nLessons = lessons.map((lesson) => {
-            if(lesson.key != key){
-                return lesson
-            }
-        });
+        let nLessons = this.state.lessons.filter((lesson) => lesson.key != key);
         this.setState({
             lessons: nLessons
         })
-        this.props.navigation.navigate("Lesson");
     }
 
     componentDidMount(){
@@ -69,6 +64,7 @@ export default class Lesson extends React.Component {
                 });
                 this.setState({
                     lessons:lessonItems,
+                    isLoading:!this.state.isLoading
                 })
             })
         })
@@ -80,6 +76,7 @@ export default class Lesson extends React.Component {
         const { navigate } = this.props.navigation;
         return(
             <View>
+                <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
                 <Header navigate={navigate} text="Lesson"/>
                 <ScrollView height={Dimensions.get("window").height-90} showsVerticalScrollIndicator={false}>
                 <Button onPress={() => navigate('LessonCreate')} title="Create new lesson" />

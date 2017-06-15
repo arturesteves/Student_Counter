@@ -7,7 +7,8 @@ import ClassLib from "../lib/Class";
 import StudentLib from "../lib/Student";
 import PresenceLib from "../lib/Presence";
 import PresenceItem from "../components/PresenceItem";
-import { List } from 'react-native-elements'
+import { List } from 'react-native-elements';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class LessonInfo extends React.Component {
 
@@ -15,6 +16,7 @@ export default class LessonInfo extends React.Component {
         super(props);
         this.state = {
             presenceItems:undefined,
+            isLoading: true
         }
     }
 
@@ -66,7 +68,8 @@ export default class LessonInfo extends React.Component {
                         })
                     }).then(()=>{
                         this.setState({
-                            presenceItems: presenceItemsInner
+                            presenceItems: presenceItemsInner,
+                            isLoading: !this.state.isLoading
                         })
                     }).catch((err) => console.log(err))
             })
@@ -83,6 +86,7 @@ export default class LessonInfo extends React.Component {
         const { navigate } = this.props.navigation;
         return(
             <View>
+                <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
                 <Header navigate={navigate} text="Lesson Info"/>
                 <List containerStyle={{marginBottom: 20}}>
                     {this.state.presenceItems}
