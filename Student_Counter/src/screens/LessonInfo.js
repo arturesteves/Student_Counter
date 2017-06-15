@@ -74,7 +74,7 @@ export default class LessonInfo extends React.Component {
                     }).catch((err) => console.log(err))
             })
         .catch((err) => {
-            alert("Oi Something Went Wrong");
+            alert("Something Went Wrong");
         })
     }
 

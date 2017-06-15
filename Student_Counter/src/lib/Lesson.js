@@ -103,7 +103,15 @@ class Lesson{
     }
 
     delete(){
+        let that = this;
         firebase.database().ref(namespaces.lessons + this.id).remove();
+        PresenceLib.all().then((presences) => {
+            presences.map((presence) => {
+                if(presence.lessonId = that.id){
+                    presence.delete();
+                }
+            })
+        })
     }
 
     async getSubject(){
