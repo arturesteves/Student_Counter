@@ -3,7 +3,7 @@ import StudentLib from "../lib/Student.js";
 import {StyleSheet, View, Button, Dimensions, ScrollView} from "react-native";
 import Header from "../components/Header"
 import StudentItem from "../components/StudentItem";
-
+import Spinner from 'react-native-loading-spinner-overlay';
 
 
 export default class Student extends React.Component {
@@ -11,7 +11,8 @@ export default class Student extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            items: []
+            items: [],
+            isLoading: true,
         };
     }
     static navigationOptions = {
@@ -22,26 +23,31 @@ export default class Student extends React.Component {
         this.props.navigation.navigate("Student");
     }
     //////
+    /////
 
     async componentDidMount(){
-        try {
+        await this.createList()
+    }
 
+    async createList() {
+        this.setState({items: this.state.items, isLoading: true})
+        try {
             let that = this;
             let students = await StudentLib.all();
             console.log("Students", students);
             let items = [];
             for(let student of  students) {
-                let item = <StudentItem key={student.id}
-                                      removeStudent={this.removeStudent.bind(this)}
-                                      id={student.id}
-                                      student={student}
-                                      navigate={that.props.navigation.navigate}/>;
+                let item = <StudentItem key={student.number}
+                                        removeStudent={this.createList.bind(this)}
+                                        id={student.number}
+                                        student={student}
+                                        navigate={that.props.navigation.navigate}/>;
                 items.push(item);
             }
 
             console.log("Items", items);
 
-            this.setState({items: items})
+            this.setState({items: items, isLoading: false})
 
         } catch(error){
             //todo - do something here
@@ -50,15 +56,17 @@ export default class Student extends React.Component {
     }
     ///////////
     /////
+    /////
 
 
     render(){
         const { navigate } = this.props.navigation;
         return(
             <View>
+                <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
                 <Header navigate={navigate} text="Students"/>
                 <ScrollView height={Dimensions.get("window").height-90} showsVerticalScrollIndicator={false}>
-                    <Button onPress={() => this.props.navigation.navigate('ClassCreate')} title="Create new class" />
+                    <Button onPress={() => this.props.navigation.navigate('StudentCreate')} title="Create new student" />
                     <View style={styles.content}>
                         {this.state.items}
                     </View>
