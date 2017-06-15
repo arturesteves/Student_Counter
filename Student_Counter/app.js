@@ -29,20 +29,19 @@ import ClassScreen from "./src/screens/Class";
 import ClassCreateScreen from "./src/screens/ClassCreate";
 import LessonInfo from "./src/screens/LessonInfo";
 
-//import firebaseInit from "./firebase";
+import firebaseInit from "./firebase";
 
 // Initialize Firebase
 firebase.initializeApp({
-    apiKey: "AIzaSyCJO-fJa5dlYXKK1zy8bt4TxzwoniSvtsU",
-    authDomain: "gpbitteam-59ca2.firebaseapp.com",
-    databaseURL: "https://gpbitteam-59ca2.firebaseio.com",
-    projectId: "gpbitteam-59ca2",
-    storageBucket: "gpbitteam-59ca2.appspot.com",
-    messagingSenderId: "571714718837"
+    apiKey: "AIzaSyCY6sw4EPi-TJIbGueUVlhtJWAeOvdpafw",
+    authDomain: "gpbitteamapk.firebaseapp.com",
+    databaseURL: "https://gpbitteamapk.firebaseio.com",
+    projectId: "gpbitteamapk",
+    storageBucket: "gpbitteamapk.appspot.com",
+    messagingSenderId: "598118677181"
 });
 
-
-//firebaseInit().then();
+// firebaseInit().then();
 
 
 const MyApp = DrawerNavigator({
