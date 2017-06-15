@@ -23,7 +23,7 @@ class Student{
     }
 
     delete(){
-        firebase.database().ref(namespaces.students + this.number).remove();
+        return firebase.database().ref(namespaces.students + this.number).remove();
     }
 
     getPresencesAsync(subjectId){

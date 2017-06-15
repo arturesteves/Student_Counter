@@ -9,24 +9,20 @@ export default class StudentItem extends React.Component{
     }
 
     deleteStudent(){
-        let that = this;
-        StudentLib.retrieve(this.props.id).then((student) => {
-            student.delete();
-            that.props.removeStudent(student.id);
-        }).catch((err) => {
-            alert(err);
-        })
+        this.props.student.delete();
+        this.props.removeStudent(this.number);
     }
-
+/////
 
     askForDelete(){
-        Alert.alert( "Delete?",`Do you want to delete the student ${this.student.name}`, [
-                {text: 'Delete', onPress: () => this.deleteClass()},
+        Alert.alert( "Delete?",`Do you want to delete the student ${this.props.student.name}`, [
+                {text: 'Delete', onPress: () => this.deleteStudent()},
                 {text: "Don't Delete", onDismiss: () => {}}
             ]
         )
     }
 
+    /////
     render(){
         return(
             <TouchableHighlight underlayColor={"white"} onPress={() => {
