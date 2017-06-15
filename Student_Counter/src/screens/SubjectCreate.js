@@ -9,16 +9,26 @@ export default class SubjectCreate extends React.Component {
 
     constructor(props){
         super(props);
-        this.state = { overseers: {} };
+        this.state = { overseers: {}, name:"",acronym:""};
     }
 
     static navigationOptions = {
         drawerLabel: undefined,
     };
 
-    ////////
     create(){
-
+        if(this.state.name.length  < 1){
+            alert("You need to add a name");
+            return null;
+        }
+        if(this.state.acronym.length  < 1){
+            alert("You need to add a acronym");
+            return null;
+        }
+        if(Object.keys(this.state.overseers).length === 0){
+            alert("You need to add a teacher!");
+            return null;
+        }
         let subject = new Subject(this.state.name, this.state.acronym, Object.keys(this.state.overseers));
         subject.save().then(()=> {
             this.props.navigation.navigate('Subject');

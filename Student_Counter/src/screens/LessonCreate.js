@@ -91,11 +91,18 @@ export default class LessonCreate extends React.Component {
         let eligibleTeachers = [];
         TeacherLIb.all().then((teachers) => {
             if(teachers.length == 0){
+                this.setState({
+                    isLoading: !this.state.isLoading
+                })
                 return null;
             }
             SubjectLib.all().then((subjects) => {
+                console.log(subjects);
                 if(subjects.length == 0){
-                return null;
+                    this.setState({
+                        isLoading: !this.state.isLoading
+                    })
+                    return null;
                 }
                 subjects.map((subject) => {
                     subject.overseersIds.map((overseerId) => {

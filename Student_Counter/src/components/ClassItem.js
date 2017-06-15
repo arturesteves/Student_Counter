@@ -84,6 +84,5 @@ let styles = StyleSheet.create({
         marginBottom:15,
         flexDirection:"row",
     },
-    ///////
-    countClass: null,
+    countClass: {},
 });
