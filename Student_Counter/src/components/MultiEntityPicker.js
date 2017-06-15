@@ -19,13 +19,9 @@ export default class MultiEntityPicker extends React.Component {
             list: {}
         };
     }
-///////
-    //////
+    
     create(){
-        // let student = new Student (this.state.number, this.state.name, this.state.email);
-        // student.save().then(()=> {
-        //     this.props.navigation.navigate('Class');
-        // });
+
     }
 
     addEntity() {

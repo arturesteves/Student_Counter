@@ -14,6 +14,7 @@ import Header from "../components/Header"
 import Styles from "../styles/Styles.js";
 import SubjectItem from "../components/SubjectItem.js";
 import SubjectLib from "../lib/Subject";
+import Spinner from 'react-native-loading-spinner-overlay';
 
 
 export default class Subject extends React.Component {
@@ -23,7 +24,8 @@ export default class Subject extends React.Component {
     constructor(){
         super();
         this.state = {
-            subjects:undefined
+            subjects:undefined,
+            isLoading:true
         }
     }
     componentDidMount(){
@@ -45,7 +47,8 @@ export default class Subject extends React.Component {
                 return <SubjectItem key={subject.id} id={subject.id} removeSubject={that.removeSubject.bind(that)} name={subject.acronym} color={color == 0 ? "#90CAF9" : "#b1d9fa"} />
             })
             this.setState({
-                subjects:subjs
+                subjects:subjs,
+                isLoading:!this.state.isLoading
             })
         })
     }
@@ -53,6 +56,7 @@ export default class Subject extends React.Component {
         const { navigate } = this.props.navigation;
         return(
             <View>
+                <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
                 <Header navigate={navigate} text="Subject"/>
                 <Button onPress={() => navigate('SubjectCreate')} title="Create new subject" />
                 <ScrollView height={Dimensions.get("window").height-90} showsVerticalScrollIndicator={false}>

@@ -4,12 +4,13 @@ import React from 'react';
 import { View, Text, Button, TextInput, ScrollView, Dimensions } from "react-native";
 import MultiEntityPicker from "../components/MultiEntityPicker";
 import Header from "../components/Header";
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class SubjectCreate extends React.Component {
 
     constructor(props){
         super(props);
-        this.state = { overseers: {}, name:"",acronym:""};
+        this.state = { overseers: {}, name:"",acronym:"", isLoading:false};
     }
 
     static navigationOptions = {
@@ -29,9 +30,15 @@ export default class SubjectCreate extends React.Component {
             alert("You need to add a teacher!");
             return null;
         }
+        this.setState({
+                isLoading:!this.state.isLoading
+        })
         let subject = new Subject(this.state.name, this.state.acronym, Object.keys(this.state.overseers));
         subject.save().then(()=> {
             this.props.navigation.navigate('Subject');
+            this.setState({
+                isLoading:!this.state.isLoading
+            })
         });
     }
 
@@ -39,6 +46,7 @@ export default class SubjectCreate extends React.Component {
         const { navigate } = this.props.navigation;
         return(
             <View>
+                <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
                 <Header navigate={navigate} text="Create Class"/>
                 <ScrollView height={Dimensions.get("window").height-90} showsVerticalScrollIndicator={false}>
                     <Text>Insert the name of the subject</Text>
