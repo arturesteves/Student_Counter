@@ -16,6 +16,7 @@ export default class DrawerContent extends React.Component{
                 <DrawerTab text="Teacher" icon="teacher" navigate={this.props.navigate}/>
                 <DrawerTab text="Student" icon="student" navigate={this.props.navigate}/>
                 <DrawerTab text="Class" icon="class" navigate={this.props.navigate}/>
+                <DrawerTab text="Metrics" icon="lesson" navigate={this.props.navigate}/>
             </View>
         )
     }

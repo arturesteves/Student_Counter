@@ -47,7 +47,7 @@ export default class SubjectCreate extends React.Component {
         return(
             <View>
                 <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
-                <Header navigate={navigate} text="Create Class"/>
+                <Header navigate={navigate} text="Create Subject"/>
                 <ScrollView height={Dimensions.get("window").height-90} showsVerticalScrollIndicator={false}>
                     <Text>Insert the name of the subject</Text>
                     <TextInput

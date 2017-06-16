@@ -3,22 +3,25 @@
  */
 import Lesson from '../lib/Lesson';
 import React from 'react';
-import { View, Text, Button, Picker } from "react-native";
+import { View, Text, Button, Picker, TouchableHighlight } from "react-native";
 import EntityPicker from "../components/EntityPicker";
-import DatePicker from 'react-native-datepicker';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import Header from "../components/Header";
 import ClassLib from "../lib/Class";
 import SubjectLib from "../lib/Subject";
 import TeacherLIb from "../lib/Teacher";
 import Spinner from 'react-native-loading-spinner-overlay';
+import { Icon } from 'react-native-elements'
 
 export default class LessonCreate extends React.Component {
 
     constructor(props){
         super(props);
         this.state = {
-        dateStart: "2016-05-09 01:00",
-        dateEnd: "2016-05-09 01:00",
+        dateStart: "",
+        dateEnd: "",
+        isVisible:false,
+        whatDate:-1,
         selectTeacher:0,
         teacherItems:[<Picker.Item key={0} label={"Select Teacher"} value={0} />],
         selectSubject:0,
@@ -36,6 +39,10 @@ export default class LessonCreate extends React.Component {
         if(this.state.selectTeacher == 0 || this.state.selectSubject == 0){
             this.state.selectTeacher == 0 ? alert("You need to choose a teacher") : alert("You need to choose a subject");
             return null
+        }
+        if(this.state.dateStart=="" || this.state.dateEnd==""){
+            alert("Please Insert Both Dates");
+            return null;
         }
         ClassLib.all().then((classes) =>{
             let eligibleClasses = [];
@@ -56,8 +63,6 @@ export default class LessonCreate extends React.Component {
             this.setState({
                 isLoading: !this.state.isLoading
             })
-            console.log(this.state.dateStart);
-            console.log(this.state.dateEnd);
             let lesson = new Lesson(that.state.selectTeacher,
                 that.state.selectSubject,eligibleClasses,
                 new Date(this.state.dateStart).toISOString(),
@@ -84,6 +89,20 @@ export default class LessonCreate extends React.Component {
         });
     
     }
+
+    _showDateTimePicker = () => this.setState({ isVisible: true });
+ 
+    _hideDateTimePicker = () => this.setState({ isVisible: false });
+ 
+    _handleDatePicked = (date) => {
+        let d = new Date(date).toISOString();
+        this.state.whatDate == 0 ? this.setState({dateStart:d}) : this.setState({dateEnd:d});
+        this.setState({
+            whatDate:-1
+        })
+        this._hideDateTimePicker();
+    };
+
     componentDidMount(){
         this.getTeachers();
     }
@@ -169,56 +188,30 @@ export default class LessonCreate extends React.Component {
                 {this.state.subjectItems}
                 </Picker>
                 <Text>Select lesson start date and time:</Text>
-                <DatePicker
-                    style={{width: 200}}
-                    date={this.state.dateStart}
-                    mode="datetime"
-                    placeholder="select date"
-                    is24Hour={true}
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    customStyles={{
-                        dateIcon: {
-                            position: 'absolute',
-                            left: 0,
-                            top: 4,
-                            marginLeft: 0
-                        },
-                        dateInput: {
-                            marginLeft: 36
-                        }
-                    }}
-                    onDateChange={(date) => {
-                        this.setState({
-                            dateStart:date
-                        });
-                    }}
-                />
+                <TouchableHighlight onPress={() => {this.setState({isVisible:true, whatDate:0})}}>
+                    <View style={{flexDirection:"row"}}>
+                        <Icon
+                        name='clock-o'
+                        type="font-awesome"
+                        size={30}/>
+                        <Text>{this.state.dateStart}</Text>
+                    </View>
+                </TouchableHighlight>
                 <Text>Select lesson end date and time:</Text>
-                <DatePicker
-                    style={{width: 200}}
-                    date={this.state.dateEnd}
-                    mode="datetime"
-                    placeholder="select date"
-                    is24Hour={true}
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    customStyles={{
-                        dateIcon: {
-                            position: 'absolute',
-                            left: 0,
-                            top: 4,
-                            marginLeft: 0
-                        },
-                        dateInput: {
-                            marginLeft: 36
-                        }
-                    }}
-                    onDateChange={(date) => {
-                        this.setState({
-                            dateEnd:date,
-                        });
-                    }}
+                <TouchableHighlight onPress={() => {this.setState({isVisible:true, whatDate:1})}}>
+                    <View style={{flexDirection:"row"}}>
+                        <Icon
+                        name='clock-o'
+                        type="font-awesome"
+                        size={30}/>
+                        <Text>{this.state.dateEnd}</Text>
+                    </View>
+                </TouchableHighlight>
+                <DateTimePicker
+                    isVisible={this.state.isVisible}
+                    onConfirm={this._handleDatePicked}
+                    onCancel={this._hideDateTimePicker}
+                    mode={"datetime"}
                 />
                 <Button onPress={this.create.bind(this)} title="Create" />
             </View>
