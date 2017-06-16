@@ -107,7 +107,7 @@ class Lesson{
         firebase.database().ref(namespaces.lessons + this.id).remove();
         PresenceLib.all().then((presences) => {
             presences.map((presence) => {
-                if(presence.lessonId = that.id){
+                if(presence.lessonId == that.id){
                     presence.delete();
                 }
             })
