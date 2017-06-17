@@ -44,7 +44,7 @@ export default class Subject extends React.Component {
             let color = 1;
             let subjs = subjects.map(function(subject){
                 color == 1 ? color=0 : color=1;
-                return <SubjectItem key={subject.id} id={subject.id} removeSubject={that.removeSubject.bind(that)} name={subject.acronym} color={color == 0 ? "#90CAF9" : "#b1d9fa"} />
+                return <SubjectItem navigate={that.props.navigation.navigate} key={subject.id} id={subject.id} subject={subject} removeSubject={that.removeSubject.bind(that)} name={subject.acronym} color={color == 0 ? "#90CAF9" : "#b1d9fa"} />
             })
             this.setState({
                 subjects:subjs,
