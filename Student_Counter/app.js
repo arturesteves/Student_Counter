@@ -4,6 +4,7 @@
  * @flow
  */
 
+
 import React, {Component} from "react";
 import {
     AppRegistry,
@@ -19,6 +20,7 @@ import HomeScreen from "./src/screens/Home";
 import Drawer from "./src/components/Drawer";
 import LessonScreen from "./src/screens/Lesson";
 import LessonCreateScreen from "./src/screens/LessonCreate";
+import LessonEditScreen from "./src/screens/LessonEdit";
 import SubjectScreen from "./src/screens/Subject";
 import SubjectCreateScreen from "./src/screens/SubjectCreate";
 import TeacherScreen from "./src/screens/Teacher";
@@ -53,6 +55,9 @@ const MyApp = DrawerNavigator({
     },
     LessonCreate:{
         screen: LessonCreateScreen
+    },
+    LessonEdit:{
+        screen: LessonEditScreen
     },
     Subject:{
         screen: SubjectScreen

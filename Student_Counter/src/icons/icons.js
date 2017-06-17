@@ -10,4 +10,5 @@ module.exports = {
     "home":require("./home.png"),
     "presence":require("./presence.png"),
     "garbage":require("./garbage.png"),
-}
+    "edit":require("./edit.gif"),
+};
