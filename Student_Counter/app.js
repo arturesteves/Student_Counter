@@ -41,7 +41,7 @@ firebase.initializeApp({
     messagingSenderId: "571714718837"
 });
 
-// firebaseInit().then();
+//firebaseInit().then();
 
 
 const MyApp = DrawerNavigator({

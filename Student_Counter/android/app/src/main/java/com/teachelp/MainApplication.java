@@ -22,7 +22,7 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new RNFetchBlobPackage(),   
+          new RNFetchBlobPackage(),	  
           new MainReactPackage()
       );
     }
