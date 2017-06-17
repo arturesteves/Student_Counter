@@ -37,6 +37,11 @@ export default class SubjectItem extends React.Component{
                     <TouchableHighlight underlayColor={this.props.color} onPress={() => this.askForDelete(this.props.name)}>
                     <Image source={Icons.garbage} style={Styles.lessonItemDelete} />
                     </TouchableHighlight>
+                    <TouchableHighlight underlayColor={this.props.color} onPress={() => this.props.navigate("SubjectEdit", {
+                        subject: this.props.subject
+                    })}>
+                        <Image source={Icons.edit} style={Styles.lessonItemDelete} />
+                    </TouchableHighlight>
                 </View>
             </TouchableHighlight>
         )

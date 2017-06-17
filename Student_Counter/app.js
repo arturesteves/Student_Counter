@@ -23,10 +23,12 @@ import LessonCreateScreen from "./src/screens/LessonCreate";
 import LessonEditScreen from "./src/screens/LessonEdit";
 import SubjectScreen from "./src/screens/Subject";
 import SubjectCreateScreen from "./src/screens/SubjectCreate";
+import SubjectEditScreen from "./src/screens/SubjectEdit";
 import TeacherScreen from "./src/screens/Teacher";
 import TeacherCreateScreen from "./src/screens/TeacherCreate";
 import StudentScreen from "./src/screens/Student";
 import StudentCreateScreen from "./src/screens/StudentCreate";
+import StudentEditScreen from "./src/screens/StudentEdit";
 import ClassScreen from "./src/screens/Class";
 import ClassCreateScreen from "./src/screens/ClassCreate";
 import LessonInfo from "./src/screens/LessonInfo";
@@ -65,6 +67,9 @@ const MyApp = DrawerNavigator({
     SubjectCreate:{
         screen: SubjectCreateScreen
     },
+    SubjectEdit:{
+        screen: SubjectEditScreen
+    },
     Teacher:{
         screen: TeacherScreen
     },
@@ -76,6 +81,9 @@ const MyApp = DrawerNavigator({
     },
     StudentCreate:{
         screen: StudentCreateScreen
+    },
+    StudentEdit:{
+        screen: StudentEditScreen
     },
     Class:{
         screen: ClassScreen

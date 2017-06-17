@@ -13,7 +13,7 @@ import TeacherLIb from "../lib/Teacher";
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Icon } from 'react-native-elements'
 
-export default class LessonCreate extends React.Component {
+export default class LessonEdit extends React.Component {
 
     constructor(props){
         super(props);
@@ -34,7 +34,7 @@ export default class LessonCreate extends React.Component {
         drawerLabel: undefined,
     };
 
-    create(){
+    update(){
         let that = this;
         if(this.state.selectTeacher == 0 || this.state.selectSubject == 0){
             this.state.selectTeacher == 0 ? alert("You need to choose a teacher") : alert("You need to choose a subject");
@@ -186,11 +186,10 @@ export default class LessonCreate extends React.Component {
 
     render(){
         const { navigate } = this.props.navigation;
-        let that = this;
         return(
             <View>
                 <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
-                <Header navigate={navigate} text="Create Lesson"/>
+                <Header navigate={navigate} text="Edit Lesson"/>
                 <Text>Select the teacher:</Text>
                 <Picker
                 selectedValue={this.state.selectTeacher}
@@ -234,7 +233,7 @@ export default class LessonCreate extends React.Component {
                     onCancel={this._hideDateTimePicker}
                     mode={"datetime"}
                 />
-                <Button onPress={this.create.bind(this)} title="Create" />
+                <Button onPress={()=>this.update()} title="Update" />
             </View>
         )
     }

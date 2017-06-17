@@ -15,8 +15,9 @@ export default class MultiEntityPicker extends React.Component {
 
     constructor(props){
         super(props);
+        let list = this.props.initial || {};
         this.state = {
-            list: {}
+            list: list
         };
     }
     
