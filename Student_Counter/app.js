@@ -31,6 +31,7 @@ import StudentCreateScreen from "./src/screens/StudentCreate";
 import StudentEditScreen from "./src/screens/StudentEdit";
 import ClassScreen from "./src/screens/Class";
 import ClassCreateScreen from "./src/screens/ClassCreate";
+import ClassEditScreen from "./src/screens/ClassEdit";
 import LessonInfo from "./src/screens/LessonInfo";
 import Metrics from "./src/screens/Metrics";
 import firebaseInit from "./firebase";
@@ -90,6 +91,9 @@ const MyApp = DrawerNavigator({
     },
     ClassCreate:{
         screen: ClassCreateScreen
+    },
+    ClassEdit:{
+        screen: ClassEditScreen
     },
     LessonInfo:  {
         screen: LessonInfo

@@ -46,6 +46,11 @@ export default class ClassItem extends React.Component{
                     }}>
                         <Image source={Icons.garbage} style={styles.deleteClass} />
                     </TouchableHighlight>
+                    <TouchableHighlight underlayColor={this.props.color} onPress={() => {
+                        this.props.navigate("ClassEdit", {clazz: this.props.clazz})
+                    }}>
+                        <Image source={Icons.edit} style={styles.deleteClass} />
+                    </TouchableHighlight>
                 </View>
             </TouchableHighlight>
         )

@@ -17,7 +17,8 @@
     "react-native-loading-spinner-overlay": "^0.5.0",
     "react-native-modal-datetime-picker": "^4.6.0",
     "react-native-vector-icons": "^4.2.0",
-    "react-navigation": "^1.0.0-beta.11"
+    "react-navigation": "^1.0.0-beta.11",
+    "xlsx": "^0.10.5"
   },
   "devDependencies": {
     "babel-jest": "20.0.3",
