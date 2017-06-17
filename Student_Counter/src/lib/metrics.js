@@ -17,7 +17,8 @@ const worksheetHeaders = {
     lesson: ["##########Lesson##########"],
     presence: ["##########Presence##########"],
     student: ["##########Student##########"],
-    teacher: ["##########Teacher##########"]
+    teacher: ["##########Teacher##########"],
+    subject: ["##########Subject##########"]
 }
 
 function Metrics(teacherId) {
@@ -40,7 +41,9 @@ function Metrics(teacherId) {
                 });
                 Promise.all(allClasses).then((classes) => {
                     classes.map((_class) => {
-                        data = data.concat(_class);
+                        if(_class.length != 0){
+                            data = data.concat(_class);
+                        }
                     })
                     resolve(data);
                 }).catch((err) => reject(err));
@@ -82,8 +85,7 @@ function Metrics(teacherId) {
                     })
                 })
                 if (!eligibleClass) {
-                    //No Subjects
-                    reject("No Eligible Classes | Can't Create Metrics");
+                    resolve([]);
                 }
                 //There is a eligible class
                 let allStudents = [];
@@ -140,7 +142,9 @@ function Metrics(teacherId) {
                 })
                 Promise.all(allStudents).then((students) => {
                     students.map((student) => {
-                        data.push(student);
+                        if(student.length != 0){
+                            data.push(student);
+                        }
                     })
                     resolve(data);
                 })
@@ -168,7 +172,7 @@ function Metrics(teacherId) {
             }).then(() => {
                 //Get Teacher Eligible Classes
                 if (allClasses.length == 0) {
-                    reject("No Classes | Can't Create Metrics");
+                    resolve([]);
                 }
                 allClasses.map((_class) => {
                     _class.subjectIds.map((subjectId) => {
@@ -180,7 +184,7 @@ function Metrics(teacherId) {
                             })
                         }).then(() => {
                             if (eligibleTeacherClasses.length == 0) {
-                                reject("No Eligible Teacher Classes | Can't Create Metrics");
+                                resolve([]);
                             }
                             eligibleTeacherClasses.map((_class) => {
                                 _class.studentIds.map((studentId) => {
@@ -202,7 +206,31 @@ function Metrics(teacherId) {
     function getPresenceMetrics() {}
 
     function getSubjectMetrics() {
-        
+        return new Promise((resolve, reject) => {
+            let eligibleSubjects = [];
+            let data = [];
+            Subject.all().then((subjects) => {
+                if(subjects.length != 0){
+                subjects.map((subject)=>{
+                    subject.overseersIds.map((overseerId) => {
+                        if(overseerId == teacher){
+                            eligibleSubjects.push(subject);
+                        }
+                    })
+                })
+                if(eligibleSubjects.length == 0){
+                    reject("No Eligible Subjects | Can't Create Metrics")
+                }
+                data.push(worksheetHeaders.subject)
+                data.push([""])
+                data.push(["Subject Name","Subject Acronym"])
+                eligibleSubjects.map((subject) => {
+                    data.push([subject.name,subject.acronym]);   
+                })
+                resolve(data);
+                }
+            })
+        });        
     }
 
     function createMetrics(metricsToCreate) {
@@ -252,7 +280,7 @@ function Metrics(teacherId) {
             case 3:
                 return getStudentsMetrics();
             case 4:
-                return getTeachersMetrics();
+                return getSubjectMetrics();
             default:
                 return undefined
         }
@@ -269,7 +297,7 @@ function Metrics(teacherId) {
             case 3:
                 return "Student";
             case 4:
-                return "Teacher";
+                return "Subject";
         }
     }
 
