@@ -22,7 +22,7 @@ const worksheetHeaders = {
 
 function Metrics(teacherId) {
 
-    console.log("Metrics Object is being created");
+    //Creation Of Metrics Object
     let teacher = teacherId;
 
     function getClassesMetrics() {
@@ -32,8 +32,8 @@ function Metrics(teacherId) {
             data.push(worksheetHeaders.class);
             Class.all().then((classes) => {
                 if (classes.length == 0) {
-                    console.log("No Classes");
-                    reject(undefined);
+                    //No Classes
+                    resolve("No Classes | Can't Create Metrics");
                 }
                 classes.map((_class) => {
                     allClasses.push(getClassMetrics(_class));
@@ -54,40 +54,38 @@ function Metrics(teacherId) {
             let data = [];
             Subject.all().then((subjects) => {
                 if (subjects.length == 0) {
-                    console.log("No Subjects");
-                    reject(undefined);
+                    //No Subjects
+                    reject("No Subject | Can't Create Metrics");
                 }
-                console.log("We have subjects:", subjects.length);
-                console.log("Trying to get eligible subjects");
+                //There is at least one subject
+                //We will try to get eligible subjects
                 let eligibleSubjects = [];
                 subjects.map((subject) => {
-                    console.log("Checking Subject", subject.id);
-                    console.log(subject);
+                    //Checking the current subject
                     subject.overseersIds.map((overseerId) => {
-                        console.log("Checking Overseer", overseerId);
+                        //Checking Overseer
                         if (overseerId == teacher) {
-                            console.log("Subject is eligible", subject.id);
+                            //The Subject is eligible
                             eligibleSubjects.push(subject.id);
                         }
                     })
                 })
-                console.log("Iterating SubjectIds", _class.subjectIds.length);
+                //Iterating Subject Ids
                 _class.subjectIds.map((subject) => {
-                    console.log("Checking Subject", subject);
+                    //Checking current subjects
                     eligibleSubjects.map((eliSubject) => {
-                        console.log("Checking if subject match", subject, eliSubject);
+                        //Checking is subjects match
                         if (subject == eliSubject) {
-                            console.log("Subjects Match", subject, eliSubject);
+                            //Subjects Match
                             eligibleClass = _class;
                         }
                     })
                 })
                 if (!eligibleClass) {
-                    console.log("No Subjects");
-                    resolve([])
+                    //No Subjects
+                    reject("No Eligible Classes | Can't Create Metrics");
                 }
-                console.log("We have an eligible class");
-
+                //There is a eligible class
                 let allStudents = [];
                 let allSubjects = [];
                 data.push([""])
@@ -117,7 +115,6 @@ function Metrics(teacherId) {
                         subjects.map((subject) => {
                             data.push([subject.name, subject.acronym])
                         })
-                        console.log("XLSX", data);
                         data.push([""])
                         resolve(data);
                     })
@@ -126,36 +123,121 @@ function Metrics(teacherId) {
         })
     }
 
+    function getStudentsMetrics() {
+        return new Promise((resolve, reject) => {
+            let data = [];
+            let allStudents = [];
+            data.push(worksheetHeaders.student)
+            data.push([""]);
+            Student.all().then((students) => {
+                if (students.length == 0) {
+                    //No Students
+                    reject("No Students | Can't Create Metrics");
+                }
+                data.push(["Student Number", "Student Name", "Student Email", "Class"])
+                students.map((student) => {
+                    allStudents.push(getStudentMetrics(student));
+                })
+                Promise.all(allStudents).then((students) => {
+                    students.map((student) => {
+                        data.push(student);
+                    })
+                    resolve(data);
+                })
+            }).catch((err) => reject(err))
+        })
+
+    }
+
+    function getStudentMetrics(student) {
+        return new Promise((resolve, reject) => {
+            let allClasses = [];
+            let eligibleTeacherClasses = []
+            let data = [];
+            Class.all().then((classes) => {
+                if (classes.length == 0) {
+                    reject("No Classes | Can't Create Metrics");
+                }
+                classes.map((_class) => {
+                    _class.studentIds.map((studentId) => {
+                        if (studentId == student.number) {
+                            allClasses.push(_class);
+                        }
+                    })
+                })
+            }).then(() => {
+                //Get Teacher Eligible Classes
+                if (allClasses.length == 0) {
+                    reject("No Classes | Can't Create Metrics");
+                }
+                allClasses.map((_class) => {
+                    _class.subjectIds.map((subjectId) => {
+                        Subject.retrieve(subjectId).then((subject) => {
+                            subject.overseersIds.map((overseerId) => {
+                                if (overseerId == teacher) {
+                                    eligibleTeacherClasses.push(_class);
+                                }
+                            })
+                        }).then(() => {
+                            if (eligibleTeacherClasses.length == 0) {
+                                reject("No Eligible Teacher Classes | Can't Create Metrics");
+                            }
+                            eligibleTeacherClasses.map((_class) => {
+                                _class.studentIds.map((studentId) => {
+                                    if (studentId == student.number) {
+                                        data.push(student.number, student.name, student.email, _class.name)
+                                        resolve(data);
+                                    }
+                                })
+                            })
+                        }).catch((err) => reject(err))
+                    })
+                })
+            })
+        })
+    }
+
     function getLessonMetrics() {}
 
     function getPresenceMetrics() {}
 
-    function getStudentMetrics() {}
-
-    function getTeacherMetrics() {}
-
-    function writeFile() {
-
+    function getSubjectMetrics() {
+        
     }
 
     function createMetrics(metricsToCreate) {
         return new Promise((resolve, reject) => {
-            let workbook = XLSX.utils.book_new();
+            if (metricsToCreate === undefined) {
+                reject("Metrics are Undefined");
+            }
+            if (metricsToCreate.constructor !== Array) {
+                reject("Metrics is not an Array");
+            }
+            if (metricsToCreate.length < 1) {
+                reject("No Metrics in Array");
+            }
+            let allMetrics = [];
             metricsToCreate.map((metric) => {
-                let _metric = getMetric(metric).then((_metric) => {
-                    if (_metric) {
-                        let worksheet = XLSX.utils.aoa_to_sheet(_metric, {
+                let _metric = getMetric(metric);
+                _metric ? allMetrics.push(_metric) : reject("Invalid Metrics");
+
+            })
+            Promise.all(allMetrics).then((metrics) => {
+                let workbook = XLSX.utils.book_new();
+                metrics.map((metric, index) => {
+                    if (metric) {
+                        let worksheet = XLSX.utils.aoa_to_sheet(metric, {
                             cellDates: true
                         });
-                        XLSX.utils.book_append_sheet(workbook, worksheet, getMetricName(metric));
-                        let wbout = XLSX.write(workbook, workbookOptions);
-                        RNFetchBlob.fs.writeFile(`${metricsDir}/TeachelpMetrics.xlsx`, wbout, "base64").then(() => console.log("XLSX file was created")).catch((err) => console.log(err))
-                        resolve("");
-                    } else {
-                        reject("");
+                        XLSX.utils.book_append_sheet(workbook, worksheet, getMetricName(metricsToCreate[index]));
                     }
-                }).catch((err) => reject(err));
-            })
+                })
+                let wbout = XLSX.write(workbook, workbookOptions);
+                RNFetchBlob.fs.writeFile(`${metricsDir}/TeachelpMetrics.xlsx`, wbout, "base64").then(() => {
+                        resolve("")
+                })
+                    .catch((err) => reject(err))
+            }).catch((err) => reject(err));
         })
     }
 
@@ -172,7 +254,7 @@ function Metrics(teacherId) {
             case 4:
                 return getTeachersMetrics();
             default:
-                return undefined;
+                return undefined
         }
     }
 
