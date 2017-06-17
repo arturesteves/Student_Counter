@@ -143,6 +143,7 @@ function Metrics(teacherId) {
                 Promise.all(allStudents).then((students) => {
                     students.map((student) => {
                         if(student.length != 0){
+                            console.log(student);
                             data.push(student);
                         }
                     })
@@ -210,7 +211,9 @@ function Metrics(teacherId) {
             let eligibleSubjects = [];
             let data = [];
             Subject.all().then((subjects) => {
-                if(subjects.length != 0){
+                if(subjects.length == 0){
+                    reject("No Subjects | Can't Create Metrics");
+                }
                 subjects.map((subject)=>{
                     subject.overseersIds.map((overseerId) => {
                         if(overseerId == teacher){
@@ -219,7 +222,7 @@ function Metrics(teacherId) {
                     })
                 })
                 if(eligibleSubjects.length == 0){
-                    reject("No Eligible Subjects | Can't Create Metrics")
+                    resolve([])
                 }
                 data.push(worksheetHeaders.subject)
                 data.push([""])
@@ -228,7 +231,6 @@ function Metrics(teacherId) {
                     data.push([subject.name,subject.acronym]);   
                 })
                 resolve(data);
-                }
             })
         });        
     }

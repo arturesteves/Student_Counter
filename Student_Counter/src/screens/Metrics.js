@@ -25,7 +25,7 @@ export default class Metrics extends React.Component {
 
     teste() {
         const _metrics = new MetricsLib("-KmnM_fHasrg2GNKe8Kv");
-        _metrics.createMetrics([0,3,4]).then((result) => alert("Metrics Created")).catch((err)=>alert(err));      
+        _metrics.createMetrics([3]).then((result) => alert("Metrics Created")).catch((err)=>alert(err));      
     }      
 
     render() {
