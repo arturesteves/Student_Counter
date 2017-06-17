@@ -43,8 +43,13 @@ export default class LessonItem extends React.Component{
                     <TouchableHighlight underlayColor={this.props.color} onPress={() => this.askForDelete(this.props.subjectName, this.props.date, this.props.time)}>
                         <Image source={Icons.garbage} style={Styles.lessonItemDelete} />
                     </TouchableHighlight>
+
+                    <TouchableHighlight underlayColor={this.props.color} onPress={() => {console.log(this.props.lesson);this.props.navigate("LessonEdit", {lesson: this.props.lesson})}}>
+                        <Image source={Icons.edit} style={Styles.lessonItemDelete} />
+                    </TouchableHighlight>
                 </View>
             </TouchableHighlight>
         )
     }
 }
+/////////

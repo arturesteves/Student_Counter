@@ -60,7 +60,7 @@ export default class Lesson extends React.Component {
                     let date = `${nDate.getDate()}/${nDate.getMonth()}/${nDate.getFullYear()}`;
                     let time = `${nDate.getHours()}:${nDate.getMinutes()}`;
                     pos == 0 ? pos = 1 : pos= 0;
-                    return <LessonItem key={lesson.id} removeLesson={this.removeLesson.bind(this)} id={lesson.id} time={time} date={date} pos={pos} subjectName={subjects[index].acronym} subjectId={subjects[index].id} classes={classes} color="#ef9a9a" navigate={that.props.navigation.navigate}/>
+                    return <LessonItem key={lesson.id} removeLesson={this.removeLesson.bind(this)} lesson={lesson} id={lesson.id} time={time} date={date} pos={pos} subjectName={subjects[index].acronym} subjectId={subjects[index].id} classes={classes} color="#ef9a9a" navigate={that.props.navigation.navigate}/>
                 });
                 this.setState({
                     lessons:lessonItems,
