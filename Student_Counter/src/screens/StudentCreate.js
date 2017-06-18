@@ -67,7 +67,7 @@ export default class StudentCreate extends React.Component {
                     placeholder="email"
                     onChangeText={(email) => {
                         this.state.email = email;
-                        this.setState(this.email);
+                        this.setState(this.state);
                     }}
                     value={this.state.email}
                 />

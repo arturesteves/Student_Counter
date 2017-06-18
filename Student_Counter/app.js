@@ -29,6 +29,8 @@ import ClassScreen from "./src/screens/Class";
 import ClassCreateScreen from "./src/screens/ClassCreate";
 import LessonInfo from "./src/screens/LessonInfo";
 import Metrics from "./src/screens/Metrics";
+import Login from "./src/screens/Login";
+import Registration from "./src/screens/Registration";
 import firebaseInit from "./firebase";
 
 // Initialize Firebase
@@ -45,6 +47,12 @@ firebase.initializeApp({
 
 
 const MyApp = DrawerNavigator({
+    Registration:{
+        screen: Registration
+    },
+    Login:{
+        screen: Login
+    },
     Home: {
         screen: HomeScreen
     },
@@ -59,9 +67,6 @@ const MyApp = DrawerNavigator({
     },
     SubjectCreate:{
         screen: SubjectCreateScreen
-    },
-    Teacher:{
-        screen: TeacherScreen
     },
     TeacherCreate:{
         screen: TeacherCreateScreen
@@ -83,6 +88,9 @@ const MyApp = DrawerNavigator({
     },
     Metrics:{
         screen: Metrics
+    },
+    Teacher: {
+        screen: TeacherScreen
     }
 },{
     drawerWidth: Dimensions.get("window").width * 3/4,

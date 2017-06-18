@@ -12,30 +12,90 @@ import { DrawerNavigator } from "react-navigation";
 import Header from "../components/Header"
 import Styles from "../styles/Styles.js";
 import Icons from "../icons/icons.js"
+import TeacherLib from '../lib/Teacher';
+import Spinner from 'react-native-loading-spinner-overlay';
+let SharedPreferences = require('react-native-shared-preferences');
 
 
 export default class Teacher extends React.Component {
+
+    constructor(props){
+        super(props);
+        this.state = {
+            isLoading: false,
+            teacher: {}
+        };
+    }
+
+    componentDidMount(){
+        let that = this;
+        SharedPreferences.getItem("id", function(value){
+            that.setState( {isLoading: true});
+            if(value){
+                //retrieve teacher
+                TeacherLib.retrieve(value).then(function(teacher){
+                    that.setState( {isLoading: false});
+                    that.setState( {teacher: teacher});
+
+                    teacher.getAllSubjects().then(function(subjects){
+                       console.log("Subjects of " + teacher.name, subjects);
+                       let _techear = that.state.teacher;
+                       _techear.numbSubjects = subjects.length;
+
+                       that.setState( {teacher: _techear} );
+
+                    });
+
+                    teacher.getAllClasses().then(function(classes){
+                        console.log("classes of " + teacher.name, classes);
+                        let _techear = that.state.teacher;
+                        _techear.numbClasses = classes.length;
+
+                        that.setState( {teacher: _techear} );
+                    });
+
+                    teacher.getNumStudents().then(function(numStudents){
+                        let teacher = that.state.teacher;
+                        teacher.numStudents = numStudents;
+
+                        that.setState( {teacher: teacher});
+                    });
+
+                }).catch(function(error){
+                    that.setState( {isLoading: false});
+                    alert("error");
+                    console.log("error: ", error.message);
+                })
+            }else{
+                alert("Nao estou logado! - bug");
+            }
+        })
+    }
+
     static navigationOptions = {
         drawerLabel: "Teacher",
-    }
+    };
+
+
     render(){
         const { navigate } = this.props.navigation;
         return(
             <View>
+                <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
                 <Header navigate={navigate} text="Teacher"/>
                 <View style={Styles.teacherContent}>
                     <Image source={require("../icons/userPic.jpg")} style={Styles.teacherImage}/>
                     <View style={Styles.teacherInfo}>
-                        <Text style={Styles.teacherInfoText}>John Doe</Text>
+                        <Text style={Styles.teacherInfoText}>{this.state.teacher.name}</Text>
                         <Text style={Styles.teacherInfoText}>21</Text>
                     </View>
                     <View style = {Styles.teacherNumbers}>
                         <Image source={Icons.subject} style={Styles.teacherNumberIcon} />
-                        <Text style={Styles.teacherNumberText}>99</Text>
+                        <Text style={Styles.teacherNumberText}>{this.state.teacher.numbSubjects}</Text>
                         <Image source={Icons.class} style={Styles.teacherNumberIcon} />
-                        <Text style={Styles.teacherNumberText}>99</Text>
+                        <Text style={Styles.teacherNumberText}>{this.state.teacher.numbClasses}</Text>
                         <Image source={Icons.student} style={Styles.teacherNumberIcon} />
-                        <Text style={Styles.teacherNumberText}>99</Text>
+                        <Text style={Styles.teacherNumberText}>{this.state.teacher.numStudents}</Text>
                     </View>
                 </View>
             </View>

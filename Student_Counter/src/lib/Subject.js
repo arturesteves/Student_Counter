@@ -7,8 +7,6 @@ let Teacher = require("./Teacher");
 
 let namespaces = require("./namespaces").namespaces;
 
-//TODO: Acrescentar a um acrónimo ou sigla para a disciplina
-//TODO: modificar overseers para overseersIds -> ATENÇÃO: que esta alteração requer que talvez seja necessário alterar os testes
 class Subject{
 
     constructor(name, acronym, overseersIds){
