@@ -42,6 +42,10 @@ export default class ClassCreate extends React.Component {
         });
     }
 
+    navigateHome(){
+        this.props.navigation.navigate('Home');
+    }
+
     render(){
         const { navigate } = this.props.navigation;
         return(
@@ -85,6 +89,7 @@ export default class ClassCreate extends React.Component {
                     />
 
                     <Button onPress={this.create.bind(this)} title="Create" />
+                    <Button onPress={this.navigateHome.bind(this)} title="Cancel" />
                 </ScrollView>
             </View>
         )
