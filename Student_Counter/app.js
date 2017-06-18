@@ -34,6 +34,8 @@ import ClassCreateScreen from "./src/screens/ClassCreate";
 import ClassEditScreen from "./src/screens/ClassEdit";
 import LessonInfo from "./src/screens/LessonInfo";
 import Metrics from "./src/screens/Metrics";
+import Login from "./src/screens/Login";
+import Registration from "./src/screens/Registration";
 import firebaseInit from "./firebase";
 
 // Initialize Firebase
@@ -50,6 +52,12 @@ firebase.initializeApp({
 
 
 const MyApp = DrawerNavigator({
+    Registration:{
+        screen: Registration
+    },
+    Login:{
+        screen: Login
+    },
     Home: {
         screen: HomeScreen
     },

@@ -39,6 +39,14 @@ class Presence{
         }
     }
 
+    updateDelay(isDelayed){
+        if(this.id){
+            return firebase.database().ref(namespaces.presences + this.id).update({
+                delay:isDelayed
+            });
+        }
+    }
+
     delete(){
         firebase.database().ref(namespaces.presences + this.id).remove();
     }

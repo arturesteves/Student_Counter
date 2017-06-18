@@ -256,5 +256,9 @@ module.exports = StyleSheet.create({
     teacherNumberText:{
         fontSize:20,
         color:"black"
+    },
+
+    alignBottom:{
+        alignSelf: "flex-end"
     }
 });
