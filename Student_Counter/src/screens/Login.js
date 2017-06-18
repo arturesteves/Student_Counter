@@ -1,6 +1,6 @@
 import Teacher from '../lib/Teacher';
 import React from 'react';
-import { View, Text, Button, TextInput, NetInfo } from "react-native";
+import { BackHandler, View, Text, Button, TextInput, NetInfo } from "react-native";
 import Spinner from 'react-native-loading-spinner-overlay';
 let SharedPreferences = require('react-native-shared-preferences');
 
@@ -14,6 +14,13 @@ export default class Login extends React.Component {
             ethernetConnection: false,
             isLoading: false
         };
+    }
+
+    componentWillMount(){
+        BackHandler.addEventListener('hardwareBackPress',()=>{
+            this.props.navigation.navigate("Registration");
+            return true;
+        });
     }
 
     componentDidMount(){

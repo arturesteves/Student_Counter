@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from "react-native";
+import {BackHandler, View, Text} from "react-native";
 import Header from "../components/Header"
 import HomeContent from "../components/HomeContent"
 let SharedPreferences = require('react-native-shared-preferences');
@@ -13,6 +13,12 @@ export default class Home extends React.Component {
        /* SharedPreferences.getItem("email", function(value){
             //alert("home, email: " + value);
         });*/
+    }
+
+    componentWillMount(){
+        BackHandler.addEventListener('hardwareBackPress',()=>{
+            BackHandler.exitApp();
+        });
     }
 
     static navigationOptions = {

@@ -1,7 +1,7 @@
 import Subject from '../lib/Subject';
 import Student from '../lib/Student';
 import React from 'react';
-import { View, Text, Button, TextInput, ScrollView, Dimensions } from "react-native";
+import { BackHandler, View, Text, Button, TextInput, ScrollView, Dimensions } from "react-native";
 import MultiEntityPicker from "../components/MultiEntityPicker";
 import Header from "../components/Header";
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -12,6 +12,13 @@ export default class SubjectEdit extends React.Component {
     constructor(props){
         super(props);
         this.state = { overseers: {}, name:"",acronym:"", isLoading:false};
+    }
+
+    componentWillMount(){
+        BackHandler.addEventListener('hardwareBackPress',()=>{
+            this.props.navigation.navigate("Subject");
+            return true;
+        });
     }
 
     async componentDidMount() {

@@ -1,6 +1,6 @@
 import Teacher from '../lib/Teacher';
 import React from 'react';
-import { View, Text, Button, TextInput } from "react-native";
+import { BackHandler, View, Text, Button, TextInput } from "react-native";
 import Header from "../components/Header";
 
 export default class TeacherCreate extends React.Component {
@@ -8,6 +8,13 @@ export default class TeacherCreate extends React.Component {
     constructor(props){
         super(props);
         this.state = {};
+    }
+
+    componentWillMount(){
+        BackHandler.addEventListener('hardwareBackPress',()=>{
+            this.props.navigation.navigate("Teacher");
+            return true;
+        });
     }
 
     static navigationOptions = {

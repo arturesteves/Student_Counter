@@ -1,6 +1,6 @@
 import Teacher from '../lib/Teacher';
 import React from 'react';
-import { View, Text, Button, TextInput, NetInfo } from "react-native";
+import { BackHandler, View, Text, Button, TextInput, NetInfo } from "react-native";
 import Spinner from 'react-native-loading-spinner-overlay';
 let SharedPreferences = require('react-native-shared-preferences');
 
@@ -15,6 +15,12 @@ export default class Registration extends React.Component {
             password: "",
             isLoading: false,
         };
+    }
+
+    componentWillMount(){
+        BackHandler.addEventListener('hardwareBackPress',()=>{
+            BackHandler.exitApp();
+        });
     }
 
     componentDidMount(){
@@ -40,12 +46,6 @@ export default class Registration extends React.Component {
         }
     }
 
-    /* TODO: to be placed somewhere else */
-    logout (){
-        SharedPreferences.clear();  //more drastic
-        SharedPreferences.setItem("id", "");
-        SharedPreferences.setItem("email", "");
-    }
 
     static navigationOptions = {
         drawerLabel: undefined,

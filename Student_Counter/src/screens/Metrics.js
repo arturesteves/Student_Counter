@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+    BackHandler,
     View,
     Text,
     TouchableHighlight,
@@ -9,6 +10,8 @@ import Header from "../components/Header"
 import RNFetchBlob from 'react-native-fetch-blob';
 import XLSX from "xlsx";
 import MetricsLib from "../lib/metrics"
+let SharedPreferences = require('react-native-shared-preferences');
+
 
 export default class Metrics extends React.Component {
 
@@ -16,16 +19,27 @@ export default class Metrics extends React.Component {
         super(props);
     }
 
+    componentWillMount(){
+        BackHandler.addEventListener('hardwareBackPress',()=>{
+            this.props.navigation.navigate("Home");
+            return true;
+        });
+    }
+
     static navigationOptions = {
         drawerLabel: "Metrics",
     };
 
-      componentDidMount() {
-  }
+    componentDidMount() {
+    }
 
     teste() {
-        const _metrics = new MetricsLib("-Kmr9gDpilG-Ok6O7qJq");
-        _metrics.createMetrics([1]).then((result) => alert("Metrics Created")).catch((err)=>alert(err));      
+        SharedPreferences.getItem("email", function(value){
+            if(value){
+                const _metrics = new MetricsLib(value);
+                _metrics.createMetrics([3]).then((result) => alert("Metrics Created")).catch((err)=>alert(err));
+            }
+        });
     }      
 
     render() {
