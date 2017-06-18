@@ -41,7 +41,7 @@ function Metrics(teacherId) {
                 });
                 Promise.all(allClasses).then((classes) => {
                     classes.map((_class) => {
-                        if(_class.length != 0){
+                        if (_class.length != 0) {
                             data = data.concat(_class);
                         }
                     })
@@ -124,78 +124,55 @@ function Metrics(teacherId) {
             }).catch((err) => reject(err))
         })
     }
-
+    
     function getStudentsMetrics() {
         return new Promise((resolve, reject) => {
-            let data = [];
-            let allStudents = [];
-            data.push(worksheetHeaders.student)
-            data.push([""]);
-            Student.all().then((students) => {
-                if (students.length == 0) {
-                    //No Students
-                    reject("No Students | Can't Create Metrics");
-                }
-                data.push(["Student Number", "Student Name", "Student Email", "Class"])
-                students.map((student) => {
-                    allStudents.push(getStudentMetrics(student));
-                })
-                Promise.all(allStudents).then((students) => {
-                    students.map((student) => {
-                        if(student.length != 0){
-                            console.log(student);
-                            data.push(student);
-                        }
-                    })
-                    resolve(data);
-                })
-            }).catch((err) => reject(err))
-        })
-
-    }
-
-    function getStudentMetrics(student) {
-        return new Promise((resolve, reject) => {
-            let allClasses = [];
-            let eligibleTeacherClasses = []
-            let data = [];
-            Class.all().then((classes) => {
-                if (classes.length == 0) {
-                    reject("No Classes | Can't Create Metrics");
-                }
-                classes.map((_class) => {
-                    _class.studentIds.map((studentId) => {
-                        if (studentId == student.number) {
-                            allClasses.push(_class);
-                        }
-                    })
-                })
-            }).then(() => {
-                //Get Teacher Eligible Classes
-                if (allClasses.length == 0) {
+            let eligibleSubjects = [];
+            Subject.all().then((subjects) => {
+                if (subjects.length == 0) {
                     resolve([]);
                 }
-                allClasses.map((_class) => {
-                    _class.subjectIds.map((subjectId) => {
-                        Subject.retrieve(subjectId).then((subject) => {
-                            subject.overseersIds.map((overseerId) => {
-                                if (overseerId == teacher) {
-                                    eligibleTeacherClasses.push(_class);
-                                }
-                            })
-                        }).then(() => {
-                            if (eligibleTeacherClasses.length == 0) {
-                                resolve([]);
+                subjects.map((subject) => {
+                    if (subject.overseersIds.includes(teacher)) {
+                        eligibleSubjects.push(subject.id);
+                    }
+                })
+            }).then(() => {
+                let eligibleClasses = [];
+                Class.all().then((classes) => {
+                    if (classes.length == 0) {
+                        resolve([]);
+                    }
+                    classes.map((_class) => {
+                        _class.subjectIds.map((subjectId) => {
+                            if (eligibleSubjects.includes(subjectId)) {
+                                eligibleClasses.push(_class);
                             }
-                            eligibleTeacherClasses.map((_class) => {
-                                _class.studentIds.map((studentId) => {
-                                    if (studentId == student.number) {
-                                        data.push(student.number, student.name, student.email, _class.name)
-                                        resolve(data);
-                                    }
-                                })
-                            })
-                        }).catch((err) => reject(err))
+                        })
+                    })
+                }).then(() => {
+                    let data = [];
+                    let eligibleStudents = [];
+                    let eligibleStudentClass = [];
+                    if (eligibleClasses.length == 0) {
+                        resolve([]);
+                    }
+                    eligibleClasses.map((_class) => {
+                        _class.studentIds.map((studentId) => {
+                            eligibleStudents.push(Student.retrieve(studentId));
+                            eligibleStudentClass.push(_class.name);
+                        })
+                    })
+                    Promise.all(eligibleStudents).then((students) => {
+                        let _students = removeDuplicatesBy(x => x.number, students);
+                        let data = [];
+                        data.push(worksheetHeaders.student);
+                        data.push("")
+                        data.push(["Student Number", "Student Name", "Student Email", "Class"]);
+                        _students.map((_student, index) => {
+                            data.push([_student.number, _student.name, _student.email, eligibleStudentClass[index]]);
+                        })
+                        resolve(data);
                     })
                 })
             })
@@ -211,28 +188,28 @@ function Metrics(teacherId) {
             let eligibleSubjects = [];
             let data = [];
             Subject.all().then((subjects) => {
-                if(subjects.length == 0){
-                    reject("No Subjects | Can't Create Metrics");
+                if (subjects.length == 0) {
+                    resolve([]);
                 }
-                subjects.map((subject)=>{
+                subjects.map((subject) => {
                     subject.overseersIds.map((overseerId) => {
-                        if(overseerId == teacher){
+                        if (overseerId == teacher) {
                             eligibleSubjects.push(subject);
                         }
                     })
                 })
-                if(eligibleSubjects.length == 0){
+                if (eligibleSubjects.length == 0) {
                     resolve([])
                 }
                 data.push(worksheetHeaders.subject)
                 data.push([""])
-                data.push(["Subject Name","Subject Acronym"])
+                data.push(["Subject Name", "Subject Acronym"])
                 eligibleSubjects.map((subject) => {
-                    data.push([subject.name,subject.acronym]);   
+                    data.push([subject.name, subject.acronym]);
                 })
                 resolve(data);
             })
-        });        
+        });
     }
 
     function createMetrics(metricsToCreate) {
@@ -250,12 +227,12 @@ function Metrics(teacherId) {
             metricsToCreate.map((metric) => {
                 let _metric = getMetric(metric);
                 _metric ? allMetrics.push(_metric) : reject("Invalid Metrics");
-
             })
             Promise.all(allMetrics).then((metrics) => {
                 let workbook = XLSX.utils.book_new();
                 metrics.map((metric, index) => {
                     if (metric) {
+                        console.log(metric);
                         let worksheet = XLSX.utils.aoa_to_sheet(metric, {
                             cellDates: true
                         });
@@ -265,7 +242,7 @@ function Metrics(teacherId) {
                 let wbout = XLSX.write(workbook, workbookOptions);
                 RNFetchBlob.fs.writeFile(`${metricsDir}/TeachelpMetrics.xlsx`, wbout, "base64").then(() => {
                         resolve("")
-                })
+                    })
                     .catch((err) => reject(err))
             }).catch((err) => reject(err));
         })
@@ -301,6 +278,15 @@ function Metrics(teacherId) {
             case 4:
                 return "Subject";
         }
+    }
+
+    function removeDuplicatesBy(keyFn, array) {
+        var mySet = new Set();
+        return array.filter(function(x) {
+            var key = keyFn(x), isNew = !mySet.has(key);
+            if (isNew) mySet.add(key);
+                return isNew;
+            });
     }
 
     return {
