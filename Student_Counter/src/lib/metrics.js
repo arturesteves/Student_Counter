@@ -3,6 +3,7 @@ import Lesson from "./Lesson";
 import Presence from "./Presence";
 import Student from "./Student";
 import Subject from "./Subject";
+import Teacher from "./Teacher";
 import RNFetchBlob from 'react-native-fetch-blob';
 import XLSX from "xlsx";
 const metricsDir = `${RNFetchBlob.fs.dirs.DownloadDir}/TeachelpMetrics`;
@@ -124,7 +125,7 @@ function Metrics(teacherId) {
             }).catch((err) => reject(err))
         })
     }
-    
+
     function getStudentsMetrics() {
         return new Promise((resolve, reject) => {
             let eligibleSubjects = [];
@@ -179,11 +180,77 @@ function Metrics(teacherId) {
         })
     }
 
-    function getLessonMetrics() {}
+    function getLessonsMetrics() {
+        return new Promise((resolve, reject) => {
+            Lesson.all().then((lessons) => {
+                if (lessons.length == 0) {
+                    resolve([]);
+                }
+                let eligibleLessons = lessons.filter((lesson) => lesson.teacherId == teacher);
+                let data = [];
+                let allClassesNames = [];
+                eligibleLessons.map((lesson) => {
+                    lesson.classes.map((classId) => {
+                        allClassesNames.push(Class.retrieve(classId));
+                    })
+                })
+                Promise.all(allClassesNames).then((classes) => {
+                    let classesNames = classes.map((_class) => {
+                        return _class.name;
+                    })
+                    classesNames = removeDuplicatesBy(x => x, classesNames);
+                    allLessons = [];
+                    classesNames.map((className) => {
+                        let _class = {
+                            class: className,
+                            lessons: []
+                        };
+                        eligibleLessons.map((lesson) => {
+                            if (lesson.classes.includes(className)) {
+                                _class.lessons.push(lesson);
+                            }
+                        })
+                        allLessons.push(_class);
+                    })
+                    let data = [];
+                    data.push(worksheetHeaders.lesson);
+                    allLessons.map((lesson) => {
+                        data.push([""]);
+                        data.push(["Class:", lesson.class])
+                        data.push(["Summary", "Start Date", "End Date", "Subject", "Teacher"]);
+                        let _promises = lesson.lessons.map((lesson) => {
+                            return new Promise((resolve, reject) => {
+                                let teacherName;
+                                let subjectName;
+                                Teacher.retrieve(lesson.teacherId).then((teacher) => {
+                                    teacherName = teacher.name;
+                                }).then(() => {
+                                    Subject.retrieve(lesson.subjectId).then((subject) => {
+                                        console.log(subject);
+                                        subjectName = subject.name;
+                                    }).then(() => {
+                                        resolve([lesson.summary, lesson.endDate, lesson.startDate, subjectName, teacherName]);
+                                    }).catch((err) => reject(err))
+                                })
+                            })
+                        })
+                        Promise.all(_promises).then((nData) => {
+                            nData.map((_data) => {
+                                data.push(_data);
+                            });
+                        }).then(() => {
+                            resolve(data);
+                        }).catch((err) => reject(err))
+                    })
+                })
+            })
+        })
 
-    function getPresenceMetrics() {}
+    }
 
-    function getSubjectMetrics() {
+    function getPresencesMetrics() {}
+
+    function getSubjectsMetrics() {
         return new Promise((resolve, reject) => {
             let eligibleSubjects = [];
             let data = [];
@@ -259,7 +326,7 @@ function Metrics(teacherId) {
             case 3:
                 return getStudentsMetrics();
             case 4:
-                return getSubjectMetrics();
+                return getSubjectsMetrics();
             default:
                 return undefined
         }
@@ -282,11 +349,12 @@ function Metrics(teacherId) {
 
     function removeDuplicatesBy(keyFn, array) {
         var mySet = new Set();
-        return array.filter(function(x) {
-            var key = keyFn(x), isNew = !mySet.has(key);
+        return array.filter(function (x) {
+            var key = keyFn(x),
+                isNew = !mySet.has(key);
             if (isNew) mySet.add(key);
-                return isNew;
-            });
+            return isNew;
+        });
     }
 
     return {
