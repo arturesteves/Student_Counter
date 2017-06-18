@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+    BackHandler,
     StyleSheet,
     Text,
     View,
@@ -28,6 +29,14 @@ export default class Subject extends React.Component {
             isLoading:true
         }
     }
+
+    componentWillMount(){
+        BackHandler.addEventListener('hardwareBackPress',()=>{
+            this.props.navigation.navigate("Home");
+            return true;
+        });
+    }
+
     componentDidMount(){
         this.getSubjects();
     }

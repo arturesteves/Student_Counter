@@ -1,6 +1,6 @@
 import React from "react";
 import StudentLib from "../lib/Student.js";
-import {StyleSheet, View, Button, Dimensions, ScrollView} from "react-native";
+import {BackHandler, StyleSheet, View, Button, Dimensions, ScrollView} from "react-native";
 import Header from "../components/Header"
 import StudentItem from "../components/StudentItem";
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -15,6 +15,14 @@ export default class Student extends React.Component {
             isLoading: true,
         };
     }
+
+    componentWillMount(){
+        BackHandler.addEventListener('hardwareBackPress',()=>{
+            this.props.navigation.navigate("Home");
+            return true;
+        });
+    }
+
     static navigationOptions = {
         drawerLabel: "Class",
     };

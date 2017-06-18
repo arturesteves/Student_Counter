@@ -11,4 +11,5 @@ module.exports = {
     "presence":require("./presence.png"),
     "garbage":require("./garbage.png"),
     "edit":require("./edit.gif"),
+    "logout":require("./logout.png"),
 };

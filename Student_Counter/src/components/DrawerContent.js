@@ -7,6 +7,9 @@ export default class DrawerContent extends React.Component{
     constructor(props){
         super(props);
     }
+
+
+
     render(){
         return(
             <View style={Styles.drawerContent}>
@@ -17,6 +20,7 @@ export default class DrawerContent extends React.Component{
                 <DrawerTab text="Student" icon="student" navigate={this.props.navigate}/>
                 <DrawerTab text="Class" icon="class" navigate={this.props.navigate}/>
                 <DrawerTab text="Metrics" icon="lesson" navigate={this.props.navigate}/>
+                <DrawerTab text="Logout" icon="logout" navigator={this.props.navigate}/>
             </View>
         )
     }

@@ -3,7 +3,7 @@
  */
 import Lesson from '../lib/Lesson';
 import React from 'react';
-import { View, Text, Button, Picker, TouchableHighlight } from "react-native";
+import { BackHandler, View, Text, Button, Picker, TouchableHighlight } from "react-native";
 import EntityPicker from "../components/EntityPicker";
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Header from "../components/Header";
@@ -28,6 +28,13 @@ export default class LessonEdit extends React.Component {
             subjectItems:[<Picker.Item key={0} label={"Select Subject"} value={0} />],
             isLoading:true
         }
+    }
+
+    componentWillMount(){
+        BackHandler.addEventListener('hardwareBackPress',()=>{
+            this.props.navigation.navigate("Lesson");
+            return true;
+        });
     }
 
     static navigationOptions = {

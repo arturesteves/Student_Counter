@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+    BackHandler,
     StyleSheet,
     Text,
     View,
@@ -25,6 +26,13 @@ export default class Teacher extends React.Component {
             isLoading: false,
             teacher: {}
         };
+    }
+
+    componentWillMount(){
+        BackHandler.addEventListener('hardwareBackPress',()=>{
+            this.props.navigation.navigate("Home");
+            return true;
+        });
     }
 
     componentDidMount(){

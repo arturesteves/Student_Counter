@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from "react-native";
+import {BackHandler, View, Text} from "react-native";
 import Header from "../components/Header";
 import HomeContent from "../components/HomeContent";
 import LessonLib from "../lib/Lesson";
@@ -18,6 +18,13 @@ export default class LessonInfo extends React.Component {
             presenceItems:undefined,
             isLoading: true
         }
+    }
+
+    componentWillMount(){
+        BackHandler.addEventListener('hardwareBackPress',()=>{
+            this.props.navigation.navigate("Lesson");
+            return true;
+        });
     }
 
     componentDidMount() {

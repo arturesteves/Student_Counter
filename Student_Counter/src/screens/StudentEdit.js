@@ -1,6 +1,6 @@
 import Student from '../lib/Student';
 import React from 'react';
-import { View, Text, Button, TextInput } from "react-native";
+import { BackHandler, View, Text, Button, TextInput } from "react-native";
 import Header from "../components/Header";
 
 export default class StudentEdit extends React.Component {
@@ -8,6 +8,13 @@ export default class StudentEdit extends React.Component {
     constructor(props){
         super(props);
         this.state = {number: null, name: null,  email: null};
+    }
+
+    componentWillMount(){
+        BackHandler.addEventListener('hardwareBackPress',()=>{
+            this.props.navigation.navigate("Student");
+            return true;
+        });
     }
 
     static navigationOptions = {
