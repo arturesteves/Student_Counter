@@ -37,7 +37,7 @@ export default class Metrics extends React.Component {
         SharedPreferences.getItem("id", function(value){
             if(value){
                 const _metrics = new MetricsLib(value);
-                _metrics.createMetrics([2]).then((result) => alert("Metrics Created")).catch((err)=>alert(err));
+                _metrics.createMetrics([0,1,2,3,4,5]).then((result) => alert("Metrics Created")).catch((err)=>alert(err));
             }
         });
     }      
@@ -50,7 +50,7 @@ export default class Metrics extends React.Component {
             <Header navigate = {
                 navigate
             }
-            text = "Metrics" / >
+            text = "Metrics" />
             <TouchableHighlight onPress = {() => this.teste()}>
             <Text>Metrics</Text> 
             </TouchableHighlight>

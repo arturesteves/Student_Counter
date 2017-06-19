@@ -19,7 +19,8 @@ const worksheetHeaders = {
     presence: ["##########Presence##########"],
     student: ["##########Student##########"],
     teacher: ["##########Teacher##########"],
-    subject: ["##########Subject##########"]
+    subject: ["##########Subject##########"],
+    evaluation: ["##########Evaluation##########"]
 }
 
 function Metrics(teacherId) {
@@ -120,7 +121,7 @@ function Metrics(teacherId) {
                         })
                         data.push([""])
                         resolve(data);
-                    })
+                    }).catch((err) => reject(err))
                 }).catch((err) => reject(err))
             }).catch((err) => reject(err))
         })
@@ -226,7 +227,6 @@ function Metrics(teacherId) {
                                     teacherName = teacher.name;
                                 }).then(() => {
                                     Subject.retrieve(lesson.subjectId).then((subject) => {
-                                        console.log(subject);
                                         subjectName = subject.name;
                                     }).then(() => {
                                         resolve([lesson.summary, lesson.endDate, lesson.startDate, subjectName, teacherName]);
@@ -316,17 +316,16 @@ function Metrics(teacherId) {
                         })
                         let previousStudent;
                         let studentData = [];
-                        console.log(infos);
                         infos.map((info) => {
-                            if(!previousStudent || previousStudent != info.student.number){
+                            if (!previousStudent || previousStudent != info.student.number) {
                                 previousStudent = info.student.number;
                                 studentData.push([""]);
-                                studentData.push(["#####"+info.student.name+"#####"]);
+                                studentData.push(["#####" + info.student.name + "#####"]);
                                 studentData.push([""]);
                                 studentData.push(["Subject Name", "Class Name", "Start Date", "End Date", "Delay", "Present"]);
                             }
 
-                            if(previousStudent == info.student.number){
+                            if (previousStudent == info.student.number) {
                                 let currentStudentData = [];
                                 currentStudentData.push(info.subject.name);
                                 let classes = [];
@@ -344,6 +343,107 @@ function Metrics(teacherId) {
                         data = data.concat(studentData);
                         resolve(data);
                     }).catch((err) => reject(err))
+                })
+            })
+        })
+    }
+
+    function getEvaluationMetrics() {
+        return new Promise((resolve, reject) => {
+            let eligibleSubjects;
+            let eligibility = [];
+            Subject.all().then((subjects) => {
+                if (subjects.length == 0) {
+                    resolve([]);
+                }
+                eligibleSubjects = subjects.filter((subject) => subject.overseersIds.includes(teacher));
+            }).then(() => {
+                Class.all().then((classes) => {
+                    if (classes.length == 0) {
+                        resolve([]);
+                    }
+                    classes.map((_class) => {
+                        eligibleSubjects.map((subject) => {
+                            if (_class.subjectIds.includes(subject.id)) {
+                                eligibility.push({
+                                    subject: subject,
+                                    class: _class,
+                                    lessons: []
+                                })
+                            }
+                        })
+                    })
+                }).then(() => {
+                    Lesson.all().then((lessons) => {
+                        if (lessons.length == 0) {
+                        resolve([]);
+                        }
+                        lessons.map((lesson) => {
+                            eligibility.map((eligible, index) => {
+                                if (lesson.classes.includes(eligible.class.name)) {
+                                    eligibility[index].lessons.push(lesson);
+                                }
+                            })
+                        })
+                    }).then(() => {
+                        Presence.all().then((presences) => {
+                            if (presences.length == 0) {
+                            resolve([]);
+                            }
+                            let info = [];
+                            if(eligibility.length == 0){
+                                resolve([]);
+                            }
+                            eligibility.map((eligible) => {
+                                //If there are no lessons no evaluation will take place.
+                                let eligibleInfo = {};
+                                eligibleInfo.class = eligible.class;
+                                eligibleInfo.subject = eligible.subject;
+
+                                if (eligible.lessons.length != 0) {
+                                    let current = {
+                                        numberOfLessons: eligible.lessons.length,
+                                        students: []
+                                    }
+                                    eligible.class.studentIds.map((studentId) => {
+                                        let currentStudent = {
+                                            student: studentId,
+                                            numberOfPresences: 0
+                                        };
+                                        let studentPresences = presences.filter((presence) => presence.studentId == studentId && eligible.lessons.filter((lesson) => lesson.id == presence.lessonId).length != 0);
+                                        studentPresences.map((presence) => {
+                                            if (presence.present == true) {
+                                                currentStudent.numberOfPresences = currentStudent.numberOfPresences + 1;
+                                            }
+                                        })
+                                        current.students.push(currentStudent);
+                                    })
+                                    eligibleInfo.lessons = current;
+                                    info.push(eligibleInfo);
+                                }
+                            })
+                            if(info.length == 0){
+                                resolve([]);
+                            }
+                            let data = [];
+                            data.push(worksheetHeaders.evaluation);
+                            data.push("");
+                            data.push(["Subject Name", "Class Name", "Student Number", "Number Of Lessons", "Number Of Attended Lessons By Student", "Current Position In Plan"]);
+                            info.map((innerInfo) => {
+                                innerInfo.lessons.students.map((student) => {
+                                    let _info = [];
+                                    _info.push(innerInfo.subject.name);
+                                    _info.push(innerInfo.class.name);
+                                    _info.push(student.student);
+                                    _info.push(innerInfo.lessons.numberOfLessons);
+                                    _info.push(student.numberOfPresences);
+                                    student.numberOfPresences >= innerInfo.lessons.numberOfLessons * 0.75 ? _info.push("Approved") : _info.push("Disapproved");
+                                    data.push(_info);
+                                })
+                            })
+                            resolve(data);
+                        })
+                    })
                 })
             })
         })
@@ -398,7 +498,6 @@ function Metrics(teacherId) {
                 let workbook = XLSX.utils.book_new();
                 metrics.map((metric, index) => {
                     if (metric) {
-                        console.log(metric);
                         let worksheet = XLSX.utils.aoa_to_sheet(metric, {
                             cellDates: true
                         });
@@ -426,6 +525,8 @@ function Metrics(teacherId) {
                 return getStudentsMetrics();
             case 4:
                 return getSubjectsMetrics();
+            case 5:
+                return getEvaluationMetrics();
             default:
                 return undefined
         }
@@ -443,6 +544,8 @@ function Metrics(teacherId) {
                 return "Student";
             case 4:
                 return "Subject";
+            case 5:
+                return "Evaluation"
         }
     }
 
