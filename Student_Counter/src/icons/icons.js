@@ -10,6 +10,8 @@ module.exports = {
     "home":require("./home.png"),
     "presence":require("./presence.png"),
     "garbage":require("./garbage.png"),
+    "deleteStudent":require("./deleteStudent.png"),
+    "editStudent":require("./editStudent.png"),
     "edit":require("./edit.gif"),
     "logout":require("./logout.png"),
 };
