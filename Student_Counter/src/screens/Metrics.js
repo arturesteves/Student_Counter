@@ -37,7 +37,7 @@ export default class Metrics extends React.Component {
         SharedPreferences.getItem("id", function(value){
             if(value){
                 const _metrics = new MetricsLib(value);
-                _metrics.createMetrics([2]).then((result) => alert("Metrics Created")).catch((err)=>alert(err));
+                _metrics.createMetrics([5]).then((result) => alert("Metrics Created")).catch((err)=>alert(err));
             }
         });
     }      
