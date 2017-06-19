@@ -50,7 +50,7 @@ export default class Metrics extends React.Component {
             <Header navigate = {
                 navigate
             }
-            text = "Metrics" / >
+            text = "Metrics" />
             <TouchableHighlight onPress = {() => this.teste()}>
             <Text>Metrics</Text> 
             </TouchableHighlight>
