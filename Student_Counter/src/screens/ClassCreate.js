@@ -1,10 +1,11 @@
 import Class from '../lib/Class';
 import Student from '../lib/Student';
 import React from 'react';
-import { BackHandler, View, Text, Button, TextInput, ScrollView, Dimensions } from "react-native";
+import { BackHandler, View, Text, TextInput, ScrollView, Dimensions } from "react-native";
 import MultiEntityPicker from "../components/MultiEntityPicker";
 import Header from "../components/Header";
 import Spinner from 'react-native-loading-spinner-overlay';
+import {FormLabel, FormInput, Button, FormValidationMessage} from 'react-native-elements'
 
 export default class ClassCreate extends React.Component {
 
@@ -59,29 +60,29 @@ export default class ClassCreate extends React.Component {
             <View>
                 <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
                 <Header navigate={navigate} text="Create Class"/>
+
                 <ScrollView height={Dimensions.get("window").height-90} showsVerticalScrollIndicator={false}>
-                    <Text>Insert the name of the class</Text>
-                    <TextInput
-                        onChangeText={(name) => {
-                            this.state.name = name;
-                            this.setState(this.state);
-                        }}
-                        value={this.state.name}
-                    />
-                    <Text>Students</Text>
+
+                    <FormLabel>Name</FormLabel>
+                    <FormInput  textInputRef="" placeholder="Please enter the class name"
+                                onChangeText={(number) => {
+                                    this.state.number = number;
+                                    this.setState(this.state);
+                                }}/>
+
+
+                    <FormLabel>Students</FormLabel>
                     <MultiEntityPicker entity="student"
                                        onAdd={(identifier)=>{
-                                           console.log("Added",identifier)
                                            this.state.students[identifier] = identifier;
                                            this.setState(this.state);
                                        }}
                                        onRemove={(identifier)=>{
-                                           console.log("Removed",identifier)
                                            delete this.state.students[identifier];
                                            this.setState(this.state);
                                        }}
                                        />
-                    <Text>Subjects</Text>
+                    <FormLabel>Subjects</FormLabel>
                     <MultiEntityPicker entity="subject"
                                        onAdd={(identifier)=>{
                                             console.log("Added",identifier)
@@ -95,8 +96,9 @@ export default class ClassCreate extends React.Component {
                                        }}
                     />
 
-                    <Button onPress={this.create.bind(this)} title="Create" />
-                    <Button onPress={this.navigateHome.bind(this)} title="Cancel" />
+                    <View style={{left: 5, right: 5}}>
+                        <Button buttonStyle={{backgroundColor: "black"}} onPress={this.create.bind(this)} title="Create"/>
+                    </View>
                 </ScrollView>
             </View>
         )

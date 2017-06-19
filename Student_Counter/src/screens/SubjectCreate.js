@@ -1,10 +1,12 @@
 import Subject from '../lib/Subject';
 import Student from '../lib/Student';
 import React from 'react';
-import { BackHandler, View, Text, Button, TextInput, ScrollView, Dimensions } from "react-native";
+import { BackHandler, View, Text, TextInput, ScrollView, Dimensions } from "react-native";
 import MultiEntityPicker from "../components/MultiEntityPicker";
 import Header from "../components/Header";
 import Spinner from 'react-native-loading-spinner-overlay';
+import {FormLabel, FormInput, Button, FormValidationMessage} from 'react-native-elements'
+
 
 export default class SubjectCreate extends React.Component {
 
@@ -52,41 +54,39 @@ export default class SubjectCreate extends React.Component {
     render(){
         const { navigate } = this.props.navigation;
         return(
-            <View>
-                <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
+            <View style={{height: Dimensions.get("window").height - 25}}>
                 <Header navigate={navigate} text="Create Subject"/>
+                <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
+
                 <ScrollView height={Dimensions.get("window").height-90} showsVerticalScrollIndicator={false}>
-                    <Text>Insert the name of the subject</Text>
-                    <TextInput
-                        onChangeText={(name) => {
-                            this.state.name = name;
-                            this.setState(this.state);
-                        }}
-                        value={this.state.name}
-                    />
-                    <Text>Insert the acronym of the subject</Text>
-                    <TextInput
-                        onChangeText={(acronym) => {
-                            this.state.acronym = acronym;
-                            this.setState(this.state);
-                        }}
-                        value={this.state.acronym}
-                    />
-                    <Text>Teacher</Text>
+                    <FormLabel>Name</FormLabel>
+                    <FormInput textInputRef="" placeholder="Please enter the subject name"
+                               onChangeText={(name) => {
+                                   this.state.name = name;
+                                   this.setState(this.name);
+                               }}/>
+
+                    <FormLabel>Acronym</FormLabel>
+                    <FormInput textInputRef="" placeholder="Please enter the subject acronym"
+                               onChangeText={(acronym) => {
+                                   this.state.acronym = acronym;
+                                   this.setState(this.acronym);
+                               }}/>
+
+                    <FormLabel>Teacher</FormLabel>
                     <MultiEntityPicker entity="teacher"
                                        onAdd={(identifier)=>{
-                                           console.log("Added",identifier)
                                            this.state.overseers[identifier] = identifier;
                                            this.setState(this.state);
                                        }}
                                        onRemove={(identifier)=>{
-                                           console.log("Removed",identifier)
                                            delete this.state.overseers[identifier];
                                            this.setState(this.state);
                                        }}
                                        />
-
-                    <Button onPress={this.create.bind(this)} title="Create" />
+                    <View style={{left: 5, right: 5}}>
+                        <Button buttonStyle={{backgroundColor: "black"}} onPress={this.create.bind(this)} title="Create"/>
+                    </View>
                 </ScrollView>
             </View>
         )

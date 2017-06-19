@@ -3,7 +3,7 @@
  */
 import Lesson from '../lib/Lesson';
 import React from 'react';
-import { BackHandler, View, Text, Button, Picker, TouchableHighlight } from "react-native";
+import { BackHandler, View, Text, Picker, TouchableHighlight } from "react-native";
 import EntityPicker from "../components/EntityPicker";
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Header from "../components/Header";
@@ -11,7 +11,7 @@ import ClassLib from "../lib/Class";
 import SubjectLib from "../lib/Subject";
 import TeacherLIb from "../lib/Teacher";
 import Spinner from 'react-native-loading-spinner-overlay';
-import { Icon } from 'react-native-elements'
+import {FormLabel, FormInput, Icon, Button, FormValidationMessage} from 'react-native-elements'
 
 export default class LessonEdit extends React.Component {
 
@@ -197,7 +197,7 @@ export default class LessonEdit extends React.Component {
             <View>
                 <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
                 <Header navigate={navigate} text="Edit Lesson"/>
-                <Text>Select the teacher:</Text>
+                <FormLabel>Select the teacher:</FormLabel>
                 <Picker
                 selectedValue={this.state.selectTeacher}
                 onValueChange={(itemValue, itemIndex) => {
@@ -206,7 +206,7 @@ export default class LessonEdit extends React.Component {
                 }}>
                 {this.state.teacherItems}
                 </Picker>
-                <Text>Select the subject:</Text>
+                <FormLabel>Select the subject:</FormLabel>
                 <Picker
                 selectedValue={this.state.selectSubject}
                 onValueChange={(itemValue, itemIndex) => {
@@ -214,7 +214,7 @@ export default class LessonEdit extends React.Component {
                 }}>
                 {this.state.subjectItems}
                 </Picker>
-                <Text>Select lesson start date and time:</Text>
+                <FormLabel>Select lesson start date and time:</FormLabel>
                 <TouchableHighlight onPress={() => {this.setState({isVisible:true, whatDate:0})}}>
                     <View style={{flexDirection:"row"}}>
                         <Icon
@@ -224,7 +224,7 @@ export default class LessonEdit extends React.Component {
                         <Text>{this.state.dateStart}</Text>
                     </View>
                 </TouchableHighlight>
-                <Text>Select lesson end date and time:</Text>
+                <FormLabel>Select lesson end date and time:</FormLabel>
                 <TouchableHighlight onPress={() => {this.setState({isVisible:true, whatDate:1})}}>
                     <View style={{flexDirection:"row"}}>
                         <Icon
@@ -235,12 +235,15 @@ export default class LessonEdit extends React.Component {
                     </View>
                 </TouchableHighlight>
                 <DateTimePicker
+                    value={this.state.dateEnd}
                     isVisible={this.state.isVisible}
                     onConfirm={this._handleDatePicked}
                     onCancel={this._hideDateTimePicker}
                     mode={"datetime"}
                 />
-                <Button onPress={()=>this.update()} title="Update" />
+                <View style={{left: 5, right: 5}}>
+                    <Button buttonStyle={{backgroundColor: "black"}} onPress={this.update.bind(this)} title="Update"/>
+                </View>
             </View>
         )
     }
