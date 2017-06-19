@@ -6,15 +6,23 @@ let Teacher = require("./Teacher");
 //let Lesson = require("./Lesson.js");
 
 let namespaces = require("./namespaces").namespaces;
-
+/** Class representing a Subject */
 class Subject{
-
+    /**
+     * Creates a Subject.
+     * @param {string} name 
+     * @param {string} acronym 
+     * @param {number} overseersIds 
+     */
     constructor(name, acronym, overseersIds){
         this.name = name;
         this.acronym = acronym;
         this.overseersIds = overseersIds;
     }
 
+    /**
+     * Saves an instance of Subject in the DataBase, if the instance already exists updates the current instance otherwise creates a new one.
+     */
     save(){
         if(this.id){
             return firebase.database().ref(namespaces.subjects + this.id).update({
@@ -31,6 +39,9 @@ class Subject{
         }
     }
 
+    /**
+     * Deletes the Subject's instance in the database.
+     */
     delete(){
         let that = this;
         firebase.database().ref(namespaces.subjects + this.id).remove();
@@ -46,6 +57,10 @@ class Subject{
 
     }
 
+    /**
+     * Gets all the Overseers of the Subject.
+     * @return {} 
+     */
     async getOverseers(){
         let array = [];
         for(let overseerId of this.overseersIds) {
@@ -54,6 +69,9 @@ class Subject{
         return array;
     }
 
+    /**
+     * Gets all the Subjects from the DataBase
+     */D
     static all(){
         return firebase.database().ref(namespaces.subjects).once("value").then(function (snapshot) {
             let subjects = [];
@@ -75,6 +93,9 @@ class Subject{
     }
 
     // NOT WORKING BECAUSE OF CIRCULAR DEPENDENCY
+    /**
+     * 
+     */
     getLessonsAsync(){
         console.log("l76",Lesson);
         console.log("l77",Teacher);
@@ -102,6 +123,10 @@ class Subject{
         });
     }
 
+    /**
+     * Gets the Subject that has the id passed in the param.
+     * @param {number} id 
+     */
     static retrieve(id){
         return new Promise((resolve, reject)=>{
             firebase.database().ref(namespaces.subjects + id).once('value').then(function(snapshot){

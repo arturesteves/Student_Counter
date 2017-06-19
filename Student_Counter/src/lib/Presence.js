@@ -4,9 +4,15 @@ let Lesson = require("./Lesson");
 
 let namespaces = require("./namespaces").namespaces;
 
-
+/** Class representing a Presence */
 class Presence{
-
+    /**
+     * 
+     * @param {number} studentId 
+     * @param {number} lessonId 
+     * @param {boolean} present 
+     * @param {boolean} delay 
+     */
     constructor(studentId, lessonId, present, delay){
         this.studentId = studentId;
         this.lessonId = lessonId;
@@ -14,6 +20,9 @@ class Presence{
         this.delay = present ? delay : false; // this check exists because: a student couldn't be late if he didn't show up
     }
 
+    /**
+     * Saves an instance of the Presence in the database, if the instance already exists updates the current instance otherwise creates a new one.
+     */
     save(){
         if(this.id){
             return firebase.database().ref(namespaces.presences + this.id).update({
@@ -31,6 +40,10 @@ class Presence{
         }
     }
 
+    /**
+     * 
+     * @param {boolean} isPresent 
+     */
     updatePresence(isPresent){
         if(this.id){
             return firebase.database().ref(namespaces.presences + this.id).update({
@@ -39,6 +52,10 @@ class Presence{
         }
     }
 
+    /**
+     * Updates de value of the delay in the Presence
+     * @param {boolean} isDelayed 
+     */
     updateDelay(isDelayed){
         if(this.id){
             return firebase.database().ref(namespaces.presences + this.id).update({
@@ -47,18 +64,30 @@ class Presence{
         }
     }
 
+    /**
+     * Deletes de Presence's instance in the database
+     */
     delete(){
         firebase.database().ref(namespaces.presences + this.id).remove();
     }
 
+    /**
+     * 
+     */
     async getStudent(){
         return await Student.retrieve(this.studentId);
     }
 
+    /**
+     * 
+     */
     async getLesson(){
         return await Lesson.retrieve(this.lessonId);
     }
 
+    /**
+     * Returns all the Presences in the database.
+     */
     static all(){
         return firebase.database().ref(namespaces.presences).once("value").then(function (snapshot) {
             let presences = [];
@@ -80,6 +109,10 @@ class Presence{
         });
     }
 
+    /**
+     * Gets the Presence that has the id passed in the param.
+     * @param {number} id 
+     */
     static retrieve(id){
         return new Promise((resolve, reject)=>{
             firebase.database().ref(namespaces.presences + id).once('value').then(function(snapshot){

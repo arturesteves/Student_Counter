@@ -2,15 +2,23 @@ import * as firebase from 'firebase';
 
 let namespaces = require("./namespaces").namespaces;
 
-
+/** Class representing a Teacher */
 class Teacher{ 
-
+    /**
+     * Create a Teacher.
+     * @param {string} name 
+     * @param {string} email 
+     * @param {string} password 
+     */
     constructor(name, email, password){
         this.name = name;
         this.email = email;
         this.password = password || "teacher123";
     }
 
+    /**
+     * Saves an instance of Teacher in the Database, if the instance already exists updates the current instance otherwise creates a new one.
+     */
     save(){
         if(this.id){
             return firebase.database().ref(namespaces.teachers + this.id).update({
@@ -27,6 +35,9 @@ class Teacher{
         }
     }
 
+    /**
+     * Deletes the Teacher's instance in the database.
+     */
     delete(){
         firebase.database().ref(namespaces.teachers + this.id).remove();
     }
@@ -35,6 +46,9 @@ class Teacher{
     //TODO: obter as turmas que tem
     //TODO: obter os alunos que possui  -> basta ver as disciplinas que tem e obter os alunos dessas disciplinas
 
+    /**
+     * Gets all the Subjects that the Teacher is in.
+     */
     getAllSubjects(){
         return new Promise((resolve, reject)=>{
             let that = this;
@@ -63,6 +77,9 @@ class Teacher{
     }
 
     // TODO: problem, couting duplicated classes!
+    /**
+     * Gets all the Classes that the Teacher is in.
+     */
     getAllClasses() {
         return new Promise((resolve, reject) => {
             let that = this;
@@ -102,6 +119,9 @@ class Teacher{
     }
 
     //TODO
+    /**
+     * Gets the number of students that the Teacher has.
+     */
     getNumStudents(){
         let that = this;
         return new Promise((function(resolve, reject){
@@ -116,6 +136,10 @@ class Teacher{
         }));
     }
 
+    /**
+     * Returns all the Teacher in the database.
+     * @return {Teacher} teachers
+     */
     static all(){
         return firebase.database().ref(namespaces.teachers).once("value").then(function (snapshot) {
             let teachers = [];
@@ -136,6 +160,10 @@ class Teacher{
         });
     }
 
+    /**
+     * Gets the Teacher that has the id passed in the param.
+     * @param {number} id 
+     */
     static retrieve(id){
         return new Promise((resolve, reject)=>{
             firebase.database().ref(namespaces.teachers + id).once('value').then(function(snapshot){
@@ -149,6 +177,11 @@ class Teacher{
         });
     }
 
+    /**
+     * Gets a Teacher by using the email and password.
+     * @param {string} email 
+     * @param {string} password 
+     */
     static find(email, password){
         return new Promise((resolve, reject)=>{
             firebase.database().ref(namespaces.teachers).once('value').then(function(snapshot){

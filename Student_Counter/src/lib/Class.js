@@ -3,15 +3,23 @@ let Student = require("./Student");
 let Subject = require("./Subject");
 let namespaces = require("./namespaces").namespaces;
 
-
+/** Class representing a Class */
 class Class {
-
+    /**
+     * Creates a Class
+     * @param {string} name 
+     * @param {number} studentIds 
+     * @param {number} subjectIds 
+     */
     constructor(name, studentIds, subjectIds) {
         this.name = name;
         this.studentIds = studentIds;
         this.subjectIds = subjectIds;
     }
 
+    /**
+     * Saves an instance of the Class in the database, if the instance already exists updates the current instance otherwise creates a new one.
+     */
     save(){
         return firebase.database().ref(namespaces.classes + this.name).set({
             studentIds: this.studentIds,
@@ -19,10 +27,16 @@ class Class {
         });
     }
 
+    /**
+     * Deletes the Class's instance from the database.
+     */
     delete(){
         firebase.database().ref(namespaces.classes + this.name).remove();
     }
 
+    /**
+     * 
+     */
     async getStudents(){
         let array = [];
         for(let studentId of this.studentIds) {
@@ -31,6 +45,9 @@ class Class {
         return array;
     }
 
+    /**
+     * 
+     */
     async getSubjects(){
         let array = [];
         for(let subjectId of this.subjectIds) {
@@ -39,6 +56,9 @@ class Class {
         return array;
     }
 
+    /**
+     * 
+     */
     numberOfregisteredStudentsAsync(){
         let that = this;
         return firebase.database().ref(namespaces.students).once("value").then(function (snapshot) {
@@ -64,6 +84,9 @@ class Class {
        /** TO COMPLETE */
     }
 
+    /**
+     * 
+     */
     static all(){
         return firebase.database().ref(namespaces.classes).once("value").then(function (snapshot) {
             let classes = [];
@@ -81,6 +104,10 @@ class Class {
         });
     }
 
+    /**
+     * Gets the Class that has the name passed in the param.
+     * @param {string} name 
+     */
     static retrieve(name){
         return new Promise((resolve, reject)=>{
             firebase.database().ref(namespaces.classes + name).once('value').then(function(snapshot){
