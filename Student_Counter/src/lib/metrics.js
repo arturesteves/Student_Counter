@@ -121,7 +121,7 @@ function Metrics(teacherId) {
                         })
                         data.push([""])
                         resolve(data);
-                    })
+                    }).catch((err) => reject(err))
                 }).catch((err) => reject(err))
             }).catch((err) => reject(err))
         })
@@ -227,7 +227,6 @@ function Metrics(teacherId) {
                                     teacherName = teacher.name;
                                 }).then(() => {
                                     Subject.retrieve(lesson.subjectId).then((subject) => {
-                                        console.log(subject);
                                         subjectName = subject.name;
                                     }).then(() => {
                                         resolve([lesson.summary, lesson.endDate, lesson.startDate, subjectName, teacherName]);
@@ -317,7 +316,6 @@ function Metrics(teacherId) {
                         })
                         let previousStudent;
                         let studentData = [];
-                        console.log(infos);
                         infos.map((info) => {
                             if (!previousStudent || previousStudent != info.student.number) {
                                 previousStudent = info.student.number;
@@ -431,7 +429,6 @@ function Metrics(teacherId) {
                             data.push(worksheetHeaders.evaluation);
                             data.push("");
                             data.push(["Subject Name", "Class Name", "Student Number", "Number Of Lessons", "Number Of Attended Lessons By Student", "Current Position In Plan"]);
-                            console.log(info);
                             info.map((innerInfo) => {
                                 innerInfo.lessons.students.map((student) => {
                                     let _info = [];
@@ -501,7 +498,6 @@ function Metrics(teacherId) {
                 let workbook = XLSX.utils.book_new();
                 metrics.map((metric, index) => {
                     if (metric) {
-                        console.log(metric);
                         let worksheet = XLSX.utils.aoa_to_sheet(metric, {
                             cellDates: true
                         });
