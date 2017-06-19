@@ -1,7 +1,8 @@
 import Student from '../lib/Student';
 import React from 'react';
-import { BackHandler, View, Text, Button, TextInput } from "react-native";
+import { BackHandler, View, Text,  TextInput, Dimensions } from "react-native";
 import Header from "../components/Header";
+import {FormLabel, FormInput, Button, FormValidationMessage} from 'react-native-elements'
 
 export default class StudentCreate extends React.Component {
 
@@ -48,38 +49,32 @@ export default class StudentCreate extends React.Component {
     render(){
         const { navigate } = this.props.navigation;
         let that = this;
+        let xml = <Header navigate={navigate} text="Create Student"/>;
         return(
-            <View>
-                <Header navigate={navigate} text="Create Student"/>
-                <Text>Insert the number of the student</Text>
-                <TextInput
-                    placeholder="number"
-                    onChangeText={(number) => {
-                        this.state.number = number;
-                        this.setState(this.state);
-                    }}
-                    value={this.state.number}
-                />
-                <Text>Insert the name of the student</Text>
-                <TextInput
-                    placeholder="name"
-                    onChangeText={(name) => {
-                        this.state.name = name;
-                        this.setState(this.state);
-                    }}
-                    value={this.state.name}
-                />
-                <Text>Insert the email of the student</Text>
-                <TextInput
-                    placeholder="email"
-                    onChangeText={(email) => {
-                        this.state.email = email;
-                        this.setState(this.state);
-                    }}
-                    value={this.state.email}
-                />
+            <View style={{height: Dimensions.get("window").height - 25}}>
+                {xml}
+                <FormLabel>Number</FormLabel>
+                <FormInput textInputRef="" placeholder="Please enter the student number" onChangeText={(number) => {
+                    this.state.number = number;
+                    this.setState(this.state);
+                }}/>
 
-                <Button onPress={this.create.bind(this)} title="Create" />
+                {/*<FormValidationMessage>Error message</FormValidationMessage>*/}
+                <FormLabel>Name</FormLabel>
+                <FormInput textInputRef="number" placeholder="Please enter the student name" onChangeText={(name) => {
+                    this.state.name = name;
+                    this.setState(this.state);
+                }}/>
+                {/*<FormValidationMessage>Error message</FormValidationMessage>*/}
+                <FormLabel>Email</FormLabel>
+                <FormInput textInputRef="number" placeholder="Please enter the student email" onChangeText={(email) => {
+                    this.state.email = email;
+                    this.setState(this.state);
+                }}/>
+                {/*<FormValidationMessage>Error message</FormValidationMessage>*/}
+                <View style={{left: 5, right: 5}}>
+                    <Button buttonStyle={{backgroundColor: "black"}} onPress={this.create.bind(this)} title="Create"/>
+                </View>
             </View>
         )
     }
