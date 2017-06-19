@@ -248,7 +248,106 @@ function Metrics(teacherId) {
 
     }
 
-    function getPresencesMetrics() {}
+    function getPresencesMetrics() {
+        return new Promise((resolve, reject) => {
+            let eligiblePresences = [];
+            let lessonPromises = [];
+            let eligibleLessons = [];
+            Presence.all().then((presences) => {
+                if (presences.length == 0) {
+                    resolve([]);
+                }
+                presences.map((presence) => {
+                    lessonPromises.push(Lesson.retrieve(presence.lessonId));
+                })
+                Promise.all(lessonPromises).then((lessons) => {
+                    lessons.map((lesson, index) => {
+                        if (lesson.teacherId == teacher) {
+                            eligiblePresences.push(presences[index]);
+                            eligibleLessons.push(lesson);
+                        }
+                    })
+                }).then(() => {
+                    //Neste Momento Temos as Presences e as Respeticas Lessons que pertencem ao professor em especifico.
+                    let data = [];
+                    data.push(worksheetHeaders.presence);
+                    let all = eligibleLessons.map((lesson, index) => {
+                        return new Promise((resolve, reject) => {
+                            let currentPresence = eligiblePresences[index];
+                            let currentSubject;
+                            let currentStudent;
+                            let currentClasses = [];
+                            let classPromises = [];
+                            lesson.classes.map((classId) => {
+                                classPromises.push(Class.retrieve(classId));
+                            })
+                            Promise.all(classPromises).then((classes) => {
+                                classes.map((_class) => {
+                                    if (_class.subjectIds.includes(lesson.subjectId) && _class.studentIds.includes(currentPresence.studentId)) {
+                                        currentClasses.push(_class);
+                                    }
+                                })
+                            }).then(() => {
+                                Subject.retrieve(lesson.subjectId).then((subject) => currentSubject = subject).then(() => {
+                                    Student.retrieve(currentPresence.studentId).then((student) => currentStudent = student).then(() => {
+                                        let obj = {};
+                                        obj.lesson = lesson;
+                                        obj.presence = currentPresence;
+                                        obj.classes = currentClasses;
+                                        obj.subject = currentSubject;
+                                        obj.student = currentStudent;
+                                        resolve(obj);
+                                    })
+                                })
+                            }).catch((err) => reject(err))
+                        })
+                    })
+                    Promise.all(all).then((infos) => {
+                        infos.sort((infoA, infoB) => {
+                            let nameA = infoA.student.name.toUpperCase();
+                            let nameB = infoB.student.name.toUpperCase();
+                            if (nameA < nameB) {
+                                return -1;
+                            }
+                            if (nameA > nameB) {
+                                return 1;
+                            }
+                            return 0;
+                        })
+                        let previousStudent;
+                        let studentData = [];
+                        console.log(infos);
+                        infos.map((info) => {
+                            if(!previousStudent || previousStudent != info.student.number){
+                                previousStudent = info.student.number;
+                                studentData.push([""]);
+                                studentData.push(["#####"+info.student.name+"#####"]);
+                                studentData.push([""]);
+                                studentData.push(["Subject Name", "Class Name", "Start Date", "End Date", "Delay", "Present"]);
+                            }
+
+                            if(previousStudent == info.student.number){
+                                let currentStudentData = [];
+                                currentStudentData.push(info.subject.name);
+                                let classes = [];
+                                info.classes.map((_class) => {
+                                    classes.push(_class.name)
+                                })
+                                currentStudentData.push(classes);
+                                currentStudentData.push(info.lesson.startDate);
+                                currentStudentData.push(info.lesson.endDate);
+                                currentStudentData.push(info.presence.delay ? "Yes" : "No");
+                                currentStudentData.push(info.presence.present ? "Yes" : "No")
+                                studentData.push(currentStudentData)
+                            }
+                        });
+                        data = data.concat(studentData);
+                        resolve(data);
+                    }).catch((err) => reject(err))
+                })
+            })
+        })
+    }
 
     function getSubjectsMetrics() {
         return new Promise((resolve, reject) => {
