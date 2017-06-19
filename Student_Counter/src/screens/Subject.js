@@ -16,6 +16,7 @@ import Styles from "../styles/Styles.js";
 import SubjectItem from "../components/SubjectItem.js";
 import SubjectLib from "../lib/Subject";
 import Spinner from 'react-native-loading-spinner-overlay';
+import { Icon } from 'react-native-elements'
 
 
 export default class Subject extends React.Component {
@@ -67,13 +68,39 @@ export default class Subject extends React.Component {
             <View>
                 <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
                 <Header navigate={navigate} text="Subject"/>
-                <Button onPress={() => navigate('SubjectCreate')} title="Create new subject" />
                 <ScrollView height={Dimensions.get("window").height-90} showsVerticalScrollIndicator={false}>
                 <View style={Styles.subjectContent}>
                 {this.state.subjects}
                 </View>
                 </ScrollView>
+                <View style={styles.add}>
+                    <Icon
+                        reverse
+                        name='plus'
+                        type = "font-awesome"
+                        color='#000'
+                        onPress={() => this.props.navigation.navigate('SubjectCreate')}
+                    />
+                </View>
             </View>
         )
     }
 }
+
+let styles = StyleSheet.create({
+
+    content: {
+        flexWrap: "wrap",
+        marginTop: 15,
+        marginLeft: 35,
+        marginRight: 35,
+    },
+    add: {
+        position: 'absolute',
+        right:     4,
+        bottom:      4,
+    }
+
+
+});
+
