@@ -227,7 +227,7 @@ export default class LessonCreate extends React.Component {
                 />
 
                 <View style={{left: 5, right: 5, marginTop: 10}}>
-                    <Button buttonStyle={{backgroundColor: "black"}} onPress={this.create.bind(this)} title="Update"/>
+                    <Button buttonStyle={{backgroundColor: "black"}} onPress={this.create.bind(this)} title="Create"/>
                 </View>
             </View>
         )

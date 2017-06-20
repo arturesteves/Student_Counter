@@ -66,8 +66,8 @@ export default class ClassCreate extends React.Component {
                     <FormLabel>Name</FormLabel>
                     <FormInput style={{marginRight: 10}}
                         textInputRef="" placeholder="Please enter the class name"
-                                onChangeText={(number) => {
-                                    this.state.number = number;
+                                onChangeText={(name) => {
+                                    this.state.name = name;
                                     this.setState(this.state);
                                 }}/>
 

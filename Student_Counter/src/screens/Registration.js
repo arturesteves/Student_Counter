@@ -120,6 +120,7 @@ export default class Registration extends React.Component {
                     <FormLabel>Password</FormLabel>
                     </View>
                     <FormInput style={{marginRight: 60, marginLeft: 60}}    textInputRef="" placeholder="password"
+                               secureTextEntry={true}
                                 onChangeText={(password) => {
                                     this.saveProperty("password", password);
                                 }}/>
