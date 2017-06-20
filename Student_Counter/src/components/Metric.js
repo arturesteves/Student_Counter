@@ -5,6 +5,7 @@ import Icons from "../icons/icons.js";
 import Share, {ShareSheet, Button} from 'react-native-share';
 import RNFetchBlob from 'react-native-fetch-blob'
 import Spinner from 'react-native-loading-spinner-overlay';
+const FileOpener = require('react-native-file-opener');
 
 export default class Metric extends React.Component{
     constructor(props){
@@ -23,11 +24,11 @@ export default class Metric extends React.Component{
     metricOnClick(){
         Alert.alert(
             'Metrics',
-            'Do you want to download or share the selected metric?',
+            'Please choose an action for the selected metric?',
             [
+                {text: 'Open', onPress: () => this.openMetric()},
                 {text: 'Download', onPress: () => this.downloadMetric()},
                 {text: 'Share', onPress: () => this.shareMetric()},
-                {text: 'Close', onDismiss: () => {}},
             ],
             { cancelable: true }
         )
@@ -52,14 +53,64 @@ export default class Metric extends React.Component{
         })
         .fetch('GET', that.props.downloadUrl)
         .then((res) =>{
-            RNFetchBlob.fs.writeFile(res.path(), 'foo', 'utf8')
-              .then(()=>{
-                 that.setState({
+                that.setState({
                     isLoadingDownload:false
-                })   
-              })   
+                })
+                that.askToOpenMetric()
         }
         )
+    }
+    openMetric(){
+        let dirs = RNFetchBlob.fs.dirs
+        let that = this;
+        const FilePath = `${dirs.DownloadDir}/TeachelpMetrics/${this.props.fileName}`; // path of the file
+        const FileMimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'; // mime type of the file
+        FileOpener.open(
+            FilePath,
+            FileMimeType
+        ).then((msg) => {
+        },() => {
+            RNFetchBlob.fs.exists(FilePath)
+            .then((exist) => {
+                exist ? that.noAppToOpen() : that.justAsk();
+            })
+            .catch(() => alert("Someting Went Wrong"))
+        });
+    }
+
+    askToOpenMetric(){
+        Alert.alert(
+            'Metrics',
+            "Do you want to open the downloaded metric?",
+            [
+                {text: 'Yes', onPress: () => this.openMetric()},
+                {text: 'No', onDismiss: () => {}},
+            ],
+            { cancelable: true }
+        )
+    }
+
+    justAsk(){
+        Alert.alert(
+            'Metrics',
+            "The selected metric doesn't exists in the current system. Do you want to download it?",
+            [
+                {text: 'Yes', onPress: () => this.downloadMetric()},
+                {text: 'No', onDismiss: () => {}},
+            ],
+            { cancelable: true }
+        )    
+    }
+
+    noAppToOpen(){
+        Alert.alert(
+            'Metrics',
+            "Your current system doesn't have an app to open the current file",
+            [
+                {text: 'Ok', onDismiss: () => {}},
+            ],
+            { cancelable: true }
+        )   
     }
 
     shareMetric(){
