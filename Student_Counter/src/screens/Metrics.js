@@ -93,7 +93,7 @@ export default class Metrics extends React.Component {
                                 isLoading:!that.state.isLoading,
                                 metrics:metrics
                             });
-                            alert("Metrics Have Been Created. Location: Downloads/TeachelpMetrics");
+                            alert("Metrics Have Been Created. Location: Downloads/TeachelpMetrics/"+result.fileName);
                         }) 
                     })
                 }).catch((err)=>{

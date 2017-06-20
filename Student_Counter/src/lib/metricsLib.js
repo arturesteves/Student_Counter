@@ -46,7 +46,7 @@ function Metrics(teacherId) {
             Class.all().then((classes) => {
                 if (classes.length == 0) {
                     //No Classes
-                    resolve("No Classes | Can't Create Metrics");
+                    resolve([]);
                 }
                 classes.map((_class) => {
                     allClasses.push(getClassMetrics(_class));
@@ -76,7 +76,7 @@ function Metrics(teacherId) {
             Subject.all().then((subjects) => {
                 if (subjects.length == 0) {
                     //No Subjects
-                    reject("No Subject | Can't Create Metrics");
+                    resolve([])
                 }
                 //There is at least one subject
                 //We will try to get eligible subjects
@@ -528,13 +528,13 @@ function Metrics(teacherId) {
     function createMetrics(metricsToCreate) {
         return new Promise((resolve, reject) => {
             if (metricsToCreate === undefined) {
-                reject("Metrics are Undefined");
+                reject("Internal Error Contact Support");
             }
             if (metricsToCreate.constructor !== Array) {
-                reject("Metrics is not an Array");
+                reject("Internal Error Contact Support");
             }
             if (metricsToCreate.length < 1) {
-                reject("No Metrics in Array");
+                reject("No Metrics Were Selected");
             }
             let allMetrics = [];
             metricsToCreate.map((metric) => {

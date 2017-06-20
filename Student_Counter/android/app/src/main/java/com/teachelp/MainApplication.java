@@ -12,7 +12,7 @@ import cl.json.RNSharePackage;
 
 import java.util.Arrays;
 import java.util.List;
-
+import com.fileopener.FileOpenerPackage;
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -27,7 +27,8 @@ public class MainApplication extends Application implements ReactApplication {
           new RNFetchBlobPackage(),   
           new MainReactPackage(),
           new RNSharedPreferencesReactPackage(),
-		  new RNSharePackage()
+		      new RNSharePackage(),
+          new FileOpenerPackage()
       );
     }
   };
