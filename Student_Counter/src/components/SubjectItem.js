@@ -81,7 +81,7 @@ let styles = StyleSheet.create({
         borderRadius:4,
         marginBottom:12.5,
         paddingTop: 20,
-        backgroundColor: "#EF9A9A"
+        backgroundColor: "#90CAF9"
     },
     label: {
         fontSize:25,
@@ -89,7 +89,7 @@ let styles = StyleSheet.create({
         color: "#000000",
     },
     name: {
-        backgroundColor: "#efb9b7",
+        backgroundColor: "#aed3f9",
         color: "#110b0b",
         fontSize:16,
         marginTop: 2,

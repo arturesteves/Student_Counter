@@ -124,5 +124,4 @@ let styles = StyleSheet.create({
         bottom:      4,
     }
 
-
 });

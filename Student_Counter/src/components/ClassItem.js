@@ -89,22 +89,21 @@ export default class ClassItem extends React.Component {
 
 let styles = StyleSheet.create({
     item: {
-        justifyContent:"space-between",
-        padding:10,
-        borderRadius:4,
-        marginBottom:12.5,
-        paddingTop: 20,
-        backgroundColor: "#EF9A9A"
+        justifyContent: "space-between",
+        padding: 10,
+        borderRadius: 4,
+        marginBottom: 12.5,
+        backgroundColor: "#9FA8DA"
     },
     label: {
-        fontSize:25,
-        fontFamily:"MedulaOne",
+        fontSize: 25,
+        fontFamily: "MedulaOne",
         color: "#000000",
     },
     name: {
-        backgroundColor: "#efb9b7",
+        backgroundColor: "#bbc2da",
         color: "#110b0b",
-        fontSize:16,
+        fontSize: 16,
         marginTop: 2,
         paddingTop: 2,
         paddingBottom: 2,
@@ -112,37 +111,37 @@ let styles = StyleSheet.create({
         borderRadius: 2
     },
     deleteClass: {
-        width:35,
-        height:35,
+        width: 25,
+        height: 25,
     },
     deleteButton: {
         position: 'absolute',
-        right:     8,
-        top:      4,
+        right: 4,
+        top: 4,
     },
     editClass: {
-        width:35,
-        height:35,
+        width: 25,
+        height: 25,
     },
     editButton: {
         position: 'absolute',
-        right:     42,
-        top:      4,
+        right: 30,
+        top: 4,
     },
     imageItem: {
-        width:25,
-        height:25,
-        marginRight:10,
+        width: 25,
+        height: 25,
+        marginRight: 10,
     },
     studentsView: {
-        marginTop:15,
-        marginBottom:15,
-        flexDirection:"row",
+        marginTop: 15,
+        marginBottom: 15,
+        flexDirection: "row",
     },
     subjectsView: {
-        marginTop:15,
-        marginBottom:15,
-        flexDirection:"row",
+        marginTop: 15,
+        marginBottom: 15,
+        flexDirection: "row",
     },
     countClass: {},
 });

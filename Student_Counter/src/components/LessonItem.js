@@ -92,7 +92,7 @@ let styles = StyleSheet.create({
         color: "#000000",
     },
     name: {
-        backgroundColor: "#efb9b7",
+        backgroundColor: "#efafaf",
         color: "#110b0b",
         fontSize:16,
         marginTop: 2,
