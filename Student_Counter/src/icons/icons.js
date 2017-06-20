@@ -6,7 +6,7 @@ module.exports = {
     "teacher":require("./teacher.png"),
     "class":require("./class.png"),
     "closeMenu":require("./closeMenu.png"),
-    "userPic":require("./userPic.jpg"),
+    "userPic":require("./userPic.png"),
     "home":require("./home.png"),
     "presence":require("./presence.png"),
     "garbage":require("./garbage.png"),

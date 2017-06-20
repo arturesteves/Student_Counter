@@ -70,7 +70,6 @@ export default class Student extends React.Component {
             <View>
                 <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
                 <Header navigate={navigate} text="Students"/>
-
                 <ScrollView height={Dimensions.get("window").height-90} showsVerticalScrollIndicator={false}>
                     <View style={styles.content}>
                         {this.state.items}

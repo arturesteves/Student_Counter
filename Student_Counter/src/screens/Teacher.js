@@ -92,7 +92,7 @@ export default class Teacher extends React.Component {
                 <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
                 <Header navigate={navigate} text="Teacher"/>
                 <View style={Styles.teacherContent}>
-                    <Image source={require("../icons/userPic.jpg")} style={Styles.teacherImage}/>
+                    <Image source={require("../icons/userPic.png")} style={Styles.teacherImage}/>
                     <View style={Styles.teacherInfo}>
                         <Text style={Styles.teacherInfoText}>{this.state.teacher.name}</Text>
                     </View>
