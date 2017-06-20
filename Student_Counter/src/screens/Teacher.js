@@ -75,7 +75,7 @@ export default class Teacher extends React.Component {
                     console.log("error: ", error.message);
                 })
             }else{
-                alert("Nao estou logado! - bug");
+                alert("Not logged in");
             }
         })
     }

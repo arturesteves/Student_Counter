@@ -64,7 +64,8 @@ export default class ClassCreate extends React.Component {
                 <ScrollView height={Dimensions.get("window").height-90} showsVerticalScrollIndicator={false}>
 
                     <FormLabel>Name</FormLabel>
-                    <FormInput  textInputRef="" placeholder="Please enter the class name"
+                    <FormInput style={{marginRight: 10}}
+                        textInputRef="" placeholder="Please enter the class name"
                                 onChangeText={(number) => {
                                     this.state.number = number;
                                     this.setState(this.state);

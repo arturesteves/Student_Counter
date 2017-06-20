@@ -1,9 +1,11 @@
 import Teacher from '../lib/Teacher';
 import React from 'react';
-import { BackHandler, View, Text, TextInput, NetInfo } from "react-native";
+import { BackHandler, Image, View, Text, TextInput, NetInfo } from "react-native";
 import Spinner from 'react-native-loading-spinner-overlay';
 let SharedPreferences = require('react-native-shared-preferences');
 import {FormLabel, FormInput, Button, FormValidationMessage} from 'react-native-elements'
+import Styles from "../styles/Styles.js";
+import icons from "../icons/icons.js";
 
 
 export default class Registration extends React.Component {
@@ -91,29 +93,42 @@ export default class Registration extends React.Component {
         return(
             <View>
                 <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
-                <Text>Teachelp - Sign Up</Text>
+                <View style={{flexDirection:"row", justifyContent:"center"}}>
+                    <Image source={icons.main} style={{width:100, height: 100, marginTop: 50, marginBottom: 20}}/>
+                </View>
+                <View style={{flexDirection:"row", justifyContent:"center"}}>
+                <Text style = {[Styles.headerTitle, {marginLeft: 14, marginTop:10}]}>Teachelp - Sign Up</Text>
+                </View>
                 <View>
-
+                    <View style={{flexDirection:"row", justifyContent:"center"}}>
                     <FormLabel>Name</FormLabel>
-                    <FormInput  textInputRef="" placeholder="Please enter your name"
+                    </View>
+                    <FormInput style={{marginRight: 60, marginLeft: 60}}
+                                textInputRef="" placeholder="name"
                                 onChangeText={(name) => {
                                     this.saveProperty("name", name);
                                 }}/>
-
+                    <View style={{flexDirection:"row", justifyContent:"center"}}>
                     <FormLabel>Email</FormLabel>
-                    <FormInput  textInputRef="" placeholder="Please enter your email"
+                    </View>
+                    <FormInput style={{marginRight: 60, marginLeft: 60}}
+                        textInputRef="" placeholder="email"
                                 onChangeText={(email) => {
                                     this.saveProperty("email", email);
                                 }}/>
-
+                    <View style={{flexDirection:"row", justifyContent:"center"}}>
                     <FormLabel>Password</FormLabel>
-                    <FormInput  textInputRef="" placeholder="Please enter your Password"
+                    </View>
+                    <FormInput style={{marginRight: 60, marginLeft: 60}}    textInputRef="" placeholder="password"
                                 onChangeText={(password) => {
                                     this.saveProperty("password", password);
                                 }}/>
-
-                    <Button onPress={this.signUp.bind(this)} title="SIGN UP" />
-                    <Text onPress={this.navigateRegistration.bind(this)}>Do you have an account? Sign In!</Text>
+                    <View style={{flexDirection:"row", justifyContent:"center"}}>
+                    <Button buttonStyle={{width: 200}} backgroundColor="black"  onPress={this.signUp.bind(this)} title="Sign Up" />
+                    </View>
+                    <View style={{flexDirection:"row", justifyContent:"center"}}>
+                    <Text style={{color: "#3366BB", marginTop: 2 }} onPress={this.navigateRegistration.bind(this)}>Already have an account? Sign In!</Text>
+                    </View>
                 </View>
             </View>
         )

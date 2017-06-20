@@ -15,5 +15,6 @@ module.exports = {
     "edit":require("./edit.gif"),
     "logout":require("./logout.png"),
     "excel":require("./excel.png"),
-    "metrics":require("./metrics.png")
+    "metrics":require("./metrics.png"),
+    "main":require("./check-mark_1.png")
 };
