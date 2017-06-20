@@ -55,35 +55,33 @@ export default class Lesson extends React.Component {
         })
     }
     getLessonItems(){
-        this.setState({items: this.state.items, isLoading: true})
         let that = this;
         this.getAllLessons()
-        .then((lessons) => {
-            let pos = 1;
-            let all = lessons.map((lesson) => {
-                return SubjectLib.retrieve(lesson.subjectId).then((subject) => {
-                    console.log(subject);
-                    return subject;
-                })
-            });
-            Promise.all(all).then((subjects) => {
-                let lessonItems = lessons.map((lesson, index) => {
-                    let classes = lesson.classes;
-                    let nDate = new Date(lesson.startDate);
-                    let date = `${nDate.getDate()}/${nDate.getMonth()}/${nDate.getFullYear()}`;
-                    let time = `${nDate.getHours()}:${nDate.getMinutes()}`;
-                    return <LessonItem key={lesson.id} removeLesson={this.removeLesson.bind(this)} lesson={lesson} id={lesson.id} time={time} date={date} pos={pos} subjectName={subjects[index].acronym} subjectId={subjects[index].id} classes={classes} color="#ef9a9a" navigate={that.props.navigation.navigate}/>
+            .then((lessons) => {
+                let pos = 1;
+                let all = lessons.map((lesson) => {
+                    return SubjectLib.retrieve(lesson.subjectId).then((subject) => {
+                        console.log(subject);
+                        return subject;
+                    })
                 });
-                this.setState({
-                    lessons:lessonItems,
-                    isLoading:!this.state.isLoading
+                Promise.all(all).then((subjects) => {
+                    let lessonItems = lessons.map((lesson, index) => {
+                        let classes = lesson.classes;
+                        let nDate = new Date(lesson.startDate);
+                        let date = `${nDate.getDate()}/${nDate.getMonth()}/${nDate.getFullYear()}`;
+                        let time = `${nDate.getHours()}:${nDate.getMinutes()}`;
+                        return <LessonItem key={lesson.id} removeLesson={this.removeLesson.bind(this)} lesson={lesson} id={lesson.id} time={time} date={date} pos={pos} subjectName={subjects[index].acronym} subjectId={subjects[index].id} classes={classes} color="#ef9a9a" navigate={that.props.navigation.navigate}/>
+                    });
+                    this.setState({
+                        lessons:lessonItems,
+                        isLoading:!this.state.isLoading
+                    })
                 })
             })
-        })
-        .catch((err) => {
-            this.setState({isLoading: false})
-            console.log(err)
-        })
+            .catch((err) => {
+                console.log(err)
+            })
     }
     render(){
         const { navigate } = this.props.navigation;
@@ -128,4 +126,3 @@ let styles = StyleSheet.create({
 
 
 });
-
