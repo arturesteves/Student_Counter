@@ -49,6 +49,7 @@ export default class Subject extends React.Component {
     }
 
     getSubjects(){
+        this.setState({items: this.state.items, isLoading: true})
         let that = this;
         SubjectLib.all().then((subjects) => {
             let color = 1;
