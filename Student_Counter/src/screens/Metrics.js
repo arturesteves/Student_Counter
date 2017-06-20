@@ -119,6 +119,7 @@ export default class Metrics extends React.Component {
             navigate
         } = this.props.navigation;
         return ( <View>
+            
             <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
             <Header navigate = {navigate} text = "Metrics" />
             <ScrollView style={{marginTop:10}} height={Dimensions.get("window").height-90} showsVerticalScrollIndicator={false}>

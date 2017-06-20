@@ -2,10 +2,17 @@ import React, {Component} from "react";
 import {StyleSheet, View, Text, Image, TouchableHighlight, Alert} from "react-native";
 import Styles from "../styles/Styles.js";
 import Icons from "../icons/icons.js";
+import Share, {ShareSheet, Button} from 'react-native-share';
 
 export default class Metric extends React.Component{
     constructor(props){
         super(props);
+        this.shareOptions = {
+            title: "Share Teachelp Metrics",
+            message: "Share Teachelp Metrics",
+            url: this.props.downloadUrl,
+            subject: "Share Teachelp Metrics" //  for email
+        };
     }
 
     metricOnClick(){
@@ -26,7 +33,7 @@ export default class Metric extends React.Component{
     }
 
     shareMetric(){
-        alert("Share");
+        Share.open(this.shareOptions);
     }
 
     render(){
