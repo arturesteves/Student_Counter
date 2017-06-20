@@ -6,8 +6,9 @@ import Student from '../lib/Student';
 import Subject from '../lib/Subject';
 import Teacher from '../lib/Teacher';
 import React from 'react';
-import { View,  Button, ScrollView, Dimensions} from "react-native";
+import { View, ScrollView, Dimensions} from "react-native";
 import EntityPicker from "../components/EntityPicker";
+import { Button } from 'react-native-elements'
 
 import { List, ListItem } from 'react-native-elements'
 
@@ -86,7 +87,9 @@ export default class MultiEntityPicker extends React.Component {
                     this.state.identifier = identifier;
                     this.setState(this.state);
                 }} />
-                <Button onPress={this.addEntity.bind(this)} title="Add" />
+                <View style={{left: 5, right: 5}}>
+                    <Button buttonStyle={{backgroundColor: "black"}} onPress={this.addEntity.bind(this)} title="Add"/>
+                </View>
                 <List>
                     {
                         Object.keys(this.state.list).map((item, i) => (

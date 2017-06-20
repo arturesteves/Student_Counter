@@ -2,10 +2,11 @@ import Class from '../lib/Class';
 import Student from '../lib/Student';
 import Subject from '../lib/Subject';
 import React from 'react';
-import { BackHandler, View, Text, Button, TextInput, ScrollView, Dimensions } from "react-native";
+import { BackHandler, View, Text, TextInput, ScrollView, Dimensions } from "react-native";
 import MultiEntityPicker from "../components/MultiEntityPicker";
 import Header from "../components/Header";
 import Spinner from 'react-native-loading-spinner-overlay';
+import {FormLabel, FormInput, Button, FormValidationMessage} from 'react-native-elements'
 
 export default class ClassEdit extends React.Component {
 
@@ -127,20 +128,19 @@ export default class ClassEdit extends React.Component {
                 <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
                 <Header navigate={navigate} text="Edit Class"/>
                 <ScrollView height={Dimensions.get("window").height-90} showsVerticalScrollIndicator={false}>
-                    <Text>Insert the name of the class</Text>
-                    <TextInput
-                        onChangeText={(name) => {
-                            this.state.name = name;
-                            this.setState(this.state);
-                        }}
-                        value={this.state.name}
-                    />
-                    <Text>Students</Text>
+
+                    <FormLabel>Name</FormLabel>
+                    <FormInput editable={false} textInputRef="number" placeholder="class name"
+                               value={this.state.name}/>
+
+                    <FormLabel>Students</FormLabel>
                     {this.state.studentPicker}
-                    <Text>Subjects</Text>
+                    <FormLabel>Subjects</FormLabel>
                     {this.state.subjectPicker}
 
-                    <Button onPress={this.update.bind(this)} title="Update" />
+                    <View style={{left: 5, right: 5}}>
+                        <Button buttonStyle={{backgroundColor: "black"}} onPress={this.update.bind(this)} title="Update"/>
+                    </View>
                 </ScrollView>
             </View>
         )

@@ -8,7 +8,18 @@ let PresenceLib = require("./Presence");
 let namespaces = require("./namespaces").namespaces;
 
 // TODO: suportar o número da aula
+/** Class representing a Lesson */
 class Lesson{
+    /**
+     * Creates a Lesson.
+     * @param {number} teacherId 
+     * @param {number} subjectId 
+     * @param {*} classes 
+     * @param {Date} startDate 
+     * @param {date} endDate 
+     * @param {string} photo 
+     * @param {string} summary 
+     */
     constructor(teacherId, subjectId, classes, startDate, endDate, photo, summary){
         this.teacherId = teacherId;
         this.subjectId = subjectId;
@@ -18,7 +29,11 @@ class Lesson{
         this.photo = photo || "No Photo";
         this.summary = summary || ""
     }
-
+    
+    /**
+     * Creates a Presence froim a Student in the Lesson.
+     * @param {number} lessonId 
+     */
     createPresences(lessonId){
         if(this.classes.length != 0){
             let allClasses = this.classes.map((_class) => {
@@ -38,6 +53,10 @@ class Lesson{
         }    
     }
 
+    /**
+     * Updates the Presences from the Lesson.
+     * @param {number} lessonId 
+     */
     updatePresences(lessonId){
         if(this.classes.length != 0){
             let allClasses = this.classes.map((_class) => {
@@ -77,6 +96,10 @@ class Lesson{
             })
         }
     }
+
+    /**
+     * Saves an instance of the Lesson in the database, if the instance already exists updates the current instance otherwise creates a new one.
+     */
     save(){
         let that = this;
         if(this.id){
@@ -102,6 +125,9 @@ class Lesson{
         }
     }
 
+    /**
+     * Deletes the Lesson's instance from the database.
+     */
     delete(){
         let that = this;
         firebase.database().ref(namespaces.lessons + this.id).remove();
@@ -114,14 +140,23 @@ class Lesson{
         })
     }
 
+    /**
+     * Gets the Subject of the Lesson.
+     */
     async getSubject(){
         return await Subject.retrieve(this.subjectId);
     }
 
+    /**
+     * Gets the teacher that is resposible for the Lesson
+     */
     async getTeacher(){
         return await Teacher.retrieve(this.teacherId);
     }
 
+    /**
+     * Returns all the Lessons in the database.
+     */
     static all(){
         return firebase.database().ref(namespaces.lessons).once("value").then(function (snapshot) {
             let lessons = [];
@@ -146,6 +181,10 @@ class Lesson{
         });
     }
 
+    /**
+     * Gets the Lesson that has the id passed in the param.
+     * @param {number} id 
+     */
     static retrieve(id){
         return new Promise((resolve, reject)=>{
             firebase.database().ref(namespaces.lessons + id).once('value').then(function(snapshot){

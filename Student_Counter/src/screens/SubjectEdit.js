@@ -1,11 +1,12 @@
 import Subject from '../lib/Subject';
 import Student from '../lib/Student';
 import React from 'react';
-import { BackHandler, View, Text, Button, TextInput, ScrollView, Dimensions } from "react-native";
+import { BackHandler, View, Text, TextInput, ScrollView, Dimensions } from "react-native";
 import MultiEntityPicker from "../components/MultiEntityPicker";
 import Header from "../components/Header";
 import Spinner from 'react-native-loading-spinner-overlay';
 import Teacher from "../lib/Teacher.js";
+import {FormLabel, FormInput, Button, FormValidationMessage} from 'react-native-elements'
 
 export default class SubjectEdit extends React.Component {
 
@@ -22,8 +23,10 @@ export default class SubjectEdit extends React.Component {
     }
 
     async componentDidMount() {
-
         let subject = this.props.navigation.state.params.subject;
+        this.state.name = subject.name;
+        this.state.acronym = subject.acronym;
+
         let items = {} ;
         console.log(subject.overseersIds);
         for(let item of subject.overseersIds) {
@@ -48,8 +51,6 @@ export default class SubjectEdit extends React.Component {
             />
         }
 
-        this.state.name = subject.name;
-        this.state.acronym = subject.acronym;
         for(let id of subject.overseersIds) {
             this.state.overseers[id] = id;
         }
@@ -97,27 +98,30 @@ export default class SubjectEdit extends React.Component {
             <View>
                 <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
                 <Header navigate={navigate} text="Edit Subject"/>
+
                 <ScrollView height={Dimensions.get("window").height-90} showsVerticalScrollIndicator={false}>
-                    <Text>Insert the name of the subject</Text>
-                    <TextInput
-                        onChangeText={(name) => {
-                            this.state.name = name;
-                            this.setState(this.state);
-                        }}
-                        value={this.state.name}
-                    />
-                    <Text>Insert the acronym of the subject</Text>
-                    <TextInput
-                        onChangeText={(acronym) => {
-                            this.state.acronym = acronym;
-                            this.setState(this.state);
-                        }}
-                        value={this.state.acronym}
-                    />
-                    <Text>Teacher</Text>
+                    <FormLabel>Name</FormLabel>
+                    <FormInput textInputRef="name" placeholder="Please enter the subject name"
+                               value={this.state.name}
+                               onChangeText={(name) => {
+                                   this.state.name = name;
+                                   this.setState(this.name);
+                               }}/>
+
+                    <FormLabel>Acronym</FormLabel>
+                    <FormInput textInputRef="name" placeholder="Please enter the subject acronym"
+                               value={this.state.acronym}
+                               onChangeText={(acronym) => {
+                                   this.state.acronym = acronym;
+                                   this.setState(this.acronym);
+                               }}/>
+
+                    <FormLabel>Teacher</FormLabel>
                     {this.state.teacherPicker}
 
-                    <Button onPress={this.update.bind(this)} title="Update" />
+                    <View style={{left: 5, right: 5}}>
+                        <Button buttonStyle={{backgroundColor: "black"}} onPress={this.update.bind(this)} title="Update"/>
+                    </View>
                 </ScrollView>
             </View>
         )

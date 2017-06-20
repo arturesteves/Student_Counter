@@ -26,7 +26,7 @@ export default class StudentItem extends React.Component{
     /////
     render(){
         return(
-            <TouchableHighlight underlayColor={"white"} onPress={() => {}}>
+
                 <View style={styles.item}>
                     <Text style={styles.label}>Number: </Text><Text style={[styles.name, {marginBottom: 6}]}>{this.props.student.number}</Text>
                     <Text style={styles.label}>Name: </Text><Text style={styles.name}>{this.props.student.name}</Text>
@@ -44,7 +44,7 @@ export default class StudentItem extends React.Component{
                         <Image source={Icons.editStudent} style={styles.editClass} />
                     </TouchableHighlight>
                 </View>
-            </TouchableHighlight>
+
         )
     }
 }

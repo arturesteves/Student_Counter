@@ -8,13 +8,21 @@ let namespaces = require("./namespaces").namespaces;
  * Represent a student
  */
 class Student{
-
+    /**
+     * Creates a Student
+     * @param {int} number 
+     * @param {string} name 
+     * @param {string} email 
+     */
     constructor(number, name, email) {
         this.number = number;
         this.name = name;
         this.email = email;
     }
 
+    /**
+     * Saves an instance of Student in the database, if the instance already exists updates the current instance otherwise creates a new one.
+     */
     save(){
         return firebase.database().ref(namespaces.students + this.number).set({
             name: this.name,
@@ -22,10 +30,17 @@ class Student{
         });
     }
 
+    /**
+     * Deletes the Student's instance from the database
+     */
     delete(){
         return firebase.database().ref(namespaces.students + this.number).remove();
     }
 
+    /**
+     * Gets the Presences os the Student that has the given id by the param.
+     * @param {number} subjectId 
+     */
     getPresencesAsync(subjectId){
         return firebase.database().ref(namespaces.presences).once("value").then(function (snapshot) {
             let numberPresences = 0;
@@ -58,6 +73,9 @@ class Student{
         });
     }
 
+    /**
+     * Gets all the Students from the database.
+     */
     static all(){
         return firebase.database().ref(namespaces.students).once("value").then(function (snapshot) {
             let students = [];
@@ -76,6 +94,10 @@ class Student{
         });
     }
 
+    /**
+     * Gets the Student that has the number passed in the param.
+     * @param {number} number 
+     */
     static retrieve(number){
         return new Promise((resolve, reject)=>{
             firebase.database().ref(namespaces.students + number).once('value').then(function(snapshot){

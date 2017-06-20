@@ -4,6 +4,7 @@ import {BackHandler, StyleSheet, View, Button, Dimensions, ScrollView} from "rea
 import Header from "../components/Header"
 import ClassItem from "../components/ClassItem";
 import Spinner from 'react-native-loading-spinner-overlay';
+import { Icon } from 'react-native-elements'
 
 export default class Class extends React.Component {
 
@@ -65,25 +66,40 @@ export default class Class extends React.Component {
             <View>
                 <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
                 <Header navigate={navigate} text="Class"/>
+
                 <ScrollView height={Dimensions.get("window").height-90} showsVerticalScrollIndicator={false}>
-                    <Button onPress={() => this.props.navigation.navigate('ClassCreate')} title="Create new class" />
-                    <View style={styles.classContent}>
+                    <View style={styles.content}>
                         {this.state.classes}
                     </View>
                 </ScrollView>
+                <View style={styles.add}>
+                    <Icon
+                        reverse
+                        name='plus'
+                        type = "font-awesome"
+                        color='#000'
+                        onPress={() => this.props.navigation.navigate('ClassCreate')}
+                    />
+                </View>
             </View>
         )
     }
 }
 
-
 let styles = StyleSheet.create({
 
-    classContent: {
+    content: {
         flexWrap: "wrap",
         marginTop: 15,
         marginLeft: 35,
         marginRight: 35,
+    },
+    add: {
+        position: 'absolute',
+        right:     4,
+        bottom:      4,
     }
 
+
 });
+

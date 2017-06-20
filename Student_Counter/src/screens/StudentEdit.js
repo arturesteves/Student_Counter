@@ -64,12 +64,6 @@ export default class StudentEdit extends React.Component {
         return(
             <View style={{height: Dimensions.get("window").height - 25}}>
                 {xml}
-                <FormLabel>Number</FormLabel>
-                <FormInput textInputRef="" placeholder="Please enter the student number" onChangeText={(number) => {
-                    this.state.number = number;
-                    this.setState(this.state);
-                }} value={this.state.number}/>
-
                 {/*<FormValidationMessage>Error message</FormValidationMessage>*/}
                 <FormLabel>Name</FormLabel>
                 <FormInput textInputRef="number" placeholder="Please enter the student name" onChangeText={(name) => {

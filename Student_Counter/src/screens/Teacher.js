@@ -95,7 +95,6 @@ export default class Teacher extends React.Component {
                     <Image source={require("../icons/userPic.jpg")} style={Styles.teacherImage}/>
                     <View style={Styles.teacherInfo}>
                         <Text style={Styles.teacherInfoText}>{this.state.teacher.name}</Text>
-                        <Text style={Styles.teacherInfoText}>21</Text>
                     </View>
                     <View style = {Styles.teacherNumbers}>
                         <Image source={Icons.subject} style={Styles.teacherNumberIcon} />

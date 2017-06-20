@@ -5,7 +5,9 @@ import {
     View,
     Button,
     Dimensions,
-    ScrollView
+    ScrollView,
+    StyleSheet
+
 } from "react-native";
 import Header from "../components/Header";
 import Styles from "../styles/Styles.js";
@@ -13,7 +15,9 @@ import LessonItem from "../components/LessonItem.js";
 import LessonLib from "../lib/Lesson.js";
 import SubjectLib from "../lib/Subject.js";
 import Spinner from 'react-native-loading-spinner-overlay';
+import { Icon } from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
+
 
 export default class Lesson extends React.Component {
     static navigationOptions = {
@@ -67,7 +71,6 @@ export default class Lesson extends React.Component {
                     let nDate = new Date(lesson.startDate);
                     let date = `${nDate.getDate()}/${nDate.getMonth()}/${nDate.getFullYear()}`;
                     let time = `${nDate.getHours()}:${nDate.getMinutes()}`;
-                    pos == 0 ? pos = 1 : pos= 0;
                     return <LessonItem key={lesson.id} removeLesson={this.removeLesson.bind(this)} lesson={lesson} id={lesson.id} time={time} date={date} pos={pos} subjectName={subjects[index].acronym} subjectId={subjects[index].id} classes={classes} color="#ef9a9a" navigate={that.props.navigation.navigate}/>
                 });
                 this.setState({
@@ -86,13 +89,41 @@ export default class Lesson extends React.Component {
             <View>
                 <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
                 <Header navigate={navigate} text="Lesson"/>
+
                 <ScrollView height={Dimensions.get("window").height-90} showsVerticalScrollIndicator={false}>
-                <Button onPress={() => navigate('LessonCreate')} title="Create new lesson" />
-                <View style={Styles.lessonContent}>
-                    {this.state.lessons}
-                </View>
+                    <View style={styles.content}>
+                        {this.state.lessons}
+                    </View>
                 </ScrollView>
+                <View style={styles.add}>
+                    <Icon
+                        reverse
+                        name='plus'
+                        type = "font-awesome"
+                        color='#000'
+                        onPress={() => this.props.navigation.navigate('LessonCreate')}
+                    />
+                </View>
             </View>
         )
     }
 }
+///////
+
+let styles = StyleSheet.create({
+
+    content: {
+        flexWrap: "wrap",
+        marginTop: 15,
+        marginLeft: 35,
+        marginRight: 35,
+    },
+    add: {
+        position: 'absolute',
+        right:     4,
+        bottom:      4,
+    }
+
+
+});
+

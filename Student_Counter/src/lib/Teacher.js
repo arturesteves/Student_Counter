@@ -3,18 +3,26 @@ import RNFetchBlob from 'react-native-fetch-blob';
 
 let namespaces = require("./namespaces").namespaces;
 
-
-class Teacher {
-
-    constructor(name, email, password) {
+/** Class representing a Teacher */
+class Teacher{ 
+    /**
+     * Create a Teacher.
+     * @param {string} name 
+     * @param {string} email 
+     * @param {string} password 
+     */
+    constructor(name, email, password){
         this.name = name;
         this.email = email;
         this.password = password || "teacher123";
         this.metrics = [];
     }
 
-    save() {
-        if (this.id) {
+    /**
+     * Saves an instance of Teacher in the Database, if the instance already exists updates the current instance otherwise creates a new one.
+     */
+    save(){
+        if(this.id){
             return firebase.database().ref(namespaces.teachers + this.id).update({
                 name: this.name,
                 email: this.email,
@@ -30,7 +38,10 @@ class Teacher {
         }
     }
 
-    delete() {
+    /**
+     * Deletes the Teacher's instance in the database.
+     */
+    delete(){
         firebase.database().ref(namespaces.teachers + this.id).remove();
     }
 
@@ -38,8 +49,11 @@ class Teacher {
     //TODO: obter as turmas que tem
     //TODO: obter os alunos que possui  -> basta ver as disciplinas que tem e obter os alunos dessas disciplinas
 
-    getAllSubjects() {
-        return new Promise((resolve, reject) => {
+    /**
+     * Gets all the Subjects that the Teacher is in.
+     */
+    getAllSubjects(){
+        return new Promise((resolve, reject)=>{
             let that = this;
             firebase.database().ref(namespaces.subjects).once('value').then(function (snapshot) {
                 let subjects = [];
@@ -66,6 +80,9 @@ class Teacher {
     }
 
     // TODO: problem, couting duplicated classes!
+    /**
+     * Gets all the Classes that the Teacher is in.
+     */
     getAllClasses() {
         return new Promise((resolve, reject) => {
             let that = this;
@@ -105,7 +122,10 @@ class Teacher {
     }
 
     //TODO
-    getNumStudents() {
+    /**
+     * Gets the number of students that the Teacher has.
+     */
+    getNumStudents(){
         let that = this;
         return new Promise((function (resolve, reject) {
             that.getAllClasses().then(function (results) {
@@ -119,7 +139,11 @@ class Teacher {
         }));
     }
 
-    static all() {
+    /**
+     * Returns all the Teacher in the database.
+     * @return {Teacher} teachers
+     */
+    static all(){
         return firebase.database().ref(namespaces.teachers).once("value").then(function (snapshot) {
             let teachers = [];
             snapshot.forEach(function (teacherValues) {
@@ -139,9 +163,13 @@ class Teacher {
         });
     }
 
-    static retrieve(id) {
-        return new Promise((resolve, reject) => {
-            firebase.database().ref(namespaces.teachers + id).once('value').then(function (snapshot) {
+    /**
+     * Gets the Teacher that has the id passed in the param.
+     * @param {number} id 
+     */
+    static retrieve(id){
+        return new Promise((resolve, reject)=>{
+            firebase.database().ref(namespaces.teachers + id).once('value').then(function(snapshot){
                 let name = snapshot.val().name;
                 let email = snapshot.val().email;
                 let password = snapshot.val().password;
@@ -159,9 +187,14 @@ class Teacher {
         });
     }
 
-    static find(email, password) {
-        return new Promise((resolve, reject) => {
-            firebase.database().ref(namespaces.teachers).once('value').then(function (snapshot) {
+    /**
+     * Gets a Teacher by using the email and password.
+     * @param {string} email 
+     * @param {string} password 
+     */
+    static find(email, password){
+        return new Promise((resolve, reject)=>{
+            firebase.database().ref(namespaces.teachers).once('value').then(function(snapshot){
                 let validTeacher = null;
                 snapshot.forEach(function (teacher) {
                     if (teacher.val().email === email && teacher.val().password === password) {
