@@ -59,6 +59,7 @@ export default class Student extends React.Component {
             this.setState({items: items, isLoading: false})
 
         } catch(error){
+            this.setState({isLoading: false})
             console.log("ERror", error);
         }
     }

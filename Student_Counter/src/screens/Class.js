@@ -34,6 +34,7 @@ export default class Class extends React.Component {
     }
 
     async componentDidMount(){
+        this.setState({items: this.state.items, isLoading: true})
         try {
             let that = this;
             let classes = await ClassLib.all();
@@ -54,6 +55,7 @@ export default class Class extends React.Component {
             console.log("Items", items);
             this.setState({classes: items, isLoading:!this.state.isLoading})
         } catch(error){
+            this.setState({ isLoading: false});
             console.log(error);
             alert("Something Went Wrong");
         }

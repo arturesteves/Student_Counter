@@ -55,6 +55,7 @@ export default class Lesson extends React.Component {
         })
     }
     getLessonItems(){
+        this.setState({items: this.state.items, isLoading: true})
         let that = this;
         this.getAllLessons()
         .then((lessons) => {
@@ -80,6 +81,7 @@ export default class Lesson extends React.Component {
             })
         })
         .catch((err) => {
+            this.setState({isLoading: false})
             console.log(err)
         })
     }
