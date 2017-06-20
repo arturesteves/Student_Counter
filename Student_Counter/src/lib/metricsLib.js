@@ -46,7 +46,7 @@ function Metrics(teacherId) {
             Class.all().then((classes) => {
                 if (classes.length == 0) {
                     //No Classes
-                    resolve("No Classes | Can't Create Metrics");
+                    resolve([]);
                 }
                 classes.map((_class) => {
                     allClasses.push(getClassMetrics(_class));
@@ -76,7 +76,7 @@ function Metrics(teacherId) {
             Subject.all().then((subjects) => {
                 if (subjects.length == 0) {
                     //No Subjects
-                    reject("No Subject | Can't Create Metrics");
+                    resolve([])
                 }
                 //There is at least one subject
                 //We will try to get eligible subjects
