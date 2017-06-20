@@ -38,8 +38,8 @@ export default class Teacher extends React.Component {
     componentDidMount(){
         let that = this;
         SharedPreferences.getItem("id", function(value){
-            that.setState( {isLoading: true});
             if(value){
+                that.setState( {isLoading: true});
                 //retrieve teacher
                 TeacherLib.retrieve(value).then(function(teacher){
                     that.setState( {isLoading: false});
