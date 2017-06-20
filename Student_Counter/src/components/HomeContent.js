@@ -26,6 +26,9 @@ export default class HomeContent extends React.Component{
                     <Card size="small" icon="student" title="Student" color="#FFAB91" navigate={this.props.navigate} />
                     <Card size="small" icon="class" title="Class" color="#9FA8DA" navigate={this.props.navigate} />
                 </View>
+                <View style={Styles.oneCardInRow}>
+                    <Card size="big" icon="metrics" title="Metrics" color="#EF9A9A" navigate={this.props.navigate} />
+                </View>
                 </ScrollView>
             </View>
         )

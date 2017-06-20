@@ -14,5 +14,6 @@ module.exports = {
     "editStudent":require("./editStudent.png"),
     "edit":require("./edit.gif"),
     "logout":require("./logout.png"),
-    "excel":require("./excel.png")
+    "excel":require("./excel.png"),
+    "metrics":require("./metrics.png")
 };
