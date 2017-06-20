@@ -218,6 +218,7 @@ export default class LessonCreate extends React.Component {
                     isVisible={this.state.isVisible}
                     onConfirm={this._handleDatePicked}
                     onCancel={this._hideDateTimePicker}
+                    is24Hour={true}
                     mode={"datetime"}
                 />
                 <Button onPress={this.create.bind(this)} title="Create" />

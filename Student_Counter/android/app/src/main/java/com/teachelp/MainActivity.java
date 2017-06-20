@@ -2,6 +2,16 @@ package com.teachelp;
 
 import com.facebook.react.ReactActivity;
 import com.oblador.vectoricons.VectorIconsPackage;
+import in.sriraman.sharedpreferences.RNSharedPreferencesReactPackage;
+import cl.json.RNSharePackage;
+import com.RNFetchBlob.RNFetchBlobPackage;
+import com.lwansbrough.RCTCamera.RCTCameraPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import in.sriraman.sharedpreferences.RNSharedPreferencesReactPackage;
+import cl.json.RNSharePackage;
+import com.RNFetchBlob.RNFetchBlobPackage;
+import com.lwansbrough.RCTCamera.RCTCameraPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 

@@ -505,8 +505,12 @@ function Metrics(teacherId) {
                     }
                 })
                 let wbout = XLSX.write(workbook, workbookOptions);
-                RNFetchBlob.fs.writeFile(`${metricsDir}/TeachelpMetrics.xlsx`, wbout, "base64").then(() => {
-                        resolve("")
+                let now = new Date(Date.now());
+                let date = `${now.getDate()}${now.getMonth()}${now.getFullYear()}`;
+                let time = `${now.getHours()}${now.getMinutes()}`;
+                RNFetchBlob.fs.writeFile(`${metricsDir}/TeachelpMetrics_${date}_${time}.xlsx`, wbout, "base64").then(() => {
+                        //Localização, Nome do Ficheiro, Ficheiro
+                        resolve([`${metricsDir}/TeachelpMetrics_${date}_${time}.xlsx`,`TeachelpMetrics (${date} ${time}).xlsx`, wbout])
                     })
                     .catch((err) => reject(err))
             }).catch((err) => reject(err));

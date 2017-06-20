@@ -260,5 +260,13 @@ module.exports = StyleSheet.create({
 
     alignBottom:{
         alignSelf: "flex-end"
+    },
+
+    metric:{
+        flexDirection:"row",
+        width:Dimensions.get("window").width,
+        marginTop:10,
+        alignItems:"center",
+        justifyContent:"center"
     }
 });
