@@ -94,7 +94,7 @@ class Subject{
 
     // NOT WORKING BECAUSE OF CIRCULAR DEPENDENCY
     /**
-     * 
+     * Gets the Lessons from the Subject.
      */
     getLessonsAsync(){
         console.log("l76",Lesson);

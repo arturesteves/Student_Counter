@@ -35,7 +35,7 @@ class Class {
     }
 
     /**
-     * 
+     * Gets the Students that are in the Class.
      */
     async getStudents(){
         let array = [];
@@ -46,7 +46,7 @@ class Class {
     }
 
     /**
-     * 
+     * Gets the Subjects related to this Class.
      */
     async getSubjects(){
         let array = [];
@@ -57,7 +57,7 @@ class Class {
     }
 
     /**
-     * 
+     * Returns the number of registered Students in the Class.
      */
     numberOfregisteredStudentsAsync(){
         let that = this;
@@ -85,7 +85,7 @@ class Class {
     }
 
     /**
-     * 
+     * Returns all the Classes in the database.
      */
     static all(){
         return firebase.database().ref(namespaces.classes).once("value").then(function (snapshot) {

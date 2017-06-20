@@ -38,7 +38,7 @@ class Student{
     }
 
     /**
-     * 
+     * Gets the Presences os the Student that has the given id by the param.
      * @param {number} subjectId 
      */
     getPresencesAsync(subjectId){

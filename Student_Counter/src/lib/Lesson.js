@@ -141,14 +141,14 @@ class Lesson{
     }
 
     /**
-     * 
+     * Gets the Subject of the Lesson.
      */
     async getSubject(){
         return await Subject.retrieve(this.subjectId);
     }
 
     /**
-     * 
+     * Gets the teacher that is resposible for the Lesson
      */
     async getTeacher(){
         return await Teacher.retrieve(this.teacherId);

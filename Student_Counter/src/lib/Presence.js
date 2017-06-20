@@ -41,7 +41,7 @@ class Presence{
     }
 
     /**
-     * 
+     * Updates the state os the Presence with the value passed in the param.
      * @param {boolean} isPresent 
      */
     updatePresence(isPresent){
@@ -72,14 +72,14 @@ class Presence{
     }
 
     /**
-     * 
+     * Gets the Student of the Presence.
      */
     async getStudent(){
         return await Student.retrieve(this.studentId);
     }
 
     /**
-     * 
+     * Gets the Lesson where the Presence is being made.
      */
     async getLesson(){
         return await Lesson.retrieve(this.lessonId);
