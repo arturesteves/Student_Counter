@@ -7,7 +7,7 @@ let StudentLib = require("./Student");
 let PresenceLib = require("./Presence");
 let namespaces = require("./namespaces").namespaces;
 
-// TODO: suportar o número da aula
+
 /** Class representing a Lesson */
 class Lesson{
     /**

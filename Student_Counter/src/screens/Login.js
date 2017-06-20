@@ -1,8 +1,9 @@
 import Teacher from '../lib/Teacher';
 import React from 'react';
-import { BackHandler, View, Text, Button, TextInput, NetInfo } from "react-native";
+import { BackHandler, View, Text, TextInput, NetInfo } from "react-native";
 import Spinner from 'react-native-loading-spinner-overlay';
 let SharedPreferences = require('react-native-shared-preferences');
+import {FormLabel, FormInput, Button, FormValidationMessage} from 'react-native-elements'
 
 export default class Login extends React.Component {
 
@@ -70,23 +71,21 @@ export default class Login extends React.Component {
                 <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
                 <Text>Teachelp - Sign Up</Text>
                 <View>
-                    <TextInput
-                        placeholder="email"
-                        onChangeText={(email) => {
-                            this.saveProperty("email", email);
-                        }}
-                        value={this.state.email}
-                    />
-                    <TextInput
-                        placeholder="password"
-                        secureTextEntry={true}
-                        onChangeText={(password) => {
-                            this.saveProperty("password", password);
-                        }}
-                        value={this.state.password}
-                    />
 
-                    <Button onPress={this.signUp.bind(this)} title="SIGN UP" />
+                    <FormLabel>Email</FormLabel>
+                    <FormInput  textInputRef="" placeholder="Please enter your email"
+                                onChangeText={(email) => {
+                                    this.saveProperty("email", email);
+                                }}/>
+
+                    <FormLabel>Password</FormLabel>
+                    <FormInput  textInputRef="" placeholder="Please enter your password"
+                                secureTextEntry={true}
+                                onChangeText={(password) => {
+                                    this.saveProperty("password", password);
+                                }}/>
+
+                    <Button onPress={this.signUp.bind(this)} title="SIGN IN" />
                 </View>
             </View>
         )

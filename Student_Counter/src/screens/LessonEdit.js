@@ -96,7 +96,6 @@ export default class LessonEdit extends React.Component {
                     isLoading: !this.state.isLoading
                 })
         });
-    
     }
 
     _showDateTimePicker = () => this.setState({ isVisible: true });

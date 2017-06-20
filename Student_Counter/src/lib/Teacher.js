@@ -45,10 +45,6 @@ class Teacher{
         firebase.database().ref(namespaces.teachers + this.id).remove();
     }
 
-    //TODO: Obter as disciplinas que lecciona
-    //TODO: obter as turmas que tem
-    //TODO: obter os alunos que possui  -> basta ver as disciplinas que tem e obter os alunos dessas disciplinas
-
     /**
      * Gets all the Subjects that the Teacher is in.
      */
@@ -79,7 +75,7 @@ class Teacher{
         });
     }
 
-    // TODO: problem, couting duplicated classes!
+
     /**
      * Gets all the Classes that the Teacher is in.
      */
@@ -121,7 +117,6 @@ class Teacher{
         });
     }
 
-    //TODO
     /**
      * Gets the number of students that the Teacher has.
      */

@@ -18,7 +18,8 @@ class Class {
     }
 
     /**
-     * Saves an instance of the Class in the database, if the instance already exists updates the current instance otherwise creates a new one.
+     * Saves an instance of the Class in the database, if the instance already exists updates the current instance
+     * otherwise creates a new one.
      */
     save(){
         return firebase.database().ref(namespaces.classes + this.name).set({
@@ -79,11 +80,6 @@ class Class {
         });
     }
 
-    //TODO consultar a assiduidad de uma turma? - COULD - talvez nao
-    getClassAssiduity(){
-       /** TO COMPLETE */
-    }
-
     /**
      * Returns all the Classes in the database.
      */
@@ -106,7 +102,7 @@ class Class {
 
     /**
      * Gets the Class that has the name passed in the param.
-     * @param {string} name 
+     * @param {string} name
      */
     static retrieve(name){
         return new Promise((resolve, reject)=>{
