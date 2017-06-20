@@ -18,8 +18,8 @@ export default class LessonCreate extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-        dateStart: "",
-        dateEnd: "",
+        dateStart: new Date().toISOString(),
+        dateEnd: new Date().toISOString(),
         isVisible:false,
         whatDate:-1,
         selectTeacher:0,
@@ -177,52 +177,57 @@ export default class LessonCreate extends React.Component {
             <View>
                 <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
                 <Header navigate={navigate} text="Create Lesson"/>
+
                 <FormLabel>Select the teacher:</FormLabel>
-                <Picker
-                selectedValue={this.state.selectTeacher}
-                onValueChange={(itemValue, itemIndex) => {
-                    this.setState({selectTeacher: itemValue})
-                    this.getTeacherSubjects(itemValue);
-                }}>
-                {this.state.teacherItems}
+                <Picker style={{marginLeft: 12, marginRight: 4}}
+                        selectedValue={this.state.selectTeacher}
+                        onValueChange={(itemValue, itemIndex) => {
+                            this.setState({selectTeacher: itemValue})
+                            this.getTeacherSubjects(itemValue);
+                        }}>
+                    {this.state.teacherItems}
                 </Picker>
                 <FormLabel>Select the subject:</FormLabel>
-                <Picker
-                selectedValue={this.state.selectSubject}
-                onValueChange={(itemValue, itemIndex) => {
-                    this.setState({selectSubject: itemValue})
-                }}>
-                {this.state.subjectItems}
+                <Picker style={{marginLeft: 12, marginRight: 4}}
+                        selectedValue={this.state.selectSubject}
+                        onValueChange={(itemValue, itemIndex) => {
+                            this.setState({selectSubject: itemValue})
+                        }}>
+                    {this.state.subjectItems}
                 </Picker>
                 <FormLabel>Select lesson start date and time:</FormLabel>
+
                 <TouchableHighlight onPress={() => {this.setState({isVisible:true, whatDate:0})}}>
-                    <View style={{flexDirection:"row"}}>
+                    <View style={{flexDirection:"row", marginLeft: 20}}>
                         <Icon
-                        name='clock-o'
-                        type="font-awesome"
-                        size={30}/>
-                        <Text>{this.state.dateStart}</Text>
+                            name='clock-o'
+                            type="font-awesome"
+                            size={30}/>
+                        <Text style={{marginLeft: 8, marginTop: 5}}>{new Date(this.state.dateStart).toString()}</Text>
                     </View>
                 </TouchableHighlight>
                 <FormLabel>Select lesson end date and time:</FormLabel>
                 <TouchableHighlight onPress={() => {this.setState({isVisible:true, whatDate:1})}}>
-                    <View style={{flexDirection:"row"}}>
+                    <View style={{flexDirection:"row", marginLeft: 20}}>
                         <Icon
-                        name='clock-o'
-                        type="font-awesome"
-                        size={30}/>
-                        <Text>{this.state.dateEnd}</Text>
+                            name='clock-o'
+                            type="font-awesome"
+                            size={30}/>
+
+                        <Text style={{marginLeft: 8, marginTop: 5}}>{new Date(this.state.dateEnd).toString()}</Text>
                     </View>
                 </TouchableHighlight>
+
                 <DateTimePicker
+                    value={this.state.dateEnd}
                     isVisible={this.state.isVisible}
                     onConfirm={this._handleDatePicked}
                     onCancel={this._hideDateTimePicker}
-                    is24Hour={true}
                     mode={"datetime"}
                 />
-                <View style={{left: 5, right: 5}}>
-                    <Button buttonStyle={{backgroundColor: "black"}} onPress={this.create.bind(this)} title="Create"/>
+
+                <View style={{left: 5, right: 5, marginTop: 10}}>
+                    <Button buttonStyle={{backgroundColor: "black"}} onPress={this.create.bind(this)} title="Update"/>
                 </View>
             </View>
         )

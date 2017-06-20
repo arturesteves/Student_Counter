@@ -83,6 +83,7 @@ let styles = StyleSheet.create({
         padding:10,
         borderRadius:4,
         marginBottom:12.5,
+        paddingTop: 20,
         backgroundColor: "#EF9A9A"
     },
     label: {
@@ -101,21 +102,21 @@ let styles = StyleSheet.create({
         borderRadius: 2
     },
     deleteClass: {
-        width:25,
-        height:25,
+        width:35,
+        height:35,
     },
     deleteButton: {
         position: 'absolute',
-        right:     4,
+        right:     8,
         top:      4,
     },
     editClass: {
-        width:25,
-        height:25,
+        width:35,
+        height:35,
     },
     editButton: {
         position: 'absolute',
-        right:     30,
+        right:     42,
         top:      4,
     },
     imageItem: {

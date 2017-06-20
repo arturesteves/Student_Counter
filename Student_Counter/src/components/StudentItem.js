@@ -55,7 +55,8 @@ let styles = StyleSheet.create({
         padding:10,
         borderRadius:4,
         marginBottom:12.5,
-        backgroundColor: "#FFAB91"
+        paddingTop: 20,
+        backgroundColor: "#EF9A9A"
     },
     label: {
         fontSize:25,
@@ -63,7 +64,7 @@ let styles = StyleSheet.create({
         color: "#000000",
     },
     name: {
-        backgroundColor: "#ffcdb7",
+        backgroundColor: "#efb9b7",
         color: "#110b0b",
         fontSize:16,
         marginTop: 2,
@@ -73,21 +74,21 @@ let styles = StyleSheet.create({
         borderRadius: 2
     },
     deleteClass: {
-        width:25,
-        height:25,
+        width:35,
+        height:35,
     },
     deleteButton: {
         position: 'absolute',
-        right:     4,
+        right:     8,
         top:      4,
     },
     editClass: {
-        width:25,
-        height:25,
+        width:35,
+        height:35,
     },
     editButton: {
         position: 'absolute',
-        right:     30,
+        right:     42,
         top:      4,
     },
     imageItem: {
