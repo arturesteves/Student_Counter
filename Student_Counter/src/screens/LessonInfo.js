@@ -94,10 +94,10 @@ export default class LessonInfo extends React.Component {
         return(
             <View>
                 <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
-                <Header navigate={navigate} text="Lesson Info"/>
-                <List containerStyle={{marginBottom: 20}}>
+                <Header navigate={navigate} text="Student Attendance"/>
+
                     {this.state.presenceItems}
-                </List>
+
             </View>
         )
     }

@@ -3,7 +3,7 @@ import {StyleSheet, View, Text, Image, TouchableHighlight, Alert} from "react-na
 import Styles from "../styles/Styles.js";
 import Icons from "../icons/icons.js";
 import PresenceLib from "../lib/Presence.js";
-import { ListItem } from 'react-native-elements'
+import {CheckBox, ListItem} from 'react-native-elements'
 
 export default class PresenceItem extends React.Component{
     constructor(props){
@@ -42,21 +42,27 @@ export default class PresenceItem extends React.Component{
 
     render(){
         return(
-            <ListItem
-                style={this.state.isDelayed ? styles.delay : styles.onTime}
+            <CheckBox
+                title={this.props.studentName + (this.state.isDelayed ? " - delayed" : "")}
+                checked={this.state.isPresent}
                 onLongPress={()=>this.handleDelay()}
-                key={this.props.number}
-                title={this.props.studentName}
-                rightIcon={{name: "circle-o", color:this.state.isPresent ? "#008000" : "#FF0000",type:"font-awesome"}}
                 onPress={() => this.handlePresence()}
             />
+            //     <ListItem
+            //     style={this.state.isDelayed ? styles.delay : styles.onTime}
+            //     onLongPress={()=>this.handleDelay()}
+            //     key={this.props.number}
+            //     title={this.props.studentName}
+            //     rightIcon={{name: "circle-o", color:this.state.isPresent ? "#48b12e" : "#ff4941",type:"font-awesome"}}
+            //     onPress={() => this.handlePresence()}
+            // />
         )
     }
 }
 
 let styles = StyleSheet.create({
     delay: {
-        backgroundColor: "#f47941"
+        backgroundColor: "#f4613e"
     },
     onTime: {}
 });
