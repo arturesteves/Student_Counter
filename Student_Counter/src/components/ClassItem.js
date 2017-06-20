@@ -77,7 +77,7 @@ export default class ClassItem extends React.Component {
                 <TouchableHighlight style={styles.editButton} underlayColor={this.props.color} onPress={() => {
 
                         this.props.navigate("ClassEdit", {clazz: this.props.clazz})
-                  
+
                 }}>
                     <Image source={Icons.editStudent} style={styles.editClass}/>
                 </TouchableHighlight>
