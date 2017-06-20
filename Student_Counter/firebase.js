@@ -61,7 +61,7 @@ async function init(){
 
 
     // define the presences of a student in a class
-    //TODO: marcar uma presença requer verificações do tipo: o aluno tem que estar inscrito na disciplina
+
     // Ou seja, é necessário obter a classe(turma) a que o aluno pertence e verificar se a turma tem aquela disciplina ou nao
 
     let presence_ricardo_gp_lesson_1 = new Presence(student_ricardo.number, lesson_gp_1.id, true, true);

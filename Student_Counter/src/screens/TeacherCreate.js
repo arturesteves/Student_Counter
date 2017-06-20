@@ -24,8 +24,6 @@ export default class TeacherCreate extends React.Component {
     /////
     create(){
 
-        //todo - validation of the values
-
         let teacher = new Teacher (this.state.name, this.state.email);
         teacher.save().then(()=> {
             this.props.navigation.navigate('Teacher');

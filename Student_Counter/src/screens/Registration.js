@@ -1,8 +1,10 @@
 import Teacher from '../lib/Teacher';
 import React from 'react';
-import { BackHandler, View, Text, Button, TextInput, NetInfo } from "react-native";
+import { BackHandler, View, Text, TextInput, NetInfo } from "react-native";
 import Spinner from 'react-native-loading-spinner-overlay';
 let SharedPreferences = require('react-native-shared-preferences');
+import {FormLabel, FormInput, Button, FormValidationMessage} from 'react-native-elements'
+
 
 export default class Registration extends React.Component {
 
@@ -24,7 +26,6 @@ export default class Registration extends React.Component {
     }
 
     componentDidMount(){
-        // TODO: TO REMOVE later
         //this.logout();
         NetInfo.isConnected.addEventListener( 'change', this.handleFirstConnectivityChange.bind(this) );
     }
@@ -57,7 +58,7 @@ export default class Registration extends React.Component {
         this.setState(object);
     }
 
-    signIn(){
+    signUp(){
         if(this.state.name && this.state.email && this.state.password){
             let that = this;
             this.saveProperty("isLoading", true);
@@ -87,41 +88,32 @@ export default class Registration extends React.Component {
 
     render(){
         const { navigate } = this.props.navigation;
-        //imagem qualquer (logo)
-        // fundo claro
-        // https://www.google.pt/search?q=login+reactnative+screen&client=firefox-b-ab&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiXyb2N4MPUAhWBwxQKHfXQDjYQ_AUIBigB&biw=1536&bih=731#imgrc=dClHTp0NTgzhZM:
-        // support
-        // guardar id do prof ? + nome + email
-        // get id by email
         return(
             <View>
                 <Spinner visible={this.state.isLoading} textContent={"Talking to the Database"} textStyle={{color: '#FFF'}} />
-                <Text>Teachelp - Sign </Text>
+                <Text>Teachelp - Sign Up</Text>
                 <View>
-                    <TextInput
-                        placeholder="name"
-                        onChangeText={(name) => {
-                            this.saveProperty("name", name);
-                        }}
-                        value={this.state.name}
-                    />
-                    <TextInput
-                        placeholder="email"
-                        onChangeText={(email) => {
-                            this.saveProperty("email", email);
-                        }}
-                        value={this.state.email}
-                    />
-                    <TextInput
-                        placeholder="password"
-                        secureTextEntry={true}
-                        onChangeText={(password) => {
-                            this.saveProperty("password", password)
-                        }}
-                        value={this.state.password}
-                    />
-                    <Button onPress={this.signIn.bind(this)} title="SIGN IN" />
-                    <Text onPress={this.navigateRegistration.bind(this)}>Do you have an account? Sing up!</Text>
+
+                    <FormLabel>Name</FormLabel>
+                    <FormInput  textInputRef="" placeholder="Please enter your name"
+                                onChangeText={(name) => {
+                                    this.saveProperty("name", name);
+                                }}/>
+
+                    <FormLabel>Email</FormLabel>
+                    <FormInput  textInputRef="" placeholder="Please enter your email"
+                                onChangeText={(email) => {
+                                    this.saveProperty("email", email);
+                                }}/>
+
+                    <FormLabel>Password</FormLabel>
+                    <FormInput  textInputRef="" placeholder="Please enter your Password"
+                                onChangeText={(password) => {
+                                    this.saveProperty("password", password);
+                                }}/>
+
+                    <Button onPress={this.signUp.bind(this)} title="SIGN UP" />
+                    <Text onPress={this.navigateRegistration.bind(this)}>Do you have an account? Sign In!</Text>
                 </View>
             </View>
         )
