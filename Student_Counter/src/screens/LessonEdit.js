@@ -61,7 +61,6 @@ export default class LessonEdit extends React.Component {
                     }
                 })
             })
-
             if(eligibleClasses.length == 0){
                 alert("There are no classes available in this subject");
                 return null;
@@ -123,7 +122,6 @@ export default class LessonEdit extends React.Component {
     async getInfo() {
         let newState = this.state;
         let lesson = this.props.navigation.state.params.lesson;
-        console.log("lesson",lesson);
 
         newState.selectTeacher = lesson.teacherId;
         newState.selectSubject = lesson.subjectId;

@@ -66,7 +66,7 @@ export default class LessonItem extends React.Component{
                 </TouchableHighlight>
                 <TouchableHighlight style={styles.editButton} underlayColor={this.props.color} onPress={() => {
                     this.props.navigate("LessonEdit", {
-                        student: this.props.student
+                        lesson: this.props.lesson
                     })
                 }}>
                     <Image source={Icons.editStudent} style={styles.editClass} />
