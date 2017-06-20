@@ -528,13 +528,13 @@ function Metrics(teacherId) {
     function createMetrics(metricsToCreate) {
         return new Promise((resolve, reject) => {
             if (metricsToCreate === undefined) {
-                reject("Metrics are Undefined");
+                reject("Internal Error Contact Support");
             }
             if (metricsToCreate.constructor !== Array) {
-                reject("Metrics is not an Array");
+                reject("Internal Error Contact Support");
             }
             if (metricsToCreate.length < 1) {
-                reject("No Metrics in Array");
+                reject("No Metrics Were Selected");
             }
             let allMetrics = [];
             metricsToCreate.map((metric) => {
