@@ -60,7 +60,7 @@ export default class LessonItem extends React.Component{
                 <Text style={styles.label}>Date: </Text><Text style={[styles.name, {marginBottom: 6}]}>{this.props.date}</Text>
                 {/*<Text style={styles.name}>{this.props.student.email}</Text>*/}
                 <TouchableHighlight style={styles.deleteButton} underlayColor={this.props.color} onPress={() => {
-                    return this.askForDelete(this.props.name)
+                    this.askForDelete(this.props.subjectName, this.props.date, this.props.time)
                 }}>
                     <Image source={Icons.deleteStudent} style={styles.deleteClass} />
                 </TouchableHighlight>

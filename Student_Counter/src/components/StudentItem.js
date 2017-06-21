@@ -10,8 +10,12 @@ export default class StudentItem extends React.Component{
     }
 
     deleteStudent(){
-        this.props.student.delete();
-        this.props.removeStudent(this.number);
+        this.props.student.delete()
+        .then(()=>{
+            this.props.removeStudent(this.number);
+        })
+        .catch((err)=>alert("Student Can't Be Deleted : It appears in one or more classes"));
+        
     }
 /////
 

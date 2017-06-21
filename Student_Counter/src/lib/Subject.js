@@ -1,5 +1,6 @@
 import * as firebase from 'firebase';
 let Teacher = require("./Teacher");
+let Class = require("./Class");
 
 // circular dependencies : https://coderwall.com/p/myzvmg/circular-dependencies-in-node-js
 //https://gist.github.com/lperrin/5934098
@@ -44,17 +45,18 @@ class Subject{
      */
     delete(){
         let that = this;
-        firebase.database().ref(namespaces.subjects + this.id).remove();
-        /*
-        Lesson.all().then((lessons) => {
-            lessons.map((lesson)=>{
-                if(lesson.subjectId == that.id){
-                    lesson.delete();
-                }
+        return new Promise((resolve, reject) => {
+            Class.all().then((classes) => {
+                let eligibleClasses = [];
+                classes.map((_class) => {
+                    if(_class.subjectIds.includes(that.id)){
+                        eligibleClasses.push(_class);
+                    }
+                })
+                console.log(eligibleClasses.length);
+                eligibleClasses.length > 0 ? reject() : firebase.database().ref(namespaces.subjects + that.id).remove().then(()=>resolve(""));
             })
         })
-        */
-
     }
 
     /**

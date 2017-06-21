@@ -42,7 +42,6 @@ function Metrics(teacherId) {
         return new Promise((resolve, reject) => {
             let data = [];
             let allClasses = [];
-            data.push(worksheetHeaders.class);
             Class.all().then((classes) => {
                 if (classes.length == 0) {
                     //No Classes
@@ -52,6 +51,7 @@ function Metrics(teacherId) {
                     allClasses.push(getClassMetrics(_class));
                 });
                 Promise.all(allClasses).then((classes) => {
+                    data.push(worksheetHeaders.class);
                     classes.map((_class) => {
                         if (_class.length != 0) {
                             data = data.concat(_class);

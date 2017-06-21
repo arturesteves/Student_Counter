@@ -11,8 +11,13 @@ export default class ClassItem extends React.Component {
     deleteClass() {
         let that = this;
         ClassLib.retrieve(this.props.id).then((clazz) => {
-            clazz.delete();
-            that.props.removeClass(clazz.name);
+            clazz.delete()
+            .then(()=>{
+                that.props.removeClass(clazz.name);
+            })
+            .catch((err)=>{
+                alert("Class Can't Be Deleted : It appears in one or more lessons")
+            });
         }).catch((err) => {
             alert(err);
         })

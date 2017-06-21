@@ -11,11 +11,10 @@ export default class SubjectItem extends React.Component{
     deleteSubject(){
         let that = this;
         SubjectLib.retrieve(this.props.id).then((subject) => {
-            subject.delete();
-            that.props.removeSubject(subject.id);
+            subject.delete().then(()=>that.props.removeSubject(subject.id)).catch((err)=>alert("Subject Can't Be Deleted : It appears in one or more classes"));
         }).catch((err) => {
             alert(err);
-        })
+        })  
     }
 
     askForDelete(subjectName){
